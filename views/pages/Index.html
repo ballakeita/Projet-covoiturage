@@ -4,12 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>SoraDrive - Accueil</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="IndexStyle.css" />
 </head>
 <body>
   <header class="main-header">
     <a href="index.html" class="logo">
-      <img src="Sora Drive.png" alt="Logo SoraDrive" />
+      <img src="SoraDrive.png" alt="Logo SoraDrive" />
     </a>
     <div class="search-container">
       <input type="text" placeholder="Search" />
@@ -18,7 +18,7 @@
     <nav class="main-nav">
       <a href="index.html">Accueil</a>
       <a href="#presentation">Présentation</a>
-      <button onclick="openOverlay('login')">Login</button>
+      <button class="btn-login" onclick="document.getElementById('loginOverlay').classList.remove('hidden')">Login</button>
       <a href="#contact">Contact</a>
     </nav>
   </header>
@@ -46,32 +46,74 @@
 
     <section class="cta-buttons">
       <button class="btn-signup" onclick="openOverlay('signup1')">S'inscrire</button>
-      <button class="btn-login" onclick="openOverlay('login')">Connexion</button>
+      <button class="btn-login" onclick="document.getElementById('loginOverlay').classList.remove('hidden')">Connexion</button>
     </section>
   </main>
 
   <!-- Overlays -->
-  <div id="login" class="overlay hidden">
-    <div class="overlay-content">
-      <h2>Connexion</h2>
-      <input type="text" placeholder="Email" />
-      <input type="password" placeholder="Mot de passe" />
-      <button>Se connecter</button>
-      <button onclick="closeOverlay('login')">Fermer</button>
+
+  <!-- Connexion -->
+  <div class="overlay hidden" id="loginOverlay">
+    <div class="login-container">
+      <div class="login-left">Connexion</div>
+      <div class="login-right">
+        <label for="loginEmail">Email :</label>
+        <input type="email" id="loginEmail" placeholder="mail@example.com">
+  
+        <label for="loginPassword">Mot de passe :</label>
+        <input type="password" id="loginPassword" placeholder="Votre mot de passe">
+  
+        <button id="loginSubmit">Se connecter</button>
+      </div>
     </div>
   </div>
 
+  <!-- Inscription étape 1 -->
   <div id="signup1" class="overlay hidden">
-    <div class="overlay-content">
-      <h2>Inscription</h2>
-      <input type="text" placeholder="Nom" />
-      <input type="email" placeholder="Email" />
-      <input type="password" placeholder="Mot de passe" />
-      <button>S'inscrire</button>
-      <button onclick="closeOverlay('signup1')">Fermer</button>
+    <div class="signup-container">
+      <div class="signup-left">Inscription !</div>
+      <div class="signup-right">
+        <label>Mail :</label>
+        <input type="email" id="email" placeholder="Mail.exemple@toto.fr" required />
+        
+        <label>Mot de passe :</label>
+        <input type="password" id="password" placeholder="MDPexemple" required />
+
+        <label>Confirmation :</label>
+        <input type="password" id="confirm" placeholder="MDPexemple" required />
+        <small>*Minimum 8 caractères, une majuscule, un chiffre.</small>
+
+        <button onclick="goToStep2()">Suivant</button>
+      </div>
     </div>
   </div>
 
+  <!-- Inscription étape 2 -->
+  <div id="signup2" class="overlay hidden">
+    <div class="signup-container">
+      <div class="signup-left">Votre nouveau départ<br/>commence ici</div>
+      <div class="signup-right">
+        <label>Prénom :</label>
+        <input type="text" id="prenom" placeholder="Exemple Filo" required />
+
+        <label>Nom :</label>
+        <input type="text" id="nom" placeholder="Exemple Taron" required />
+
+        <label>Téléphone :</label>
+        <input type="tel" id="tel" placeholder="+33612345678" required />
+
+        <label>Date de naissance :</label>
+        <input type="text" id="birthdate" placeholder="Jour/Mois/Année" required />
+
+        <label>Code parrainage :</label>
+        <input type="text" id="parrainage" placeholder="CodeParrain123" />
+
+        <button onclick="finishSignup()">Suivant</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Boutique -->
   <div id="cashshop" class="overlay hidden">
     <div class="overlay-content">
       <h2>Cash Shop</h2>
@@ -87,6 +129,49 @@
 
     function closeOverlay(id) {
       document.getElementById(id).classList.add('hidden');
+    }
+
+    function goToStep2() {
+      const email = document.getElementById('email').value;
+      const pwd = document.getElementById('password').value;
+      const confirm = document.getElementById('confirm').value;
+
+      if (!email || !pwd || pwd !== confirm || pwd.length < 8) {
+        alert("Vérifiez vos informations.");
+        return;
+      }
+
+      // Données conservées dans le contexte (à traiter serveur/API par la suite)
+      closeOverlay('signup1');
+      openOverlay('signup2');
+    }
+
+    function finishSignup() {
+      // Ici on pourrait envoyer les données à l’API
+      // Exemple : POST /api/signup avec JSON des champs
+
+      // Redirection vers la page connectée
+      window.location.href = "IndexConnected.html";
+    }
+    // Ferme tous les overlays au clic en dehors
+    document.querySelectorAll('.overlay').forEach(overlay => {
+      overlay.addEventListener('click', function (e) {
+        if (e.target === this) {
+          this.classList.add('hidden');
+          resetSignupForm();
+          resetLoginForm();
+        }
+      });
+    });
+
+    function resetSignupForm() {
+      document.querySelectorAll('#signupStep1 input, #signupStep2 input').forEach(input => input.value = '');
+      document.getElementById('signupStep1')?.classList.remove('hidden');
+      document.getElementById('signupStep2')?.classList.add('hidden');
+    }
+
+    function resetLoginForm() {
+      document.querySelectorAll('#loginOverlay input').forEach(input => input.value = '');
     }
   </script>
 </body>
