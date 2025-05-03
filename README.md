@@ -4,58 +4,53 @@ Projet PHP structuré pour une application web de gestion de trajets étudiants,
 
 ## 📁 Arborescence du projet
 
+```plaintext
 /mon_projet_php/
 ├── config/
-│ ├── database.php # Connexion à la base de données (via PDO)
-│ └── config.php # Constantes globales (base URL, debug, chemins...)
-│
-├── public/ # Répertoire public (à exposer via Apache/Nginx)
-│ ├── assets/ # Fichiers statiques visibles côté client
-│ │ ├── css/
-│ │ ├── js/
-│ │ └── images/ # Images accessibles via le navigateur
-│ └── index.php # Point d'entrée principal de l'application
-│
-├── src/ # Code métier (non exposé directement)
-│ ├── functions/ # Fonctions PHP organisées par thème
-│ │ ├── user.php # Gestion des utilisateurs
-│ │ ├── auth.php # Authentification, sessions
-│ │ ├── pub.php # Gestion des publicités
-│ │ └── utils.php # Fonctions utilitaires (sanitization, validation, etc.)
-│ ├── controllers/ # Logique applicative (coordonne views/fonctions)
-│ │ ├── user_controller.php
-│ │ ├── pub_controller.php
-│ │ └── ...
-│
-├── views/ # Fichiers de rendu HTML/PHP
-│ ├── templates/ # Morceaux réutilisables (header, footer, menu)
-│ │ ├── header.php
-│ │ ├── footer.php
-│ │ └── nav.php
-│ ├── pages/ # Pages principales de l'application
-│ │ ├── home.php
-│ │ ├── login.php
-│ │ ├── register.php
-│ │ ├── dashboard.php
-│ │ └── ...
-│
-├── api/ # Endpoints pour requêtes AJAX ou API REST
-│ ├── get_user.php
-│ ├── create_pub.php
-│ └── ...
-│
-├── sql/ # Scripts SQL pour gérer la base de données
-│ ├── schema.sql # Création des tables
-│ ├── seed.sql # Données de test (ex : utilisateurs fictifs)
-│ └── drop.sql # Suppression (optionnelle) des tables
-│
-├── uploads/ # Fichiers uploadés par les utilisateurs
-│ ├── avatars/ # Avatars des profils
-│ └── pub_images/ # Images liées aux publicités
-│
-├── .gitignore # Fichiers/dossiers à ignorer par Git
-├── README.md # Documentation du projet
-└── composer.json # (Optionnel) Dépendances PHP avec Composer
+│   ├── database.php         # Connexion à la base de données (via PDO)
+│   └── config.php           # Constantes globales (base URL, debug, chemins...)
+├── public/                  # Répertoire public (à exposer via Apache/Nginx)
+│   ├── assets/              # Fichiers statiques visibles côté client
+│   │   ├── css/
+│   │   ├── js/
+│   │   └── images/          # Images accessibles via le navigateur
+│   └── index.php            # Point d'entrée principal de l'application
+├── src/                     # Code métier (non exposé directement)
+│   ├── functions/           # Fonctions PHP organisées par thème
+│   │   ├── user.php         # Gestion des utilisateurs
+│   │   ├── auth.php         # Authentification, sessions
+│   │   ├── pub.php          # Gestion des publicités
+│   │   └── utils.php        # Fonctions utilitaires (sanitization, validation, etc.)
+│   ├── controllers/         # Logique applicative (coordonne views/fonctions)
+│   │   ├── user_controller.php
+│   │   ├── pub_controller.php
+│   │   └── ...
+├── views/                   # Fichiers de rendu HTML/PHP
+│   ├── templates/           # Morceaux réutilisables (header, footer, menu)
+│   │   ├── header.php
+│   │   ├── footer.php
+│   │   └── nav.php
+│   ├── pages/               # Pages principales de l'application
+│   │   ├── home.php
+│   │   ├── login.php
+│   │   ├── register.php
+│   │   ├── dashboard.php
+│   │   └── ...
+├── api/                     # Endpoints pour requêtes AJAX ou API REST
+│   ├── get_user.php
+│   ├── create_pub.php
+│   └── ...
+├── sql/                     # Scripts SQL pour gérer la base de données
+│   ├── schema.sql           # Création des tables
+│   ├── seed.sql             # Données de test (ex : utilisateurs fictifs)
+│   └── drop.sql             # Suppression (optionnelle) des tables
+├── uploads/                 # Fichiers uploadés par les utilisateurs
+│   ├── avatars/             # Avatars des profils
+│   └── pub_images/          # Images liées aux publicités
+├── .gitignore               # Fichiers/dossiers à ignorer par Git
+├── README.md                # Documentation du projet
+└── composer.json            # (Optionnel) Dépendances PHP avec Composer
+```
 
 
 ## 🔧 Détails des répertoires
