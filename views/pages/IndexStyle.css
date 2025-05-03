@@ -242,3 +242,13 @@ body {
 .login-right button:hover {
   background: #093838;
 }
+
+.results-section {
+  padding: 2rem;
+}
+
+.results-section h2 {
+  color: #0c4b4b;
+  margin-bottom: 2rem;
+  text-align: center;
+}

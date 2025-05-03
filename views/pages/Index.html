@@ -12,8 +12,10 @@
       <img src="SoraDrive.png" alt="Logo SoraDrive" />
     </a>
     <div class="search-container">
-      <input type="text" placeholder="Search" />
-      <button>🔍</button>
+      <form class="search-container" id="searchForm" action="SearchResults.html" method="GET">
+        <input type="text" name="query" id="searchInput" placeholder="Recherche de trajets...">
+        <button type="submit">🔍</button>
+      </form>
     </div>
     <nav class="main-nav">
       <a href="index.html">Accueil</a>
@@ -173,6 +175,17 @@
     function resetLoginForm() {
       document.querySelectorAll('#loginOverlay input').forEach(input => input.value = '');
     }
+    
+    // Pas de formulaire de recherche vide
+    const searchForm = document.getElementById('searchForm');
+    const searchInput = document.getElementById('searchInput');
+
+    searchForm.addEventListener('submit', function(e) {
+      if (searchInput.value.trim() === '') {
+        e.preventDefault(); // bloque la redirection
+        alert("Veuillez entrer un mot-clé de recherche.");
+      }
+    });
   </script>
 </body>
 </html>
