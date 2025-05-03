@@ -1,0 +1,17 @@
+{
+    "name": "soradrive/app",
+    "autoload": {
+        "psr-4": {
+            "Soradrive\\App\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Fidji32",
+            "email": "matthis.vandevyver@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "^11.5"
+    }
+}
