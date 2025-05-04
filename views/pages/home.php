@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SoraDrive - Accueil Connecté</title>
+  <link rel="stylesheet" href="../../public/assets/css/IndexStyle.css" />
+</head>
+<body>
+  <header class="main-header">
+    <a href="home.php" class="logo">
+      <img src="../../public/assets/images/SoraDrive.png" alt="Logo SoraDrive" />
+    </a>
+    <div class="search-container">
+      <input type="text" placeholder="Search" />
+      <button>🔍</button>
+    </div>
+    <nav class="main-nav">
+      <a href="home.php">Accueil</a>
+      <a href="#presentation">Présentation</a>
+      <a href="#profil">Profil</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Des trajets cools, des rencontres vraies.</h1>
+    </section>
+
+    <section class="cards">
+      <div class="card">
+        <h2>Conduire</h2>
+        <p>Fais le plein de bons plans en roulant.</p>
+        <div class="sub-card">🌱 Écologique<br/><small>ecologie.gouv.fr</small></div>
+        <div class="sub-card">🤝 Rencontrer<br/><small>Trouver votre copilote en 1 clic</small></div>
+      </div>
+
+      <div class="card">
+        <h2>Gagner !</h2>
+        <p>Rouler ensemble, gagner ensemble.</p>
+        <div class="sub-card" onclick="openOverlay('cashshop')">🎁 Récompenses<br/><small>Accès à la boutique</small></div>
+        <div class="sub-card">🎮 Ludique<br/><small>Gain de points</small></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Cash Shop Overlay -->
+  <div id="cashshop" class="overlay hidden">
+    <div class="overlay-content">
+      <h2>Cash Shop</h2>
+      <p>Voici les objets à découvrir (carousel ici).</p>
+      <button onclick="closeOverlay('cashshop')">Fermer</button>
+    </div>
+  </div>
+
+  <script>
+    function openOverlay(id) {
+      document.getElementById(id).classList.remove('hidden');
+    }
+
+    function closeOverlay(id) {
+      document.getElementById(id).classList.add('hidden');
+    }
+  </script>
+</body>
+</html>
