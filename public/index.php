@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!empty($_SESSION['login_error'])) {
-    echo '<div class="error-message" style="color: red; margin-bottom: 1em;">' . htmlspecialchars($_SESSION['login_error']) . '</div>';
+    echo '<script>alert("' . htmlspecialchars($_SESSION['login_error']) . '")</script>';
     unset($_SESSION['login_error']); // Supprime le message après affichage
 }
 ?>
