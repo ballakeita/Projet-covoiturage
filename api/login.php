@@ -8,9 +8,6 @@ require_once '../src/functions/auth.php';
 $email = $_POST['email'] ?? '';
 $password = $_POST['password'] ?? '';
 
-echo $email;
-echo $password;
-
 // Appel de la fonction d'authentification
 $response = loginUser($email, $password);
 
