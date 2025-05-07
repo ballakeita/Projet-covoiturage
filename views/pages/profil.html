@@ -2,8 +2,8 @@
 <html lang="fr">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Profil – SoraDrive</title>
     <!-- Google Font Sora -->
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;700&display=swap" rel="stylesheet">
@@ -35,31 +35,46 @@
             <div class="card profile">
                 <button class="btn-add">+ Ajouter</button>
                 <button class="btn-edit">✎</button>
+
+                <!-- 1. Avatar dynamique -->
                 <div class="avatar">
-                    <img src="ton-photo.jpg" alt="Avatar">
+                    <img id="avatar" src="" alt="Avatar de l’utilisateur">
                 </div>
-                <div class="rating">
-                    <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-                </div>
+
+                <!-- 2. Rating dynamique -->
+                <div id="rating" class="rating"></div>
+
                 <button class="pin">📌</button>
             </div>
 
             <!-- Stats Card -->
             <div class="card stats">
                 <button class="btn-settings">⚙︎</button>
-                <h1>Profil NOM</h1>
+
+                <!-- 3. Nom complet -->
+                <h1 id="fullname">Profil NOM</h1>
+
+                <!-- 4. Score & Streak -->
                 <div class="metrics">
-                    <div class="metric">✒ Score : 12 345</div>
-                    <div class="metric">🔥 Streak : 1 234</div>
+                    <div class="metric">
+                        ✒ <span id="score">0</span>
+                    </div>
+                    <div class="metric">
+                        🔥 <span id="streak">0</span>
+                    </div>
                 </div>
+
                 <h2>Quelques chiffres :</h2>
+                <!-- 5. Compteurs -->
                 <div class="numbers">
-                    <span>Conducteur : « x »</span>
-                    <span>Passager : « x »</span>
+                    <span>Conducteur : <strong id="count-driver">0</strong></span>
+                    <span>Passager : <strong id="count-passenger">0</strong></span>
                 </div>
+
+                <!-- 6. Icônes bonus -->
                 <div class="icons-bottom">
-                    <button>🛡️</button>
-                    <button>🚗</button>
+                    <button id="icon-shield">🛡️</button>
+                    <button id="icon-car">🚗</button>
                 </div>
             </div>
         </main>
@@ -67,37 +82,68 @@
         <!-- RIGHT -->
         <aside class="sidebar-right">
             <div class="top-stats">
-                <div class="stat">✒ 12 345</div>
-                <div class="stat">🔥 1 234</div>
+                <div class="stat">✒ <span id="score-side">0</span></div>
+                <div class="stat">🔥 <span id="streak-side">0</span></div>
             </div>
+
             <div class="friends">
                 <h3>Amis</h3>
-                <ul>
-                    <li>
-                        <span>Tilio Faron</span>
-                        <div class="actions">
-                            <button>⚙︎</button>
-                            <button>💬</button>
-                        </div>
-                    </li>
-                    <li>
-                        <span>Ami 2</span>
-                        <div class="actions">
-                            <button>⚙︎</button>
-                            <button>💬</button>
-                        </div>
-                    </li>
-                    <li>
-                        <span>Ami 3</span>
-                        <div class="actions">
-                            <button>⚙︎</button>
-                            <button>💬</button>
-                        </div>
-                    </li>
-                </ul>
+                <!-- 7. Liste d’amis -->
+                <ul id="friends-list"></ul>
             </div>
         </aside>
     </div>
+
+    <!-- ==== Script d’intégration dynamique ==== -->
+    <script>
+        window.addEventListener('DOMContentLoaded', async () => {
+            try {
+                // 1️⃣ Récupération des données du profil
+                const profileRes = await fetch('/api/profile');
+                const profile = await profileRes.json();
+                // Injection des données de base
+                document.getElementById('avatar').src = profile.avatarUrl;
+                document.getElementById('avatar').alt = `Avatar de ${profile.fullname}`;
+                document.getElementById('fullname').innerText = profile.fullname;
+
+                document.getElementById('score').innerText = profile.score;
+                document.getElementById('streak').innerText = profile.streak;
+                document.getElementById('score-side').innerText = profile.score;
+                document.getElementById('streak-side').innerText = profile.streak;
+
+                document.getElementById('count-driver').innerText = profile.countDriver;
+                document.getElementById('count-passenger').innerText = profile.countPassenger;
+
+                // 2️⃣ Génération des étoiles
+                const ratingEl = document.getElementById('rating');
+                ratingEl.innerHTML = '';
+                for (let i = 1; i <= 5; i++) {
+                    ratingEl.innerHTML += (i <= profile.rating) ? '★' : '☆';
+                }
+
+                // 3️⃣ Récupération et affichage de la liste d’amis
+                // Si votre endpoint /api/profile contient déjà friends, vous pouvez utiliser profile.friends
+                const friendsRes = await fetch('/api/friends');
+                const friends = await friendsRes.json();
+
+                const ul = document.getElementById('friends-list');
+                ul.innerHTML = '';
+                friends.forEach(f => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `
+            <span class="friend-name">${f.name}</span>
+            <div class="actions">
+              <button class="btn-friend-settings">⚙︎</button>
+              <button class="btn-friend-message">💬</button>
+            </div>
+          `;
+                    ul.appendChild(li);
+                });
+            } catch (err) {
+                console.error('Erreur chargement profil :', err);
+            }
+        });
+    </script>
 </body>
 
 </html>
