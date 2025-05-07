@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SoraDrive - Profil</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f3f3f3;
+            display: flex;
+            height: 100vh;
+        }
+
+        .sidebar {
+            background-color: #5da6a7;
+            color: #fff;
+            width: 200px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .sidebar img {
+            width: 100px;
+            margin-bottom: 10px;
+        }
+
+        .sidebar a {
+            color: #fefefe;
+            text-decoration: none;
+            margin: 10px 0;
+        }
+
+        .main {
+            flex: 1;
+            padding: 20px;
+            background: linear-gradient(to right, #5da6a7 0%, #f3f3f3 30%, #f3f3f3 70%, #5da6a7 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .top-right {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #2f6d6d;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-weight: bold;
+            display: flex;
+            gap: 20px;
+        }
+
+        .profile-card {
+            background: #5da6a7;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 10px;
+            color: #fff;
+            width: 500px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .edit-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #044;
+            padding: 5px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .add-friend-btn {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #044;
+            padding: 5px 10px;
+            border-radius: 10px;
+            color: white;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid white;
+            margin-bottom: 10px;
+        }
+
+        .stars {
+            margin-top: 10px;
+        }
+
+        .stars span {
+            color: gold;
+            font-size: 20px;
+        }
+
+        .stats-card {
+            background: #5da6a7;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 10px;
+            color: #fff;
+            width: 500px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .friends-panel {
+            width: 200px;
+            background-color: #054d4d;
+            padding: 10px;
+            color: white;
+        }
+
+        .friend-box {
+            background-color: #5da6a7;
+            margin: 10px 0;
+            padding: 8px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <img src="https://i.imgur.com/FnHhnJg.png" alt="SoraDrive Logo">
+        <strong>SoraDrive</strong>
+        <a href="#">Présentation</a>
+        <a href="#">Trajet</a>
+        <a href="#">Profil</a>
+        <a href="#">Contact</a>
+        <a href="#">Boutique</a>
+    </div>
+
+    <div class="main">
+        <div class="top-right">
+            <span>🪶 12 345</span>
+            <span>🔥 1 234</span>
+        </div>
+
+        <div class="profile-card">
+            <div class="add-friend-btn">+ Ajouter</div>
+            <div class="edit-icon">✎</div>
+            <img src="https://i.imgur.com/uQ9xjyk.jpeg" alt="Profil" class="profile-img">
+            <div class="stars">
+                <span>★</span><span>★</span><span>★</span><span>☆</span><span>☆</span>
+            </div>
+        </div>
+
+        <div class="stats-card">
+            <h3>Profil NOM</h3>
+            <div class="stats">
+                <div>
+                    <p>Score : 12 345</p>
+                </div>
+                <div>
+                    <p>Streak : 1 234</p>
+                </div>
+            </div>
+            <p><strong>Quelques chiffres :</strong></p>
+            <p>Nombre de fois conducteur : "x"</p>
+            <p>Passager : "x"</p>
+        </div>
+    </div>
+
+    <div class="friends-panel">
+        <h3>Amis</h3>
+        <div class="friend-box">Tilio Faron ⚙️ 💬</div>
+        <div class="friend-box">Ami 2 ⚙️ 💬</div>
+        <div class="friend-box">Ami 3 ⚙️ 💬</div>
+    </div>
+</body>
+
+</html>
