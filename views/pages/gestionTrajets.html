@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gestion Trajets</title>
+  <link rel="stylesheet" href="IndexStyle.css"> <!-- Ajoute ici ton fichier CSS -->
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background-color: #edf2f4;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #5f9ea0;
+      padding: 10px 20px;
+      color: #fff;
+    }
+
+    header .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    header .logo img {
+      height: 60px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+
+    nav a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #fff8dc;
+      font-weight: bold;
+    }
+
+    .search-bar {
+      display: flex;
+      align-items: center;
+    }
+
+    .search-bar input {
+      padding: 5px 10px;
+      border-radius: 20px;
+      border: 1px solid #ccc;
+    }
+
+    main {
+      display: flex;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .column {
+      flex: 1;
+      background-color: #e0f0f0;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .column h2 {
+      background-color: #245e5e;
+      color: #fff;
+      padding: 10px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .trajet, .reservation {
+      background-color: #669999;
+      margin: 10px 0;
+      padding: 15px;
+      border-radius: 8px;
+      color: white;
+    }
+
+    #add-button {
+      display: block;
+      width: 100%;
+      margin: 10px auto;
+      padding: 10px;
+      text-align: center;
+      background-color: #245e5e;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .pub {
+      background-color: #245e5e;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    .pub img {
+      width: 50px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="logo.png" alt="Logo SoraDrive"> <!-- Remplacez par votre logo -->
+      <strong>SoraDrive</strong>
+    </div>
+
+    <div class="search-bar">
+      <form action="searchResult.html" method="GET">
+        <input type="text" name="search" placeholder="Search..." />
+        <button type="submit">🔍</button>
+      </form>
+    </div>
+
+    <nav>
+      <a href="#">Accueil</a>
+      <a href="#">Présentation</a>
+      <a href="#">Profil</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Colonne "Mes Trajets" -->
+    <div class="column">
+      <h2>Mes Trajets</h2>
+
+      <!-- Trajets créés par l'utilisateur -->
+      <div class="trajet">
+        <!-- Données insérées dynamiquement ici -->
+        <!-- Exemple statique -->
+        Trajet 1
+      </div>
+      <div class="trajet">
+        RESULTAT RECHERCHE 2
+      </div>
+      <div class="trajet">
+        RESULTAT RECHERCHE 3
+      </div>
+
+      <!-- Bouton Ajouter -->
+      <a id="add-button" href="ajoutTrajet.html">Ajouter</a>
+    </div>
+
+    <!-- Colonne "Mes Réservations" -->
+    <div class="column">
+      <h2>Mes Réservations</h2>
+
+      <!-- Réservations de l'utilisateur -->
+      <!-- Données insérées dynamiquement ici -->
+      <div class="reservation">
+        RESULTAT RECHERCHE 1
+      </div>
+      <div class="reservation">
+        RESULTAT RECHERCHE 2
+      </div>
+      <div class="reservation">
+        RESULTAT RECHERCHE 3
+      </div>
+    </div>
+
+    <!-- Colonne "Publicité" -->
+    <div class="column pub">
+      <h2>PUB?</h2>
+      <img src="pub_icon.png" alt="Pub" /> <!-- Remplace par votre image -->
+      <p>Texte Pub</p>
+    </div>
+  </main>
+</body>
+</html>
