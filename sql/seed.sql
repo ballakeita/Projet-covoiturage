@@ -39,7 +39,7 @@ INSERT INTO Code_Postal (Numero) VALUES
 
 -- Utilisateur
 INSERT INTO Utilisateur (Nom, Prenom, Mail, Telephone, Mot_De_Passe, Avatar, Derniere_Connexion) VALUES
-('Maurice', 'Michelle', 'eleonore77@picard.net', '3167439523', 'G46^O7q!9YEw', 'https://www.lorempixel.com/100/100', '2025-04-09 17:32:49'),
+('Nom', 'Prenom', 'test@gmail.com', '3167439523', '$2y$10$wui1DUwP0aCYEkBvsF4nNeHTfTqRgTvJ4yToYe8rETVp86YazIGx6', 'https://www.lorempixel.com/100/100', '2025-04-09 17:32:49'),
 ('Benard', 'Alex', 'tessieralfred@orange.fr', '7196129136', 'O++5gPnwasMF', 'https://dummyimage.com/100x100', '2024-07-17 16:15:14'),
 ('Guérin', 'Paul', 'anouk15@gauthier.fr', '0966434282', ')lR1SIiBxcjG', 'https://www.lorempixel.com/100/100', '2024-08-22 20:03:34'),
 ('Dos Santos', 'Denise', 'edenis@bruneau.fr', '0174083600', '$+@GdQkWt)S3', 'https://www.lorempixel.com/100/100', '2024-12-29 19:33:43'),
@@ -122,7 +122,7 @@ INSERT INTO Laisser_Avis (Id_Etudiant_Laisser_Avis, Note, Commentaire, Signaler,
 (5, 2, 'Retardé', true, 5);
 
 -- Reserver
-INSERT INTO Reserver (Id_Trajet_Reserver, Id_Etudiant_Reserver, Date_Reservation, Status, Arret_Depart, Arret_Arrivee, Validation) VALUES
+INSERT INTO Reserver (Id_Trajet_Reserver, Id_Etudiant_Reserver, Date_Reservation, Annulation, Arret_Depart, Arret_Arrivee, Validation) VALUES
 (1, 2, '2024-04-15 08:00:00', true, 1, 2, true),
 (2, 3, '2024-04-16 09:30:00', true, 2, 3, true),
 (3, 4, '2024-04-17 07:45:00', false, 1, 3, false),

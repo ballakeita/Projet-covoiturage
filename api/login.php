@@ -2,7 +2,7 @@
 
 session_start();
 
-require_once '../src/functions/auth.php';
+require_once '../src/auth.php';
 
 // Récupérer les données envoyées par le formulaire HTML
 $email = $_POST['email'] ?? '';

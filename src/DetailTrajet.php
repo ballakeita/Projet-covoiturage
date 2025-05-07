@@ -1,6 +1,6 @@
 <?php
 
-require_once '../../config/config.php';
+require_once '../config/config.php';
 
 function get_trajet_detail(int $id_trajet): ?array {
     $pdo = connexionBd();

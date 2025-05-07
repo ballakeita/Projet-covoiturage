@@ -1,5 +1,5 @@
 <?php
-require_once '../../config/config.php';
+require_once '../config/config.php';
 
 function get_trajets_disponibles(): array {
     $pdo = connexionBd();

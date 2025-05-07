@@ -1,8 +1,8 @@
 <?php
 
 // Inclure les fichiers nécessaires
-require_once '../src/functions/user.php';
-require_once '../src/functions/utils.php';
+require_once '../src/user.php';
+require_once '../src/utils.php';
 require_once '../config/config.php'; // Assurez-vous que ce fichier contient la connexion à la base de données
 
 // Simuler l'envoi de données par un formulaire (données POST)

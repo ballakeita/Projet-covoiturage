@@ -255,7 +255,7 @@ CREATE TABLE Reserver(
    Id_Trajet_Reserver INTEGER,
    Id_Etudiant_Reserver INTEGER,
    Date_Reservation TIMESTAMP NOT NULL,
-   Status BOOLEAN NOT NULL,
+   Annulation BOOLEAN NOT NULL,
    Arret_Depart SMALLINT NOT NULL,
    Arret_Arrivee SMALLINT NOT NULL,
    Validation BOOLEAN NOT NULL,
