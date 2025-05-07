@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard Admin</title>
+  <link rel="stylesheet" href="IndexStyle.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    .dashboard-container {
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+
+    .stat-box {
+      background-color: #0c4b4b;
+      color: #faf8d4;
+      border-radius: 10px;
+      padding: 2rem;
+      box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .stat-title {
+      font-size: 1rem;
+      color: #d6f1d0;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-value {
+      font-size: 2.2rem;
+      font-weight: bold;
+      color: #fff8d4;
+    }
+
+    .dashboard-header {
+      background: linear-gradient(to bottom, #5d9ca3, #104d4d);
+      color: white;
+      padding: 2rem;
+      text-align: center;
+      font-size: 2rem;
+      font-weight: bold;
+    }
+
+    .charts-container {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      padding: 2rem;
+    }
+
+    .chart-card {
+      background: white;
+      border-radius: 10px;
+      padding: 2rem;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    canvas {
+      max-width: 100%;
+    }
+
+    form#filter-form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    #filter-form label {
+      font-weight: bold;
+    }
+
+    #filter-form select,
+    #filter-form button {
+      padding: 0.5rem;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    #filter-form button {
+      background-color: #5d9ca3;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    #filter-form button:hover {
+      background-color: #104d4d;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="dashboard-header">
+    Tableau de bord - Administration
+  </header>
+
+  <section class="charts-container">
+    <form id="filter-form">
+      <label for="month-select">Mois :</label>
+      <select id="month-select" name="month">
+        <option value="all">Tous</option>
+        <option value="01">Janvier</option>
+        <option value="02">Février</option>
+        <option value="03">Mars</option>
+        <option value="04">Avril</option>
+        <option value="05">Mai</option>
+        <option value="06">Juin</option>
+      </select>
+
+      <label for="year-select">Année :</label>
+      <select id="year-select" name="year">
+        <option value="2025">2025</option>
+        <option value="2024">2024</option>
+        <option value="2023">2023</option>
+      </select>
+
+      <button type="submit">Appliquer</button>
+    </form>
+  </section>
+
+  <main class="dashboard-container">
+    <div class="stat-box">
+      <div class="stat-title">Utilisateurs enregistrés</div>
+      <div class="stat-value" id="total-users">1523</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-title">Trajets ce mois</div>
+      <div class="stat-value" id="monthly-rides">478</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-title">Sponsors actifs</div>
+      <div class="stat-value" id="active-sponsors">12</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-title">Revenus générés (€)</div>
+      <div class="stat-value" id="monthly-revenue">3420</div>
+    </div>
+  </main>
+
+  <section class="charts-container">
+    <div class="chart-card">
+      <h3>Trajets par mois</h3>
+      <canvas id="ridesPerMonthChart"></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>Revenus générés (€) par mois</h3>
+      <canvas id="revenueChart"></canvas>
+    </div>
+  </section>
+
+  <script>
+    // Création initiale des graphiques avec des données fictives
+    const ridesChart = new Chart(document.getElementById('ridesPerMonthChart'), {
+      type: 'bar',
+      data: {
+        labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin'],
+        datasets: [{
+          label: 'Trajets',
+          data: [320, 412, 389, 478, 503, 450],
+          backgroundColor: '#5d9ca3',
+          borderRadius: 5
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: { y: { beginAtZero: true } }
+      }
+    });
+
+    const revenueChart = new Chart(document.getElementById('revenueChart'), {
+      type: 'line',
+      data: {
+        labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin'],
+        datasets: [{
+          label: 'Revenus (€)',
+          data: [800, 1120, 1340, 1420, 1690, 1860],
+          fill: true,
+          borderColor: '#104d4d',
+          backgroundColor: 'rgba(93, 156, 163, 0.2)',
+          tension: 0.4,
+          pointRadius: 5,
+          pointBackgroundColor: '#5d9ca3'
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: { y: { beginAtZero: true } }
+      }
+    });
+
+    // Gestion du filtre dynamique
+    document.getElementById('filter-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const month = document.getElementById('month-select').value;
+      const year = document.getElementById('year-select').value;
+
+      // Appel vers backend
+      /*fetch(`fetch_dashboard_data.php?month=${month}&year=${year}`)
+        .then(res => res.json())
+        .then(data => {
+          // Mise à jour des statistiques brutes
+          document.getElementById('total-users').textContent = data.totalUsers;
+          document.getElementById('monthly-rides').textContent = data.rides;
+          document.getElementById('active-sponsors').textContent = data.sponsors;
+          document.getElementById('monthly-revenue').textContent = data.revenue;
+
+          // Mise à jour des graphiques
+          ridesChart.data.datasets[0].data = data.ridesPerMonth;
+          revenueChart.data.datasets[0].data = data.revenuePerMonth;
+
+          ridesChart.update();
+          revenueChart.update();
+        })
+        .catch(err => {
+          console.error("Erreur lors de la récupération des données du dashboard :", err);
+        });*/
+        const data = {
+        totalUsers: 2025,
+        rides: 430,
+        sponsors: 18,
+        revenue: 5600,
+        ridesPerMonth: [120, 140, 160, 180, 200, 220],
+        revenuePerMonth: [1000, 1100, 1200, 1300, 1400, 1500]
+        };
+
+        // 🔁 Mise à jour statiques simulées
+        document.getElementById('total-users').textContent = data.totalUsers;
+        document.getElementById('monthly-rides').textContent = data.rides;
+        document.getElementById('active-sponsors').textContent = data.sponsors;
+        document.getElementById('monthly-revenue').textContent = data.revenue;
+
+        ridesChart.data.datasets[0].data = data.ridesPerMonth;
+        revenueChart.data.datasets[0].data = data.revenuePerMonth;
+
+        ridesChart.update();
+        revenueChart.update();
+
+    });
+  </script>
+
+</body>
+</html>
