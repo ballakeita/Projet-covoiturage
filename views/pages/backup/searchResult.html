@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Résultats de recherche – SoraDrive</title>
+
+  <!-- Police et CSS global -->
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="route.css">
+
+  <style>
+    /* Corps sous navbar fixe */
+    body {
+      padding-top: 80px;
+      overflow-x: hidden;
+      overflow-y: auto;
+      font-family: 'Sora', sans-serif;
+    }
+
+    /* Navbar fixe */
+    header.site-header {
+      position: fixed; top:0; left:0;
+      width:100%; height:80px;
+      background:var(--teal);
+      display:flex; align-items:center;
+      padding:0 1rem; gap:1rem;
+      z-index:1000;
+    }
+    header.site-header .logo {
+      width:64px; height:64px;
+      border-radius:50%; overflow:hidden;
+      box-shadow:0 2px 6px rgba(0,0,0,0.1);
+    }
+    header.site-header .logo img { width:100%; }
+    header.site-header .search-bar { flex:1; position:relative; }
+    header.site-header .search-bar input {
+      width:100%;
+      padding:.5rem 2.5rem .5rem 1rem;
+      border-radius:999px;
+      border:2px solid rgba(255,255,255,0.5);
+      background:transparent;
+      color:var(--white);
+      font-size:.9rem;
+    }
+    header.site-header .search-bar input::placeholder { color:rgba(255,255,255,0.7); }
+    header.site-header .search-bar button {
+      position:absolute; top:50%; right:.5rem;
+      transform:translateY(-50%);
+      background:none; border:none;
+      color:var(--white); font-size:1.2rem;
+      cursor:pointer;
+    }
+    header.site-header nav { display:flex; gap:1rem; }
+    header.site-header nav a {
+      color:var(--white);
+      text-decoration:none;
+      font-weight:500;
+      transition:opacity .2s;
+    }
+    header.site-header nav a:hover { opacity:.7; }
+
+    /* Layout principal */
+    .search-container {
+      display:flex;
+      gap:1rem;
+      height:calc(100vh - 80px);
+      padding:1rem;
+      align-items:stretch;
+    }
+
+    /* Filtres */
+    .filters {
+      width:15%;
+      background:var(--teal-dark);
+      border-radius:12px;
+      box-shadow:0 4px 12px rgba(0,0,0,0.1);
+      padding:1rem;
+      color:var(--text-light);
+      display:flex; flex-direction:column;
+    }
+
+    /* Résultats (carte centrale) */
+    .results {
+      width:55%;
+      background:var(--teal-dark);
+      border-radius:12px;
+      box-shadow:0 4px 12px rgba(0,0,0,0.1);
+      display:flex; flex-direction:column;
+      overflow:hidden;
+    }
+    .results h2 {
+      margin:0;
+      padding:.75rem 1rem;
+      background:var(--teal-dark);
+      color:var(--text-light);
+      font-size:1.25rem;
+      font-weight:700;
+      border-bottom:1px solid rgba(244,233,190,0.3);
+      flex:0 0 auto;
+    }
+    .results ul {
+      list-style:none;
+      margin:0; padding:1rem;
+      display:flex; flex-direction:column; gap:.5rem;
+      flex:1 1 auto;
+      overflow-y:auto;
+      background:transparent; /* ← ici */
+    }
+    .results li {
+      background:var(--teal);
+      padding:1rem;
+      border-radius:8px;
+      color:var(--white);
+      cursor:pointer;
+      transition:background .2s;
+    }
+    .results li:hover {
+      background:var(--teal-dark);
+    }
+
+    /* Pub */
+    .ad {
+      width:25%;
+      background:var(--teal-dark);
+      border-radius:12px;
+      box-shadow:0 4px 12px rgba(0,0,0,0.1);
+      padding:1rem;
+      color:var(--text-light);
+      display:flex; flex-direction:column;
+    }
+
+    /* Overlay modal */
+    .modal {
+      display:none;
+      position:fixed;
+      top:0; left:0;
+      width:100%; height:100%;
+      background:rgba(0,0,0,0.5);
+      z-index:1001;
+      align-items:center; justify-content:center;
+    }
+    .modal.open { display:flex; }
+    .modal-content {
+      position:relative;
+      width:80%; height:80%;
+      background:var(--bg);
+      border-radius:16px;
+      overflow:hidden;
+      box-shadow:0 8px 24px rgba(0,0,0,0.2);
+    }
+    .modal-content iframe {
+      width:100%; height:100%; border:none;
+    }
+    .modal-close {
+      position:absolute; top:.5rem; right:.75rem;
+      background:var(--teal-dark);
+      color:var(--white);
+      border:none; font-size:1.5rem;
+      padding:.25rem .5rem; border-radius:8px;
+      cursor:pointer; z-index:1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="site-header">
+    <div class="logo">
+      <img src="logo-soradrive.png" alt="Logo SoraDrive">
+    </div>
+    <form class="search-bar" id="searchForm" action="search.html" method="GET">
+        <input type="text" name="query" id="searchInput" placeholder="Search">
+        <button type="submit">🔍</button>
+    </form>
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="presentation.html">Présentation</a>
+      <a href="profil.html">Profil</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <!-- Conteneur principal -->
+  <div class="search-container">
+    <aside class="filters">
+      <h3>Filtres</h3>
+    </aside>
+
+    <section class="results">
+      <h2>Titre de la recherche</h2>
+      <ul>
+        <li data-url="reserve.html">Résultat Trajet 1</li>
+        <li data-url="reserve.html">Résultat Trajet 2</li>
+        <li data-url="reserve.html">Résultat Trajet 3</li>
+      </ul>
+    </section>
+
+    <aside class="ad">
+      <h3>PUB ?</h3>
+    </aside>
+  </div>
+
+  <!-- Overlay modal -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <button id="closeBtn" class="modal-close">&times;</button>
+      <iframe id="modalFrame" src=""></iframe>
+    </div>
+  </div>
+
+  <script>
+    document.querySelectorAll('.results li').forEach(item => {
+      item.addEventListener('click', () => {
+        document.getElementById('modalFrame').src = item.dataset.url;
+        document.getElementById('modal').classList.add('open');
+      });
+    });
+    document.getElementById('closeBtn').addEventListener('click', () => {
+      document.getElementById('modal').classList.remove('open');
+      document.getElementById('modalFrame').src = '';
+    });
+    document.getElementById('modal').addEventListener('click', e => {
+      if (e.target.id === 'modal') {
+        document.getElementById('closeBtn').click();
+      }
+    });
+  </script>
+  <!-- AJAX searchResult.php -->
+  <script >document.addEventListener("DOMContentLoaded", () => {
+    const params = new URLSearchParams(window.location.search);
+    const query = params.get("query")?.toLowerCase() || "";
+  
+    const titleElement = document.querySelector(".results h2");
+    const listContainer = document.querySelector(".results ul");
+  
+    titleElement.textContent = query
+      ? `Résultats pour : "${query}"`
+      : "Aucune recherche effectuée.";
+  
+    // Données simulées
+    const allTrips = [
+      { depart: "Lyon", arrivee: "Paris", date: "2025-05-10"},
+      { depart: "Marseille", arrivee: "Amiens", date: "2025-05-12"},
+      { depart: "Nice", arrivee: "Arras", date: "2025-05-15"},
+      { depart: "Lille", arrivee: "Bordeaux", date: "2025-05-17"},
+      { depart: "Toulouse", arrivee: "Avignon", date: "2025-05-18"},
+      { depart: "Lyon", arrivee: "Agen", date: "2025-05-19"}
+    ];
+  
+    // Filtrage
+    const filtered = allTrips.filter(trip =>
+      trip.arrivee.toLowerCase().includes(query)
+    );
+  
+    listContainer.innerHTML = ""; // Nettoie la liste
+  
+    if (filtered.length === 0) {
+      const li = document.createElement("li");
+      li.textContent = "Aucun trajet trouvé.";
+      listContainer.appendChild(li);
+      return;
+    }
+  
+    // Génération dynamique des résultats
+    filtered.forEach(trip => {
+      const li = document.createElement("li");
+      li.dataset.url = "reserve.html"; // tu peux adapter si tu veux des pages différentes
+      li.innerHTML = `
+        <strong>${trip.depart} → ${trip.arrivee}</strong><br>
+      `;
+      listContainer.appendChild(li);
+    });
+  
+    // Rebranche le modal sur les nouveaux <li>
+    document.querySelectorAll(".results li").forEach(item => {
+      item.addEventListener("click", () => {
+        document.getElementById("modalFrame").src = item.dataset.url;
+        document.getElementById("modal").classList.add("open");
+      });
+    });
+  });
+  /* A MODIFIER QUAND PHP PRÊT
+  document.addEventListener("DOMContentLoaded", () => {
+  const params = new URLSearchParams(window.location.search);
+  const query = params.get("query")?.toLowerCase() || "";
+  const resultsContainer = document.querySelector(".results ul");
+  const titleElement = document.querySelector(".results h2");
+
+  titleElement.textContent = query
+    ? `Résultats pour : "${query}"`
+    : "Aucune recherche effectuée.";
+
+  if (!query) return;
+
+  fetch(`search.php?query=${encodeURIComponent(query)}`)
+    .then(response => {
+      if (!response.ok) throw new Error("Erreur réseau");
+      return response.json();
+    })
+    .then(data => {
+      resultsContainer.innerHTML = ""; // vide les résultats actuels
+
+      if (!Array.isArray(data) || data.length === 0) {
+        resultsContainer.innerHTML = "<li>Aucun trajet trouvé.</li>";
+        return;
+      }
+
+      data.forEach(trip => {
+        const li = document.createElement("li");
+        li.dataset.url = "reserve.html"; // ou autre URL dynamique
+        li.innerHTML = `
+          <strong>${trip.depart} → ${trip.arrivee}</strong><br>
+          ${trip.date} — ${trip.prix} €
+        `;
+        resultsContainer.appendChild(li);
+      });
+
+      // Ajout des listeners sur les nouveaux éléments
+      document.querySelectorAll('.results li').forEach(item => {
+        item.addEventListener('click', () => {
+          document.getElementById('modalFrame').src = item.dataset.url;
+          document.getElementById('modal').classList.add('open');
+        });
+      });
+    })
+    .catch(err => {
+      resultsContainer.innerHTML = `<li>Erreur : ${err.message}</li>`;
+    });
+});
+*/  
+</script>
+</body>
+</html>
