@@ -12,12 +12,12 @@ if (!empty($_SESSION['login_error'])) {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>SoraDrive - Accueil</title>
-  <link rel="stylesheet" href="assets/css/IndexStyle.css" />
+  <link rel="stylesheet" href="/Soradrive/public/assets/css/IndexStyle.css" />
 </head>
 <body>
   <header class="main-header">
     <a href="index.php" class="logo">
-      <img src="assets/images/SoraDrive.png" alt="Logo SoraDrive" />
+      <img src="/Soradrive/public/assets/images/SoraDrive.png" alt="Logo SoraDrive" />
     </a>
     <div class="search-container">
       <form class="search-container" id="searchForm" action="SearchResults.html" method="GET">
