@@ -1,0 +1,249 @@
+:root {
+  --bg:         #ededed;
+  --teal:       #5fa09d;
+  --teal-dark:  #00474c;
+  --text-light: #f4e9be;
+  --white:      #ffffff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Sora', sans-serif;
+  background: var(--bg);
+  color: var(--text-light);
+}
+
+/* ========== NAVBAR ========== */
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;  /* voiture centrée */
+  background: var(--teal);
+  padding: 0.5rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.car-icon {
+  width: 48px;
+  height: auto;
+  pointer-events: none;
+}
+
+/* ========== TRAJET CARD LAYOUT ========== */
+.route-container {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 80px);
+  overflow-y: auto;  /* activation du scroll si besoin */
+}
+
+.card {
+  position: absolute;
+  background: var(--teal-dark);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  color: var(--text-light);
+  overflow-y: auto;
+  z-index: 1;
+}
+
+.card h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  border-bottom: 1px solid var(--text-light);
+  padding-bottom: 0.5rem;
+}
+.card h3 .icon {
+  width: 20px;
+  height: 20px;
+  fill: var(--text-light);
+}
+
+.depart {
+  top: 100px;
+  left: 5%;
+  width: 25%;
+  min-width: 250px;
+  height: 350px;
+}
+
+.arrive {
+  top: 100px;
+  right: 5%;
+  width: 25%;
+  min-width: 250px;
+  height: 350px;
+}
+
+.arrets {
+  bottom: auto;  /* on désactive la constrainte bottom */
+  top: calc(100px + 350px + 1rem);  /* placé sous Départ/Arrivée */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50%;
+  min-width: 350px;
+  height: 300px;
+}
+
+/* la « route » sous les cartes */
+.route-path {
+  position: absolute;
+  width: 100%;
+  height: 200px;
+  top: 175px;
+  left: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* bouton Réserver/Annuler */
+.btn-reserver {
+  position: absolute;
+  top: 20px;
+  right: 5%;
+  background: var(--teal-dark);
+  color: var(--white);
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: background 0.2s;
+  z-index: 1;
+}
+.btn-reserver:hover {
+  background: var(--teal);
+}
+
+/* ========== MODAL OVERLAY ========== */
+.modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  background: rgba(0,0,0,0.5);
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+  overflow-y: auto;  /* pour scroller si nécessaire */
+}
+.modal.open {
+  display: flex;
+}
+.modal-content {
+  position: relative;
+  max-height: 90vh;  /* limite la hauteur pour laisser défiler */
+  width: 80%;
+  background: var(--bg);
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  overflow-y: auto;
+}
+.modal-content iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+.modal-close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.75rem;
+  background: var(--teal-dark);
+  color: var(--white);
+  border: none;
+  font-size: 1.5rem;
+  line-height: 1;
+  padding: 0.25rem 0.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+/* ========== SEARCH RESULTS PAGE ========== */
+.search-container {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+}
+.filters {
+  width: 15%;
+  background: var(--teal-dark);
+  border-radius: 12px;
+  padding: 1rem;
+  color: var(--text-light);
+}
+.filters h3 {
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+  border-bottom: 1px solid var(--text-light);
+  padding-bottom: 0.5rem;
+}
+.filters label {
+  display: block;
+  margin-top: 1rem;
+  font-weight: 700;
+}
+.filters select,
+.filters .listbox {
+  width: 100%;
+  border: none;
+  border-radius: 12px;
+  padding: 0.5rem;
+  background: var(--teal);
+  color: var(--white);
+  margin-top: 0.5rem;
+}
+.filters .listbox {
+  height: 150px;
+  overflow-y: auto;
+}
+
+.results {
+  width: 70%;
+  background: var(--teal-dark);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.results h2 {
+  background: var(--teal-dark);
+  color: var(--text-light);
+  padding: 0.75rem 1rem;
+  margin: 0;
+}
+.results ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.results li {
+  background: var(--teal);
+  color: var(--white);
+  padding: 1rem;
+  border-radius: 12px;
+  margin: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.results li:hover {
+  background: var(--teal-dark);
+}
+
+.ad {
+  width: 15%;
+  background: var(--teal-dark);
+  border-radius: 12px;
+  padding: 1rem;
+  color: var(--text-light);
+}
