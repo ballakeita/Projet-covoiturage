@@ -169,7 +169,7 @@
     <div class="logo">
       <img src="logo-soradrive.png" alt="Logo SoraDrive">
     </div>
-    <form class="search-bar" id="searchForm" action="search.html" method="GET">
+    <form class="search-bar" id="searchForm" action="searchResult.html" method="GET">
         <input type="text" name="query" id="searchInput" placeholder="Search">
         <button type="submit">🔍</button>
     </form>
@@ -292,7 +292,7 @@
 
   if (!query) return;
 
-  fetch(`/Soradrive/api/search.php?query=${encodeURIComponent(query)}`)
+  fetch(`/Soradrive/src/trajet.php?action=recherche_par_destination&query=${encodeURIComponent(query)}`)
     .then(response => {
       if (!response.ok) throw new Error("Erreur réseau");
       return response.json();
@@ -326,7 +326,8 @@
     .catch(err => {
       resultsContainer.innerHTML = `<li>Erreur : ${err.message}</li>`;
     });
-}); 
+});
+
 </script>
 </body>
 </html>
