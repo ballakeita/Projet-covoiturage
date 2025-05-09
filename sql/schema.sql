@@ -135,6 +135,7 @@ CREATE TABLE Trajet(
    Places_Disponibles SMALLINT NOT NULL,
    Repartition_Points BOOLEAN NOT NULL,
    Annulation BOOLEAN NOT NULL,
+   Date_Depart DATE NOT NULL,
    Id_Type_Vehicule_Effectuer INTEGER NOT NULL,
    Id_Etudiant_Creer INTEGER NOT NULL,
    PRIMARY KEY(Id_Trajet),

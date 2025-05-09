@@ -124,10 +124,10 @@ INSERT INTO Laisser_Avis (Id_Etudiant_Laisser_Avis, Note, Commentaire, Signaler,
 -- Reserver
 INSERT INTO Reserver (Id_Trajet_Reserver, Id_Etudiant_Reserver, Date_Reservation, Annulation, Arret_Depart, Arret_Arrivee, Validation) VALUES
 (1, 2, '2024-04-15 08:00:00', true, 1, 2, true),
-(2, 3, '2024-04-16 09:30:00', true, 2, 3, true),
+(2, 3, '2024-04-16 09:30:00', true, 2, 3, false),
 (3, 4, '2024-04-17 07:45:00', false, 1, 3, false),
 (4, 5, '2024-04-18 10:00:00', true, 1, 2, true),
-(5, 1, '2024-04-19 11:15:00', false, 2, 3, false);
+(5, 1, '2024-04-19 11:15:00', false, 2, 3, true);
 
 -- Voir
 INSERT INTO Voir (Id_Etudiant, Id_Pub, Nombre_Vu) VALUES
@@ -172,8 +172,8 @@ INSERT INTO Sponsor (Nom, Id_Utilisateur) VALUES
 -- Etudiant
 INSERT INTO Etudiant (Status, Nombre_Points, Multiplicateur_Points, Date_Expiration_Multiplicateur, Date_Fin_Protection, Identifiant_Carte_Etudiant, Annee_Expiration_Carte_Etudiante, Photo_Carte_Etudiante, Pub, Id_Utilisateur) VALUES
 (true, 120, 1.2, '2025-05-20', '2025-05-20', '1234567890123', '2025', 'photo1.jpg', true, 3),  -- Id_Utilisateur 3 doit exister
-(true, 95, 1.1, '2025-06-10', '2025-06-10', '1234567890124', '2026', 'photo2.jpg', true, 4),  -- Id_Utilisateur 4 doit exister
-(true, 150, 1.5, '2025-07-15', '2025-07-15', '1234567890125', '2027', 'photo3.jpg', true, 5);  -- Id_Utilisateur 5 doit exister
+(true, 95, 1.1, '2025-06-10', '2025-06-10', '1234567890124', '2026', 'photo2.jpg', false, 4),  -- Id_Utilisateur 4 doit exister
+(false, 150, 1.5, '2025-07-15', '2025-07-15', '1234567890125', '2027', 'photo3.jpg', true, 5);  -- Id_Utilisateur 5 doit exister
 
 -- Type_Pub
 INSERT INTO Type_Pub (Libelle, Id_Emplacement_Pub_Positionner) VALUES
@@ -187,9 +187,9 @@ INSERT INTO Type_Pub (Libelle, Id_Emplacement_Pub_Positionner) VALUES
 INSERT INTO Objet (Libelle, Prix, Virtuel, Id_Effet_Objet_Avoir) VALUES
 ('Carte Bonus 24h', 10.00, true, 1),  -- Id_Effet_Objet 1 doit exister dans la table Effet_Objet
 ('Réduc Trajet', 5.50, true, 2),
-('Pack Bienvenue', 15.00, true, 3),
+('Pack Bienvenue', 15.00, false, 3),
 ('Multiplicateur XP', 20.00, true, 4),
-('Accès VIP', 30.00, true, 5);
+('Accès VIP', 30.00, false, 5);
 
 -- Arret (on suppose que chaque ville a un arrêt)
 INSERT INTO Arret (Heure_Passage, Adresse, Informations_Complementaires, Ordre, Id_Ville_Situer, Id_Trajet_Prevoir) VALUES
@@ -200,12 +200,12 @@ INSERT INTO Arret (Heure_Passage, Adresse, Informations_Complementaires, Ordre, 
 ('12:00:00', 'Grand Place Lille', 'À côté du métro', 5, 5, 5);
 
 -- Trajet (utilise les arrets créés)
-INSERT INTO Trajet (Places_Disponibles, Repartition_Points, Annulation, Id_Type_Vehicule_Effectuer, Id_Etudiant_Creer) VALUES
-(4, true, false, 1, 3),  -- Id_Type_Vehicule 1 et Id_Etudiant 3 doivent exister
-(6, false, false, 2, 4),
-(8, true, true, 3, 5),
-(3, false, false, 4, 3),
-(5, true, false, 5, 4);
+INSERT INTO Trajet (Places_Disponibles, Repartition_Points, Annulation, Date_Depart, Id_Type_Vehicule_Effectuer, Id_Etudiant_Creer) VALUES
+(4, true, false, '2025-05-07', 1, 3),  -- Id_Type_Vehicule 1 et Id_Etudiant 3 doivent exister
+(6, false, false, '2025-05-20', 2, 4),
+(8, true, true, '2025-05-20', 3, 5),
+(3, false, true, '2025-05-20', 4, 3),
+(5, true, false, '2025-05-07', 5, 4);
 
 -- Réactiver les contraintes de clés étrangères
 SET session_replication_role = origin;

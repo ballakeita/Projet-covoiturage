@@ -2,7 +2,7 @@
 
 require_once '../config/config.php';
 
-function create_trajet($places_disponibles, $repartition_points, $id_type_vehicule_effectuer, $id_etudiant_creer): bool {
+function create_trajet($places_disponibles, $repartition_points, $id_type_vehicule_effectuer, $id_utilisateur): bool {
     $pdo = connexionBd();
 
     $sql = "INSERT INTO trajet (
@@ -11,20 +11,21 @@ function create_trajet($places_disponibles, $repartition_points, $id_type_vehicu
                 annulation, 
                 id_type_vehicule_effectuer, 
                 id_etudiant_creer
-            ) VALUES (
+            )
+            VALUES (
                 :places_disponibles, 
                 :repartition_points, 
                 FALSE, 
-                :id_type_vehicule_effectuer, 
-                :id_etudiant_creer
-            )"; // <--- Virgule corrigée ici entre FALSE et le paramètre suivant
+                :id_type_vehicule_effectuer,
+                (SELECT Id_Etudiant FROM Etudiant WHERE Id_Utilisateur = :id_utilisateur)
+            )";
 
     $stmt = $pdo->prepare($sql);
     return $stmt->execute([
         ':places_disponibles' => (int)$places_disponibles,
-        ':repartition_points' => (int)$repartition_points,
+        ':repartition_points' => (bool)$repartition_points,
         ':id_type_vehicule_effectuer' => (int)$id_type_vehicule_effectuer,
-        ':id_etudiant_creer' => (int)$id_etudiant_creer,
+        ':id_utilisateur' => (int)$id_utilisateur,
     ]);
 }
 
@@ -46,80 +47,126 @@ function modifier_trajet(int $id_trajet, int $places_disponibles, bool $repartit
     
 }
 
-function annuler_trajet(int $id_trajet, int $id_etudiant): bool {
+function annuler_trajet(int $id_trajet, int $id_utilisateur): bool {
     $pdo = connexionBd();
 
     $sql = "UPDATE trajet
             SET annulation = TRUE
             WHERE id_trajet = :id_trajet
-              AND id_etudiant_creer = :id_etudiant";
+              AND id_etudiant_creer = (
+                  SELECT id_etudiant FROM etudiant WHERE id_utilisateur = :id_utilisateur
+              )";
 
     $stmt = $pdo->prepare($sql);
     return $stmt->execute([
         ':id_trajet' => $id_trajet,
-        ':id_etudiant' => $id_etudiant
+        ':id_utilisateur' => $id_utilisateur
     ]);
 }
 
-function lister_trajets_disponibles(int $id_utilisateur): array {
+function getTrajetsFutursParUtilisateur(int $idUtilisateur): array {
     $pdo = connexionBd();
 
     $sql = "
-    SELECT 
-        t.id_trajet,
-        t.places_disponibles,
-        t.repartition_points,
-        
-        u.nom,
-        u.prenom,
-        u.avatar,
-
-        arret_depart.heure_passage AS heure_depart,
-        arret_arrivee.heure_passage AS heure_arrivee,
-
-        arret_depart.id_arret AS id_arret_depart,
-        arret_arrivee.id_arret AS id_arret_arrivee,
-
-        -- Calcul des places restantes
-        (t.places_disponibles - COALESCE((
-            SELECT COUNT(*)
-            FROM reserver r
-            WHERE r.id_trajet_reserver = t.id_trajet
-              AND r.validation = TRUE
-              AND r.annulation = FALSE
-        ), 0)) AS places_restantes
-
-    FROM trajet t
-    JOIN etudiant e ON t.id_etudiant_creer = e.id_etudiant
-    JOIN utilisateur u ON e.id_utilisateur = u.id_utilisateur
-
-    -- Rechercher arrêt de départ
-    JOIN LATERAL (
-        SELECT *
-        FROM arret
-        WHERE id_trajet_prevoir = t.id_trajet
-        ORDER BY ordre ASC
-        LIMIT 1
-    ) AS arret_depart ON true
-
-    -- Rechercher arrêt d'arrivée
-    JOIN LATERAL (
-        SELECT *
-        FROM arret
-        WHERE id_trajet_prevoir = t.id_trajet
-        ORDER BY ordre DESC
-        LIMIT 1
-    ) AS arret_arrivee ON true
-
-    WHERE t.annulation = FALSE
-      AND e.id_utilisateur != :id_utilisateur
+        SELECT 
+            t.*, 
+            (t.Date_Depart + a.Heure_Passage) AS Date_Heure_Depart
+        FROM Trajet t
+        JOIN Etudiant e ON e.Id_Etudiant = t.Id_Etudiant_Creer
+        JOIN (
+            SELECT Id_Trajet_Prevoir, MIN(Id_Arret) AS Id_Arret_Depart
+            FROM Arret
+            GROUP BY Id_Trajet_Prevoir
+        ) ar_min ON ar_min.Id_Trajet_Prevoir = t.Id_Trajet
+        JOIN Arret a ON a.Id_Arret = ar_min.Id_Arret_Depart
+        WHERE 
+            e.Id_Utilisateur = :id_utilisateur
+            AND t.Annulation = false
+            AND (t.Date_Depart + a.Heure_Passage) > NOW()
+        ORDER BY Date_Heure_Depart ASC
     ";
 
     $stmt = $pdo->prepare($sql);
-    $stmt->execute([':id_utilisateur' => $id_utilisateur]);
+    $stmt->bindParam(':id_utilisateur', $idUtilisateur, PDO::PARAM_INT);
+    $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-$date = lister_trajets_disponibles(1);
-echo $date;
+function chercher_trajets_par_ville_destination(int $id_utilisateur, string $ville_destination): array {
+    $pdo = connexionBd();
 
+    $sql = "
+        SELECT DISTINCT t.*, 
+               MIN(a1.heure_passage) AS heure_depart
+        FROM trajet t
+        JOIN etudiant e ON t.id_etudiant_creer = e.id_etudiant
+        JOIN arret a1 ON t.id_trajet = a1.id_trajet_prevoir
+        JOIN arret a2 ON t.id_trajet = a2.id_trajet_prevoir
+        JOIN ville v ON a2.id_ville_situer = v.id_ville
+        WHERE e.id_utilisateur != :id_utilisateur
+          AND t.annulation = FALSE
+          AND t.date_depart + (
+              SELECT MIN(heure_passage)::interval 
+              FROM arret 
+              WHERE id_trajet_prevoir = t.id_trajet
+          ) > NOW()
+          AND a1.ordre = (
+              SELECT MIN(ordre) 
+              FROM arret 
+              WHERE id_trajet_prevoir = t.id_trajet
+          )
+          AND v.nom ILIKE :ville_destination
+          AND a2.ordre > 1
+        GROUP BY t.id_trajet
+        ORDER BY t.date_depart, heure_depart ASC
+    ";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([
+        ':id_utilisateur' => $id_utilisateur,
+        ':ville_destination' => $ville_destination
+    ]);
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function chercher_trajets_par_ville_depart_destination(int $id_utilisateur, string $ville_depart, string $ville_destination): array {
+    $pdo = connexionBd();
+
+    $sql = "
+        SELECT DISTINCT t.*, 
+               MIN(ad.heure_passage) AS heure_depart
+        FROM trajet t
+        JOIN etudiant e ON t.id_etudiant_creer = e.id_etudiant
+        JOIN arret ad ON t.id_trajet = ad.id_trajet_prevoir
+        JOIN ville vd ON ad.id_ville_situer = vd.id_ville
+        JOIN arret aa ON t.id_trajet = aa.id_trajet_prevoir
+        JOIN ville va ON aa.id_ville_situer = va.id_ville
+        WHERE e.id_utilisateur != :id_utilisateur
+          AND t.annulation = FALSE
+          AND t.date_depart + (
+              SELECT MIN(heure_passage)::interval 
+              FROM arret 
+              WHERE id_trajet_prevoir = t.id_trajet
+          ) > NOW()
+          AND ad.ordre = (
+              SELECT MIN(ordre) 
+              FROM arret 
+              WHERE id_trajet_prevoir = t.id_trajet
+          )
+          AND vd.nom ILIKE :ville_depart
+          AND va.nom ILIKE :ville_destination
+          AND aa.ordre > ad.ordre
+        GROUP BY t.id_trajet
+        ORDER BY t.date_depart, heure_depart ASC
+    ";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([
+        ':id_utilisateur' => $id_utilisateur,
+        ':ville_depart' => $ville_depart,
+        ':ville_destination' => $ville_destination
+    ]);
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
