@@ -2,6 +2,96 @@
 
 require_once '../config/config.php';
 
+if (isset($_GET["action"])) {
+    switch ($_GET["action"]) {
+
+        case "create_trajet":
+            if (
+                isset($_POST['places_disponibles'], $_POST['repartition_points'], $_POST['id_type_vehicule_effectuer'], $_POST['id_utilisateur'])
+            ) {
+                $success = create_trajet(
+                    $_POST['places_disponibles'],
+                    $_POST['repartition_points'],
+                    $_POST['id_type_vehicule_effectuer'],
+                    $_POST['id_utilisateur']
+                );
+                echo json_encode(["success" => $success]);
+            } else {
+                http_response_code(400);
+                echo json_encode(["error" => "Paramètres manquants pour create_trajet"]);
+            }
+            break;
+
+        case "modifier_trajet":
+            if (
+                isset($_POST['id_trajet'], $_POST['places_disponibles'], $_POST['repartition_points'], $_POST['id_type_vehicule_effectuer'])
+            ) {
+                $success = modifier_trajet(
+                    $_POST['id_trajet'],
+                    $_POST['places_disponibles'],
+                    $_POST['repartition_points'],
+                    $_POST['id_type_vehicule_effectuer']
+                );
+                echo json_encode(["success" => $success]);
+            } else {
+                http_response_code(400);
+                echo json_encode(["error" => "Paramètres manquants pour modifier_trajet"]);
+            }
+            break;
+
+        case "annuler_trajet":
+            if (isset($_POST['id_trajet'], $_POST['id_utilisateur'])) {
+                $success = annuler_trajet($_POST['id_trajet'], $_POST['id_utilisateur']);
+                echo json_encode(["success" => $success]);
+            } else {
+                http_response_code(400);
+                echo json_encode(["error" => "Paramètres manquants pour annuler_trajet"]);
+            }
+            break;
+
+        case "trajets_utilisateur":
+            if (isset($_GET['id_utilisateur'])) {
+                $result = getTrajetsFutursParUtilisateur($_GET['id_utilisateur']);
+                echo json_encode($result);
+            } else {
+                http_response_code(400);
+                echo json_encode(["error" => "Paramètre id_utilisateur manquant"]);
+            }
+            break;
+
+        case "recherche_par_destination":
+            if (isset($_GET['id_utilisateur'], $_GET['ville_destination'])) {
+                $result = chercher_trajets_par_ville_destination($_GET['id_utilisateur'], $_GET['ville_destination']);
+                echo json_encode($result);
+            } else {
+                http_response_code(400);
+                echo json_encode(["error" => "Paramètres manquants pour recherche_par_destination"]);
+            }
+            break;
+
+        case "recherche_par_depart_destination":
+            if (isset($_GET['id_utilisateur'], $_GET['ville_depart'], $_GET['ville_destination'])) {
+                $result = chercher_trajets_par_ville_depart_destination(
+                    $_GET['id_utilisateur'],
+                    $_GET['ville_depart'],
+                    $_GET['ville_destination']
+                );
+                echo json_encode($result);
+            } else {
+                http_response_code(400);
+                echo json_encode(["error" => "Paramètres manquants pour recherche_par_depart_destination"]);
+            }
+            break;
+
+        default:
+            http_response_code(400);
+            echo json_encode(["error" => "Action inconnue"]);
+    }
+} else {
+    http_response_code(400);
+    echo json_encode(["error" => "Paramètre 'action' manquant"]);
+}
+
 function create_trajet($places_disponibles, $repartition_points, $id_type_vehicule_effectuer, $id_utilisateur): bool {
     $pdo = connexionBd();
 
