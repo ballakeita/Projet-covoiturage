@@ -292,7 +292,7 @@
 
   if (!query) return;
 
-  fetch(`/Soradrive/src/trajet.php?actions=recherche_par_destination&query=${encodeURIComponent(query)}`)
+  fetch(`/Soradrive/src/trajet.php?action=recherche_par_destination&query=${encodeURIComponent(query)}`)
     .then(response => {
       if (!response.ok) throw new Error("Erreur réseau");
       return response.json();
