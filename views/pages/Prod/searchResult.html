@@ -227,59 +227,7 @@
     });
   </script>
   <!-- AJAX searchResult.php -->
-  <script >/*document.addEventListener("DOMContentLoaded", () => {
-    const params = new URLSearchParams(window.location.search);
-    const query = params.get("query")?.toLowerCase() || "";
-  
-    const titleElement = document.querySelector(".results h2");
-    const listContainer = document.querySelector(".results ul");
-  
-    titleElement.textContent = query
-      ? `Résultats pour : "${query}"`
-      : "Aucune recherche effectuée.";
-  
-    // Données simulées
-    const allTrips = [
-      { depart: "Lyon", arrivee: "Paris", date: "2025-05-10"},
-      { depart: "Marseille", arrivee: "Amiens", date: "2025-05-12"},
-      { depart: "Nice", arrivee: "Arras", date: "2025-05-15"},
-      { depart: "Lille", arrivee: "Bordeaux", date: "2025-05-17"},
-      { depart: "Toulouse", arrivee: "Avignon", date: "2025-05-18"},
-      { depart: "Lyon", arrivee: "Agen", date: "2025-05-19"}
-    ];
-  
-    // Filtrage
-    const filtered = allTrips.filter(trip =>
-      trip.arrivee.toLowerCase().includes(query)
-    );
-  
-    listContainer.innerHTML = ""; // Nettoie la liste
-  
-    if (filtered.length === 0) {
-      const li = document.createElement("li");
-      li.textContent = "Aucun trajet trouvé.";
-      listContainer.appendChild(li);
-      return;
-    }
-  
-    // Génération dynamique des résultats
-    filtered.forEach(trip => {
-      const li = document.createElement("li");
-      li.dataset.url = "reserve.html"; // tu peux adapter si tu veux des pages différentes
-      li.innerHTML = `
-        <strong>${trip.depart} → ${trip.arrivee}</strong><br>
-      `;
-      listContainer.appendChild(li);
-    });
-  
-    // Rebranche le modal sur les nouveaux <li>
-    document.querySelectorAll(".results li").forEach(item => {
-      item.addEventListener("click", () => {
-        document.getElementById("modalFrame").src = item.dataset.url;
-        document.getElementById("modal").classList.add("open");
-      });
-    });
-  });*/
+  <script >
   document.addEventListener("DOMContentLoaded", () => {
   const params = new URLSearchParams(window.location.search);
   const query = params.get("query")?.toLowerCase() || "";
@@ -310,7 +258,7 @@
         li.dataset.url = "reserve.html"; // ou autre URL dynamique
         li.innerHTML = `
           <strong>${trip.depart} → ${trip.arrivee}</strong><br>
-          ${trip.date} — ${trip.prix} €
+          ${trip.date} — ${trip.heure} €
         `;
         resultsContainer.appendChild(li);
       });

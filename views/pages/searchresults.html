@@ -102,24 +102,72 @@
   </div>
 
   <script>
-    // Ouvre l'iframe dans le modal
-    document.querySelectorAll('.results li').forEach(li => {
-      li.onclick = () => {
-        document.getElementById('modalFrame').src = li.dataset.url;
+    document.querySelectorAll('.results li').forEach(item => {
+      item.addEventListener('click', () => {
+        document.getElementById('modalFrame').src = item.dataset.url;
         document.getElementById('modal').classList.add('open');
-      };
+      });
     });
-    // Ferme le modal
-    document.getElementById('closeBtn').onclick = () => {
+    document.getElementById('closeBtn').addEventListener('click', () => {
       document.getElementById('modal').classList.remove('open');
       document.getElementById('modalFrame').src = '';
-    };
-    // Ferme si on clique sur le backdrop
-    document.getElementById('modal').onclick = e => {
+    });
+    document.getElementById('modal').addEventListener('click', e => {
       if (e.target.id === 'modal') {
         document.getElementById('closeBtn').click();
       }
-    };
+    });
   </script>
+  <!-- AJAX searchResult.php -->
+  <script >
+  document.addEventListener("DOMContentLoaded", () => {
+  const params = new URLSearchParams(window.location.search);
+  const query = params.get("query")?.toLowerCase() || "";
+  const resultsContainer = document.querySelector(".results ul");
+  const titleElement = document.querySelector(".results h2");
+
+  titleElement.textContent = query
+    ? `Résultats pour : "${query}"`
+    : "Aucune recherche effectuée.";
+
+  if (!query) return;
+
+  fetch(`/Soradrive/src/trajet.php?action=recherche_par_destination&query=${encodeURIComponent(query)}`)
+    .then(response => {
+      if (!response.ok) throw new Error("Erreur réseau");
+      return response.json();
+    })
+    .then(data => {
+      resultsContainer.innerHTML = ""; // vide les résultats actuels
+
+      if (!Array.isArray(data) || data.length === 0) {
+        resultsContainer.innerHTML = "<li>Aucun trajet trouvé.</li>";
+        return;
+      }
+
+      data.forEach(trip => {
+        const li = document.createElement("li");
+        li.dataset.url = "reserve.html"; // ou autre URL dynamique
+        li.innerHTML = `
+          <strong>${trip.depart} → ${trip.arrivee}</strong><br>
+          ${trip.date} — ${trip.heure} €
+        `;
+        resultsContainer.appendChild(li);
+      });
+
+      // Ajout des listeners sur les nouveaux éléments
+      document.querySelectorAll('.results li').forEach(item => {
+        item.addEventListener('click', () => {
+          document.getElementById('modalFrame').src = item.dataset.url;
+          document.getElementById('modal').classList.add('open');
+        });
+      });
+    })
+    .catch(err => {
+      resultsContainer.innerHTML = `<li>Erreur : ${err.message}</li>`;
+    });
+});
+
+</script>
 </body>
 </html>
