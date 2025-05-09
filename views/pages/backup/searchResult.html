@@ -169,7 +169,7 @@
     <div class="logo">
       <img src="logo-soradrive.png" alt="Logo SoraDrive">
     </div>
-    <form class="search-bar" id="searchForm" action="search.html" method="GET">
+    <form class="search-bar" id="searchForm" action="searchResult.html" method="GET">
         <input type="text" name="query" id="searchInput" placeholder="Search">
         <button type="submit">🔍</button>
     </form>
@@ -227,7 +227,7 @@
     });
   </script>
   <!-- AJAX searchResult.php -->
-  <script >document.addEventListener("DOMContentLoaded", () => {
+  <script >/*document.addEventListener("DOMContentLoaded", () => {
     const params = new URLSearchParams(window.location.search);
     const query = params.get("query")?.toLowerCase() || "";
   
@@ -279,8 +279,7 @@
         document.getElementById("modal").classList.add("open");
       });
     });
-  });
-  /* A MODIFIER QUAND PHP PRÊT
+  });*/
   document.addEventListener("DOMContentLoaded", () => {
   const params = new URLSearchParams(window.location.search);
   const query = params.get("query")?.toLowerCase() || "";
@@ -293,7 +292,7 @@
 
   if (!query) return;
 
-  fetch(`search.php?query=${encodeURIComponent(query)}`)
+  fetch(`/Soradrive/src/trajet.php?actions=recherche_par_destination&query=${encodeURIComponent(query)}`)
     .then(response => {
       if (!response.ok) throw new Error("Erreur réseau");
       return response.json();
@@ -328,7 +327,7 @@
       resultsContainer.innerHTML = `<li>Erreur : ${err.message}</li>`;
     });
 });
-*/  
+
 </script>
 </body>
 </html>
