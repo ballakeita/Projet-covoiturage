@@ -159,7 +159,7 @@
   </section>
 
   <script>
-    fetch('/Soradrive/src/controllers/statistique.php')
+    fetch('/soradrive/src/controllers/statistique.php')
       .then(response => response.text())
       .then(data => {
         document.getElementById('resultat-permis').innerHTML = data;
