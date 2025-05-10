@@ -130,5 +130,59 @@ function get_utilisateurs_signales(): array {
     return $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 }// Test fait
 
+//Test JSON 
 
+require_once '../config/config.php';
+
+// Exécute automatiquement une fonction si ?stat=nom_fonction dans l’URL
+if (isset($_GET['stat'])) {
+    header('Content-Type: application/json');
+
+    switch ($_GET['stat']) {
+        case 'villes_depart':
+            echo json_encode(get_villes_depart_populaires());
+            break;
+        case 'villes_destination':
+            echo json_encode(getVillesPlusPopulairesDestination());
+            break;
+        case 'trajets_par_mois':
+            echo json_encode(get_nombre_trajets_par_mois());
+            break;
+        case 'top_utilisateurs':
+            echo json_encode(get_top_utilisateurs_reservations());
+            break;
+        case 'objets_populaires':
+            echo json_encode(get_objets_populaires());
+            break;
+        case 'heures_trajets':
+            echo json_encode(get_heures_populaires_trajets());
+            break;
+        case 'jours_achats':
+            echo json_encode(get_jours_populaires_achats());
+            break;
+        case 'trajets_annules':
+            echo json_encode(["total" => get_nombre_trajets_annules()]);
+            break;
+        case 'utilisateurs_signales':
+            echo json_encode(get_utilisateurs_signales());
+            break;
+        default:
+            http_response_code(400);
+            echo json_encode(["error" => "Statistique inconnue"]);
+    }
+
+    exit;
+}
+
+// Test en local sans passer par l'URL
+//echo "<pre>";
+//print_r(get_villes_depart_populaires());
+// print_r(getVillesPlusPopulairesDestination());
+ //print_r(get_nombre_trajets_par_mois());
+// print_r(get_top_utilisateurs_reservations());
+// print_r(get_objets_populaires());
+// print_r(get_heures_populaires_trajets());
+// print_r(get_jours_populaires_achats());
+// echo get_nombre_trajets_annules();
+// print_r(get_utilisateurs_signales());
 
