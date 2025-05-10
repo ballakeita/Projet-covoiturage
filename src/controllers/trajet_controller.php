@@ -1,11 +1,8 @@
 <?php
 
-require_once '/Soradrive/config/config.php';
-require_once '/Soradrive/src/fonctions/trajet.php';
+require_once '../../config/config.php';
+require_once '../fonctions/trajet.php';
 
-session_start();
-
-// Démarrage de la session pour récupérer l'id_utilisateur
 session_start();
 
 if (isset($_GET["action"])) {
@@ -86,8 +83,8 @@ if (isset($_GET["action"])) {
 
         case "recherche_par_destination":
             if (isset($_GET['query'])) {
-                if (isset($_SESSION['id_utilisateur'])) {
-                    $result = chercher_trajets_par_ville_destination($_SESSION['id_utilisateur'], $_GET['query']);
+                if (true) {
+                    $result = chercher_trajets_par_ville_destination(5, $_GET['query']);
                     echo json_encode($result);
                 } else {
                     http_response_code(401); // Unauthorized
@@ -114,6 +111,16 @@ if (isset($_GET["action"])) {
             } else {
                 http_response_code(400);
                 echo json_encode(["error" => "Paramètres manquants pour recherche_par_depart_destination"]);
+            }
+            break;
+        
+        case "infos_trajet":
+            if (isset($_GET['id_trajet'])) {
+                $result = getInfosCompletTrajet((int)$_GET['id_trajet']);
+                echo json_encode($result);
+            } else {
+                http_response_code(400);
+                echo json_encode(["error" => "Paramètre id_trajet manquant"]);
             }
             break;
 

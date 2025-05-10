@@ -132,7 +132,7 @@
 
   if (!query) return;
 
-  fetch(`/Soradrive/src/trajet.php?action=recherche_par_destination&query=${encodeURIComponent(query)}`)
+  fetch(`/Soradrive/src/controllers/trajet_controller.php?action=recherche_par_destination&query=${encodeURIComponent(query)}`)
     .then(response => {
       if (!response.ok) throw new Error("Erreur réseau");
       return response.json();
@@ -140,17 +140,17 @@
     .then(data => {
       resultsContainer.innerHTML = ""; // vide les résultats actuels
 
-      if (!Array.isArray(data) || data.length === 0) {
+      if (!Array.isArray(data.trajets) || data.length === 0) {
         resultsContainer.innerHTML = "<li>Aucun trajet trouvé.</li>";
         return;
       }
 
-      data.forEach(trip => {
+      data.trajets.forEach(trip => {
         const li = document.createElement("li");
         li.dataset.url = "reserve.html"; // ou autre URL dynamique
         li.innerHTML = `
-          <strong>${trip.depart} → ${trip.arrivee}</strong><br>
-          ${trip.date} — ${trip.heure} €
+          <strong>${trip.ville_depart} → ${trip.ville_arrivee}</strong><br>
+          ${trip.date} — ${trip.heure_depart}
         `;
         resultsContainer.appendChild(li);
       });

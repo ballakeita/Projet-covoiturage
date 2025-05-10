@@ -203,3 +203,48 @@ function chercher_trajets_par_ville_depart_destination(int $id_utilisateur, stri
         'trajets' => $results
     ];
 }
+
+function getInfosCompletTrajet(int $id_trajet): array {
+    $pdo = connexionBd();
+
+    // Récupérer les infos du trajet
+    $sqlTrajet = "
+        SELECT t.*, 
+               tv.Libelle AS type_vehicule,
+               e.Id_Etudiant,
+               u.Prenom, u.Nom
+        FROM Trajet t
+        JOIN Type_Vehicule tv ON t.Id_Type_Vehicule_Effectuer = tv.Id_Type_Vehicule
+        JOIN Etudiant e ON t.Id_Etudiant_Creer = e.Id_Etudiant
+        JOIN Utilisateur u ON e.Id_Utilisateur = u.Id_Utilisateur
+        WHERE t.Id_Trajet = :id_trajet
+    ";
+
+    $stmtTrajet = $pdo->prepare($sqlTrajet);
+    $stmtTrajet->execute([':id_trajet' => $id_trajet]);
+    $trajet = $stmtTrajet->fetch(PDO::FETCH_ASSOC);
+
+    if (!$trajet) {
+        return ['success' => false, 'message' => 'Trajet introuvable'];
+    }
+
+    // Récupérer les arrêts du trajet
+    $sqlArrets = "
+        SELECT a.Id_Arret, a.Heure_Passage, a.Adresse, a.Informations_Complementaires, a.Ordre,
+               v.Nom AS Ville
+        FROM Arret a
+        JOIN Ville v ON a.Id_Ville_Situer = v.Id_Ville
+        WHERE a.Id_Trajet_Prevoir = :id_trajet
+        ORDER BY a.Ordre ASC
+    ";
+
+    $stmtArrets = $pdo->prepare($sqlArrets);
+    $stmtArrets->execute([':id_trajet' => $id_trajet]);
+    $arrets = $stmtArrets->fetchAll(PDO::FETCH_ASSOC);
+
+    return [
+        'success' => true,
+        'trajet' => $trajet,
+        'arrets' => $arrets
+    ];
+}
