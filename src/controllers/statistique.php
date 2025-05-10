@@ -38,5 +38,41 @@ try {
 
 } catch (PDOException $e) {
     echo "Erreur de connexion ou d'exécution : " . $e->getMessage();
+
+    // -------------------------------------------------------------------------
+    // Requête SQL pour le classement des destinations les plus recherchées
+    // -------------------------------------------------------------------------
+    $sql_destinations = "
+        SELECT
+            v.Nom AS Destination,
+            COUNT(a.Id_Ville_Situer) AS Nombre_Recherches
+        FROM
+            Arret a
+        JOIN
+            Ville v ON a.Id_Ville_Situer = v.Id_Ville
+        GROUP BY
+            v.Nom
+        ORDER BY
+            Nombre_Recherches DESC
+        LIMIT 5; -- Limiter aux 5 destinations les plus recherchées
+    ";
+    $stmt_destinations = $pdo->query($sql_destinations);
+    $result_destinations = $stmt_destinations->fetchAll(PDO::FETCH_ASSOC);
+
+    // Formatter le résultat des destinations
+    $classement_destinations = "<h3>Top 5 des destinations les plus recherchées :</h3><ul>";
+    if ($result_destinations) {
+        foreach ($result_destinations as $row) {
+            $classement_destinations .= "<li>" . htmlspecialchars($row['Destination']) . " : " . $row['Nombre_Recherches'] . " recherches</li>";
+        }
+    } else {
+        $classement_destinations .= "<li>Aucune destination trouvée.</li>";
+    }
+    $classement_destinations .= "</ul>";
+
+    // -------------------------------------------------------------------------
+    // Combiner les résultats pour les renvoyer au format texte (vous pouvez changer le format si besoin)
+    // -------------------------------------------------------------------------
+    echo $pourcentage_permis . "<br><br>" . $classement_destinations;
 }
 ?>

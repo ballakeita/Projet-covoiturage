@@ -145,6 +145,10 @@
       <div class="stat-title">% Étudiants avec permis</div>
       <div class="stat-value" id="resultat-permis">Chargement...</div>
     </div>
+    <div class="stat-box">
+      <div class="stat-title">Top Destinations</div>
+      <div class="stat-value" id="top-destinations">Chargement...</div>
+    </div>
   </main>
 
   <section class="charts-container">
@@ -159,13 +163,22 @@
   </section>
 
   <script>
-    fetch('/soradrive/src/controllers/statistique.php')
+    fetch('/Soradrive/src/controllers/statistique.php')
       .then(response => response.text())
       .then(data => {
-        document.getElementById('resultat-permis').innerHTML = data;
+        const parts = data.split('<br><br>');
+        if (parts.length >= 2) {
+          document.getElementById('resultat-permis').innerHTML = parts[0];
+          document.getElementById('top-destinations').innerHTML = parts[1];
+        } else {
+          document.getElementById('resultat-permis').innerHTML = 'Erreur lors de la récupération des statistiques.';
+          document.getElementById('top-destinations').innerHTML = '';
+        }
       })
       .catch(error => {
         console.error('Erreur AJAX :', error);
+        document.getElementById('resultat-permis').innerHTML = 'Erreur de communication avec le serveur.';
+        document.getElementById('top-destinations').innerHTML = 'Erreur de communication avec le serveur.';
       });
     // Création initiale des graphiques avec des données fictives
     const ridesChart = new Chart(document.getElementById('ridesPerMonthChart'), {
