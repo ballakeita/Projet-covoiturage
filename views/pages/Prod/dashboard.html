@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard Admin</title>
   <link rel="stylesheet" href="IndexStyle.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -92,6 +93,7 @@
     }
   </style>
 </head>
+
 <body>
 
   <header class="dashboard-header">
@@ -139,6 +141,10 @@
       <div class="stat-title">Revenus générés (€)</div>
       <div class="stat-value" id="monthly-revenue">3420</div>
     </div>
+    <div class="stat-box">
+      <div class="stat-title">% Étudiants avec permis</div>
+      <div class="stat-value" id="resultat-permis">Chargement...</div>
+    </div>
   </main>
 
   <section class="charts-container">
@@ -153,6 +159,14 @@
   </section>
 
   <script>
+    fetch('/Soradrive/src/controllers/statistique.php')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('resultat-permis').innerHTML = data;
+      })
+      .catch(error => {
+        console.error('Erreur AJAX :', error);
+      });
     // Création initiale des graphiques avec des données fictives
     const ridesChart = new Chart(document.getElementById('ridesPerMonthChart'), {
       type: 'bar',
@@ -219,29 +233,30 @@
         .catch(err => {
           console.error("Erreur lors de la récupération des données du dashboard :", err);
         });*/
-        const data = {
+      const data = {
         totalUsers: 2025,
         rides: 430,
         sponsors: 18,
         revenue: 5600,
         ridesPerMonth: [120, 140, 160, 180, 200, 220],
         revenuePerMonth: [1000, 1100, 1200, 1300, 1400, 1500]
-        };
+      };
 
-        // 🔁 Mise à jour statiques simulées
-        document.getElementById('total-users').textContent = data.totalUsers;
-        document.getElementById('monthly-rides').textContent = data.rides;
-        document.getElementById('active-sponsors').textContent = data.sponsors;
-        document.getElementById('monthly-revenue').textContent = data.revenue;
+      // 🔁 Mise à jour statiques simulées
+      document.getElementById('total-users').textContent = data.totalUsers;
+      document.getElementById('monthly-rides').textContent = data.rides;
+      document.getElementById('active-sponsors').textContent = data.sponsors;
+      document.getElementById('monthly-revenue').textContent = data.revenue;
 
-        ridesChart.data.datasets[0].data = data.ridesPerMonth;
-        revenueChart.data.datasets[0].data = data.revenuePerMonth;
+      ridesChart.data.datasets[0].data = data.ridesPerMonth;
+      revenueChart.data.datasets[0].data = data.revenuePerMonth;
 
-        ridesChart.update();
-        revenueChart.update();
+      ridesChart.update();
+      revenueChart.update();
 
     });
   </script>
 
 </body>
+
 </html>
