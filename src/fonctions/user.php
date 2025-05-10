@@ -1,6 +1,6 @@
 <?php
 
-require_once '../config/config.php';
+require_once '../../config/config.php';
 
 function createUser(array $data): array {
     $pdo = connexionBd();

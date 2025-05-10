@@ -1,5 +1,6 @@
 <?php
-require_once '../config/config.php';
+
+require_once '../../config/config.php';
 
 function lister_participants_trajet(int $id_trajet): array {
     $pdo = connexionBd();

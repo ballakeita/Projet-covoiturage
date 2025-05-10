@@ -1,11 +1,3 @@
-<?php
-session_start();
-if (!empty($_SESSION['login_error'])) {
-    echo '<script>alert("' . htmlspecialchars($_SESSION['login_error']) . '")</script>';
-    unset($_SESSION['login_error']); // Supprime le message après affichage
-}
-?>
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -13,6 +5,7 @@ if (!empty($_SESSION['login_error'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>SoraDrive - Accueil</title>
   <link rel="stylesheet" href="/Soradrive/public/assets/css/IndexStyle.css" />
+  <script src="/Soradrive/public/assets/js/login.js" defer></script>
 </head>
 <body>
   <header class="main-header">
@@ -67,15 +60,13 @@ if (!empty($_SESSION['login_error'])) {
     <div class="login-container">
       <div class="login-left">Connexion</div>
       <div class="login-right">
-          <form method="POST" action="../api/login.php" id="loginForm">
           <label for="loginEmail">Email :</label>
           <input type="email" id="loginEmail" name="email" placeholder="mail@example.com" required>
     
           <label for="loginPassword">Mot de passe :</label>
           <input type="password" id="loginPassword" name="password" placeholder="Votre mot de passe" required>
     
-          <button type="submit" id="loginSubmit">Se connecter</button>
-        </form>
+          <button id="loginSubmit">Se connecter</button>
       </div>
     </div>
   </div>
