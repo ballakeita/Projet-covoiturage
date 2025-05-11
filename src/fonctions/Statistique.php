@@ -144,6 +144,7 @@ function get_jours_populaires_achats(): string {
 }
 
 
+// Les trahets annulés 
 function get_nombre_trajets_annules(): string {
     $pdo = connexionBd();
     $sql = "SELECT COUNT(*) AS total FROM trajet WHERE annulation = TRUE";
@@ -156,6 +157,7 @@ function get_nombre_trajets_annules(): string {
 }
 
 
+// les users signalés
 function get_utilisateurs_signales(): string {
     $pdo = connexionBd();
     $sql = "
