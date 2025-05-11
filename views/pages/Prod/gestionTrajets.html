@@ -4,62 +4,60 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SoraDrive – Tableau de bord</title>
+  <title>SoraDrive – Gestion des trajets</title>
   <link rel="stylesheet" href="gestionTrajets.css">
 </head>
 
 <body>
-  <!-- NAVBAR UNIFIÉE -->
+  <!-- HEADER -->
   <header class="main-header">
+    <!-- Logo -->
     <a href="home.html" class="logo">
-      <div class="sora-logo" aria-label="SoraDrive"></div>
+      <!-- fallback -->
+      <img src="logo.png" alt="Logo SoraDrive">
+      <!-- background image via CSS -->
+      <div class="sora-logo"></div>
     </a>
 
+    <!-- Recherche -->
     <div class="search-container">
-      <form id="searchForm" action="./searchResults.html" method="GET">
-        <input
-          type="text"
-          name="query"
-          id="searchInput"
-          placeholder="Recherche de trajets..."
-        />
-        <button type="submit">🔍</button>
-      </form>
+      <input class="search-input" type="text" placeholder="Recherche de trajets…">
+      <button class="btn-search" aria-label="Rechercher">🔍</button>
     </div>
 
+    <!-- Navigation -->
     <nav class="main-nav">
       <a href="home.html">Accueil</a>
-      <a href="gestionTrajets.html" class="active">Trajets</a>
+      <a href="gestionTrajets.html">Trajets</a>
       <a href="./profil.html">Profil</a>
       <a href="Contact.html">Contact</a>
     </nav>
   </header>
 
-  <!-- CONTENU -->
+  <!-- CONTENU PRINCIPAL -->
   <main class="layout">
+    <!-- MES TRAJETS -->
     <div class="card list">
       <div class="card-header">
         <h2>Mes Trajets</h2>
         <button class="add-btn" id="open-add">Ajouter</button>
       </div>
-      <ul>
-        <li data-href="infoTrajets.html">Trajet 1</li>
-        <li data-href="infoTrajets.html">Trajet 2</li>
-        <li data-href="infoTrajets.html">Trajet 3</li>
+      <ul id="mes-trajets">
+        <!-- Les <li> seront injectés ici par JavaScript -->
       </ul>
     </div>
 
+    <!-- MES RÉSERVATIONS -->
     <div class="card list">
       <div class="card-header">
         <h2>Mes Réservations</h2>
       </div>
-      <ul>
-        <li data-href="annulerTrajets.html">Réservation 1</li>
-        <li data-href="annulerTrajets.html">Réservation 2</li>
-        <li data-href="annulerTrajets.html">Réservation 3</li>
+      <ul id="mes-reservations">
+        <!-- Les <li> seront injectés ici par JavaScript -->
       </ul>
     </div>
 
+    <!-- PUBLICITÉ -->
     <aside class="card sidebar pub">
       <h2>PUB ?</h2>
       <img src="pub-logo.png" alt="Logo Pub">
@@ -76,29 +74,82 @@
   </div>
 
   <script>
+    // Ouvre le modal avec l'URL passée
     function openModal(url) {
-      const m = document.getElementById('modal'),
-            f = document.getElementById('modal-iframe');
+      const m = document.getElementById('modal');
+      const f = document.getElementById('modal-iframe');
       f.src = url;
       m.classList.add('open');
     }
+    // Ferme le modal
     function closeModal() {
-      const m = document.getElementById('modal'),
-            f = document.getElementById('modal-iframe');
+      const m = document.getElementById('modal');
+      const f = document.getElementById('modal-iframe');
       f.src = '';
       m.classList.remove('open');
     }
 
-    document.querySelectorAll('.layout .card.list:first-child ul li')
-      .forEach(item => item.addEventListener('click', () => openModal(item.dataset.href)));
-    document.querySelectorAll('.layout .card.list:nth-child(2) ul li')
-      .forEach(item => item.addEventListener('click', () => openModal(item.dataset.href)));
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1) Charger les trajets de l'utilisateur
+      fetch('/path/to/trajet_controller.php?action=trajets_utilisateur', {
+        credentials: 'same-origin'
+      })
+      .then(res => res.json())
+      .then(data => {
+        const ul = document.getElementById('mes-trajets');
+        ul.innerHTML = '';
+        if (Array.isArray(data)) {
+          data.forEach(trajet => {
+            const li = document.createElement('li');
+            li.textContent = trajet.titre || `Trajet #${trajet.id_trajet}`;
+            li.addEventListener('click', () =>
+              openModal(`infoTrajets.html?id=${trajet.id_trajet}`)
+            );
+            ul.appendChild(li);
+          });
+        } else if (data.message) {
+          ul.innerHTML = `<li>${data.message}</li>`;
+        }
+      })
+      .catch(err => {
+        document.getElementById('mes-trajets')
+          .innerHTML = `<li>Erreur de chargement : ${err.message}</li>`;
+      });
 
-    document.getElementById('open-add')
-      .addEventListener('click', () => openModal('createTrajets.html'));
+      // 2) Charger les réservations futures de l'utilisateur
+      fetch('/path/to/reservation_controller.php?action=get_future_reservations', {
+        credentials: 'same-origin'
+      })
+      .then(res => res.json())
+      .then(data => {
+        const ul = document.getElementById('mes-reservations');
+        ul.innerHTML = '';
+        if (Array.isArray(data)) {
+          data.forEach(resa => {
+            const li = document.createElement('li');
+            li.textContent = resa.titre_trajet || `Réservation #${resa.id_reservation}`;
+            li.addEventListener('click', () =>
+              openModal(`annulerTrajets.html?id=${resa.id_reservation}`)
+            );
+            ul.appendChild(li);
+          });
+        } else if (data.message) {
+          ul.innerHTML = `<li>${data.message}</li>`;
+        }
+      })
+      .catch(err => {
+        document.getElementById('mes-reservations')
+          .innerHTML = `<li>Erreur de chargement : ${err.message}</li>`;
+      });
 
-    document.getElementById('modal-close')
-      .addEventListener('click', closeModal);
+      // 3) Bouton "Ajouter" ouvre la page de création
+      document.getElementById('open-add')
+        .addEventListener('click', () => openModal('createTrajets.html'));
+
+      // 4) Fermeture du modal
+      document.getElementById('modal-close')
+        .addEventListener('click', closeModal);
+    });
   </script>
 </body>
 
