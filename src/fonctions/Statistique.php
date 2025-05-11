@@ -122,7 +122,6 @@ function get_objets_populaires(): string {
     ]);
 }
 
-
 /** Jours les plus populaires pour les achats */
 
 function get_jours_populaires_achats(): string {
