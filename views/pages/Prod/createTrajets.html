@@ -33,13 +33,15 @@
         Départ
       </h3>
       <label>
-        Adresse départ<br>
-        <input type="text" id="depart-adresse" placeholder="Ex : 12 rue des Fleurs" required>
+        Nombre de places disponibles<br>
+        <input type="number" id="places-disponibles" min="1" required>
       </label><br><br>
       <label>
-        Heure départ<br>
-        <input type="time" id="depart-heure" required>
-      </label>
+        Répartition des points<br>
+        <input type="checkbox" id="repartition-points">
+      </label><br><br>
+      <!-- Si vous avez un type de véhicule fixe -->
+      <input type="hidden" id="id-type-vehicule" value="1">
     </div>
 
     <!-- Route SVG -->
@@ -52,27 +54,7 @@
             stroke-dasharray="40,20" fill="none"/>
     </svg>
 
-    <!-- Arrivée -->
-    <div class="card arrive">
-      <h3>
-        <svg class="icon" xmlns="http://www.w3.org/2000/svg"
-             viewBox="0 0 24 24">
-          <path fill="currentColor"
-                d="M6 2v20h2V8l6 4 6-4v14h2V2H6z"/>
-        </svg>
-        Arrivée
-      </h3>
-      <label>
-        Adresse arrivée<br>
-        <input type="text" id="arrivee-adresse" placeholder="Ex : 45 avenue du Port" required>
-      </label><br><br>
-      <label>
-        Heure arrivée<br>
-        <input type="time" id="arrivee-heure" required>
-      </label>
-    </div>
-
-    <!-- Arrêts -->
+    <!-- Arrêts (remplace Arrivée) -->
     <div class="card arrets">
       <h3>
         <svg class="icon" xmlns="http://www.w3.org/2000/svg"
@@ -82,7 +64,9 @@
         Arrêts
       </h3>
       <div id="stops-list"></div>
-      <button id="add-stop" type="button" class="btn-secondary">+ Ajouter un arrêt</button>
+      <button id="add-stop" type="button" class="btn-secondary">
+        + Ajouter un arrêt
+      </button>
     </div>
 
     <!-- Créer -->
@@ -96,46 +80,57 @@
       const idx = container.children.length + 1;
       const div = document.createElement('div');
       div.innerHTML = `
-        <strong>Arrêt ${idx}</strong><br>
-        Adresse<br>
-        <input type="text" class="stop-adresse" data-idx="${idx-1}" placeholder="Adresse arrêt" required><br><br>
-        Heure<br>
-        <input type="time" class="stop-heure" data-idx="${idx-1}" required>
+        <strong>Arrêt ${idx}</strong><br><br>
+        <label>Ordre<br>
+          <input type="number" class="stop-ordre" data-idx="${idx-1}"
+                 value="${idx}" min="1" required>
+        </label><br><br>
+        <label>Adresse<br>
+          <input type="text" class="stop-adresse" data-idx="${idx-1}"
+                 placeholder="Adresse arrêt" required>
+        </label><br><br>
+        <label>Heure<br>
+          <input type="time" class="stop-heure" data-idx="${idx-1}" required>
+        </label><br><br>
+        <label>Ville<br>
+          <input type="text" class="stop-ville" data-idx="${idx-1}"
+                 placeholder="Ville" required>
+        </label><br><br>
+        <label>Infos complémentaires<br>
+          <textarea class="stop-info" data-idx="${idx-1}"
+                    placeholder="Infos complémentaires"></textarea>
+        </label>
         <hr>
       `;
       container.appendChild(div);
     });
 
-    // Soumission AJAX
+    // Soumission AJAX GET
     document.getElementById('btnCreate').addEventListener('click', e => {
       e.preventDefault();
-      const depart = {
-        adresse: document.getElementById('depart-adresse').value,
-        heure:   document.getElementById('depart-heure').value
-      };
-      const arrivee = {
-        adresse: document.getElementById('arrivee-adresse').value,
-        heure:   document.getElementById('arrivee-heure').value
-      };
-      const stops = Array.from(document.querySelectorAll('.stop-adresse'))
-        .map(inp => ({
-          adresse: inp.value,
-          heure:   document.querySelector(`.stop-heure[data-idx="${inp.dataset.idx}"]`).value,
-          ordre:   Number(inp.dataset.idx) + 1
-        }));
 
-      fetch('/Soradrive/src/controllers/trajet_controller.php?action=create', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ depart, stops, arrivee })
+      const places = document.getElementById('places-disponibles').value;
+      const repartPoints = document.getElementById('repartition-points').checked ? 1 : 0;
+      const vehicule = document.getElementById('id-type-vehicule').value;
+
+      // Construction de la query string pour create_trajet
+      const url = `../controllers/trajet_controller.php`
+                + `?action=create_trajet`
+                + `&places_disponibles=${encodeURIComponent(places)}`
+                + `&repartition_points=${encodeURIComponent(repartPoints)}`
+                + `&id_type_vehicule_effectuer=${encodeURIComponent(vehicule)}`;
+
+      fetch(url, {
+        method: 'GET',
+        credentials: 'same-origin'
       })
-      .then(res => res.json())
-      .then(json => {
-        if (json.success) {
+      .then(res => res.json().then(json => ({ status: res.status, body: json })))
+      .then(({ status, body }) => {
+        if (status === 200 && body.success) {
           parent.closeModal();
-          alert(`Trajet créé – ID : ${json.id_trajet}`);
+          alert('Trajet créé avec succès !'); 
         } else {
-          alert('Erreur : ' + json.error);
+          alert('Erreur : ' + (body.error || 'Statut ' + status));
         }
       })
       .catch(err => alert('Échec réseau : ' + err.message));
