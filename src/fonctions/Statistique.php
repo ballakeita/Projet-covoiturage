@@ -1,6 +1,5 @@
 <?php
-require_once '../config/config.php';
-
+require_once '../../config/config.php';
 
 /** Villes les plus utilisées comme point de départ */
 function get_villes_depart_populaires(): array {
