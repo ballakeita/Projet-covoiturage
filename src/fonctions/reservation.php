@@ -1,7 +1,8 @@
 <?php
-require_once '../config/config.php';
 
-function peut_reserver(int $id_trajet): bool {
+require_once '../../config/config.php';
+
+function peut_reserver(int $id_trajet): array {
     $pdo = connexionBd();
 
     // Récupérer le nombre total de places pour le trajet (si non annulé)
@@ -13,7 +14,7 @@ function peut_reserver(int $id_trajet): bool {
 
     if ($places_disponibles === false) {
         // Trajet introuvable ou annulé
-        return false;
+        return ['success' => false, 'error' => 'Trajet introuvable ou annulé'];
     }
 
     // Compter les réservations acceptées et non annulées (validation = TRUE AND annulation = FALSE) pour ce trajet
@@ -24,10 +25,12 @@ function peut_reserver(int $id_trajet): bool {
     $reservations = $stmt->fetchColumn();
 
     // Vérifier s'il reste des places
-    return ($places_disponibles - $reservations) > 0;
+    $places_restantes = ($places_disponibles - $reservations) > 0;
+
+    return ['success' => $places_restantes];
 }
 
-function reserver_trajet(int $id_trajet, int $id_utilisateur, int $arret_depart, int $arret_arrivee): bool {
+function reserver_trajet(int $id_trajet, int $id_utilisateur, int $arret_depart, int $arret_arrivee): array {
     $pdo = connexionBd();
 
     // 1. Récupérer l'id_etudiant à partir de l'id_utilisateur
@@ -37,14 +40,16 @@ function reserver_trajet(int $id_trajet, int $id_utilisateur, int $arret_depart,
     $id_etudiant = $stmt->fetchColumn();
 
     if (!$id_etudiant) {
-        return false; // Si l'étudiant n'existe pas pour cet utilisateur
+        return ['success' => false, 'error' => 'Étudiant non trouvé'];
     }
 
     // 2. Vérifier que l'étudiant n'a pas déjà réservé ce trajet
     $sql = "SELECT COUNT(*) FROM reserver WHERE id_trajet_reserver = :id_trajet AND id_etudiant_reserver = :id_etudiant";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([':id_trajet' => $id_trajet, ':id_etudiant' => $id_etudiant]);
-    if ($stmt->fetchColumn() > 0) return false;
+    if ($stmt->fetchColumn() > 0) {
+        return ['success' => false, 'error' => 'Réservation déjà existante pour ce trajet'];
+    }
 
     // 3. Enregistrer la réservation
     $sql = "INSERT INTO reserver (
@@ -53,15 +58,20 @@ function reserver_trajet(int $id_trajet, int $id_utilisateur, int $arret_depart,
                 :id_trajet, :id_etudiant, NOW(), FALSE, :arret_depart, :arret_arrivee, FALSE
             )";
     $stmt = $pdo->prepare($sql);
-    return $stmt->execute([
+    $reservation_reussie = $stmt->execute([
         ':id_trajet' => $id_trajet,
         ':id_etudiant' => $id_etudiant,
         ':arret_depart' => $arret_depart,
         ':arret_arrivee' => $arret_arrivee
     ]);
+
+    return [
+        'success' => $reservation_reussie,
+        'message' => $reservation_reussie ? 'Réservation réussie' : 'Echec de la réservation',
+    ];
 }
 
-function annuler_reservation(int $id_trajet, int $id_utilisateur): bool {
+function annuler_reservation(int $id_trajet, int $id_utilisateur): array {
     $pdo = connexionBd();
 
     $sql = "UPDATE reserver
@@ -74,11 +84,17 @@ function annuler_reservation(int $id_trajet, int $id_utilisateur): bool {
               )";
 
     $stmt = $pdo->prepare($sql);
-    return $stmt->execute([
+    $annulation_reussie = $stmt->execute([
         ':id_trajet' => $id_trajet,
         ':id_utilisateur' => $id_utilisateur
     ]);
+
+    return [
+        'success' => $annulation_reussie,
+        'message' => $annulation_reussie ? 'Réservation annulée' : 'Echec de l\'annulation',
+    ];
 }
+
 
 function get_future_reservations_by_user(int $id_utilisateur): array {
     $pdo = connexionBd();
@@ -105,5 +121,11 @@ function get_future_reservations_by_user(int $id_utilisateur): array {
 
     $stmt = $pdo->prepare($sql);
     $stmt->execute([':id_utilisateur' => $id_utilisateur]);
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $reservations = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    return [
+        'success' => true,
+        'reservations' => $reservations,
+    ];
 }
+

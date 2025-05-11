@@ -117,7 +117,7 @@ body {
 .btn-reserver {
   position: absolute;
   top: 20px;
-  right: 5%;
+  right: 20%;
   background: var(--teal-dark);
   color: var(--white);
   border: none;

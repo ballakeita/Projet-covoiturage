@@ -1,98 +1,8 @@
 <?php
 
-require_once '../config/config.php';
+require_once '../../config/config.php';
 
-if (isset($_GET["action"])) {
-    switch ($_GET["action"]) {
-
-        case "create_trajet":
-            if (
-                isset($_POST['places_disponibles'], $_POST['repartition_points'], $_POST['id_type_vehicule_effectuer'], $_POST['id_utilisateur'])
-            ) {
-                $success = create_trajet(
-                    $_POST['places_disponibles'],
-                    $_POST['repartition_points'],
-                    $_POST['id_type_vehicule_effectuer'],
-                    $_POST['id_utilisateur']
-                );
-                echo json_encode(["success" => $success]);
-            } else {
-                http_response_code(400);
-                echo json_encode(["error" => "Paramètres manquants pour create_trajet"]);
-            }
-            break;
-
-        case "modifier_trajet":
-            if (
-                isset($_POST['id_trajet'], $_POST['places_disponibles'], $_POST['repartition_points'], $_POST['id_type_vehicule_effectuer'])
-            ) {
-                $success = modifier_trajet(
-                    $_POST['id_trajet'],
-                    $_POST['places_disponibles'],
-                    $_POST['repartition_points'],
-                    $_POST['id_type_vehicule_effectuer']
-                );
-                echo json_encode(["success" => $success]);
-            } else {
-                http_response_code(400);
-                echo json_encode(["error" => "Paramètres manquants pour modifier_trajet"]);
-            }
-            break;
-
-        case "annuler_trajet":
-            if (isset($_POST['id_trajet'], $_POST['id_utilisateur'])) {
-                $success = annuler_trajet($_POST['id_trajet'], $_POST['id_utilisateur']);
-                echo json_encode(["success" => $success]);
-            } else {
-                http_response_code(400);
-                echo json_encode(["error" => "Paramètres manquants pour annuler_trajet"]);
-            }
-            break;
-
-        case "trajets_utilisateur":
-            if (isset($_GET['id_utilisateur'])) {
-                $result = getTrajetsFutursParUtilisateur($_GET['id_utilisateur']);
-                echo json_encode($result);
-            } else {
-                http_response_code(400);
-                echo json_encode(["error" => "Paramètre id_utilisateur manquant"]);
-            }
-            break;
-
-        case "recherche_par_destination":
-            if (isset($_GET['id_utilisateur'], $_GET['ville_destination'])) {
-                $result = chercher_trajets_par_ville_destination($_GET['id_utilisateur'], $_GET['ville_destination']);
-                echo json_encode($result);
-            } else {
-                http_response_code(400);
-                echo json_encode(["error" => "Paramètres manquants pour recherche_par_destination"]);
-            }
-            break;
-
-        case "recherche_par_depart_destination":
-            if (isset($_GET['id_utilisateur'], $_GET['ville_depart'], $_GET['ville_destination'])) {
-                $result = chercher_trajets_par_ville_depart_destination(
-                    $_GET['id_utilisateur'],
-                    $_GET['ville_depart'],
-                    $_GET['ville_destination']
-                );
-                echo json_encode($result);
-            } else {
-                http_response_code(400);
-                echo json_encode(["error" => "Paramètres manquants pour recherche_par_depart_destination"]);
-            }
-            break;
-
-        default:
-            http_response_code(400);
-            echo json_encode(["error" => "Action inconnue"]);
-    }
-} else {
-    http_response_code(400);
-    echo json_encode(["error" => "Paramètre 'action' manquant"]);
-}
-
-function create_trajet($places_disponibles, $repartition_points, $id_type_vehicule_effectuer, $id_utilisateur): bool {
+function create_trajet($places_disponibles, $repartition_points, $id_type_vehicule_effectuer, $id_utilisateur): array {
     $pdo = connexionBd();
 
     $sql = "INSERT INTO trajet (
@@ -111,15 +21,20 @@ function create_trajet($places_disponibles, $repartition_points, $id_type_vehicu
             )";
 
     $stmt = $pdo->prepare($sql);
-    return $stmt->execute([
-        ':places_disponibles' => (int)$places_disponibles,
-        ':repartition_points' => (bool)$repartition_points,
-        ':id_type_vehicule_effectuer' => (int)$id_type_vehicule_effectuer,
-        ':id_utilisateur' => (int)$id_utilisateur,
+    $success = $stmt->execute([ 
+        ':places_disponibles' => (int)$places_disponibles, 
+        ':repartition_points' => (bool)$repartition_points, 
+        ':id_type_vehicule_effectuer' => (int)$id_type_vehicule_effectuer, 
+        ':id_utilisateur' => (int)$id_utilisateur 
     ]);
+
+    return [
+        'success' => $success,
+        'message' => $success ? 'Trajet créé avec succès' : 'Échec de la création du trajet'
+    ];
 }
 
-function modifier_trajet(int $id_trajet, int $places_disponibles, bool $repartition_points, int $id_type_vehicule_effectuer): bool {
+function modifier_trajet(int $id_trajet, int $places_disponibles, bool $repartition_points, int $id_type_vehicule_effectuer): array {
     $pdo = connexionBd();
     $sql = "UPDATE trajet
             SET places_disponibles = :places_disponibles,
@@ -128,16 +43,20 @@ function modifier_trajet(int $id_trajet, int $places_disponibles, bool $repartit
             WHERE id_trajet = :id_trajet";
 
     $stmt = $pdo->prepare($sql);
-    return $stmt->execute([
+    $success = $stmt->execute([
         ':places_disponibles' => $places_disponibles,
         ':repartition_points' => $repartition_points,
         ':id_type_vehicule_effectuer' => $id_type_vehicule_effectuer,
         ':id_trajet' => $id_trajet
     ]);
-    
+
+    return [
+        'success' => $success,
+        'message' => $success ? 'Trajet modifié avec succès' : 'Échec de la modification du trajet'
+    ];
 }
 
-function annuler_trajet(int $id_trajet, int $id_utilisateur): bool {
+function annuler_trajet(int $id_trajet, int $id_utilisateur): array {
     $pdo = connexionBd();
 
     $sql = "UPDATE trajet
@@ -148,10 +67,15 @@ function annuler_trajet(int $id_trajet, int $id_utilisateur): bool {
               )";
 
     $stmt = $pdo->prepare($sql);
-    return $stmt->execute([
+    $success = $stmt->execute([
         ':id_trajet' => $id_trajet,
         ':id_utilisateur' => $id_utilisateur
     ]);
+
+    return [
+        'success' => $success,
+        'message' => $success ? 'Trajet annulé avec succès' : 'Échec de l\'annulation du trajet'
+    ];
 }
 
 function getTrajetsFutursParUtilisateur(int $idUtilisateur): array {
@@ -179,20 +103,29 @@ function getTrajetsFutursParUtilisateur(int $idUtilisateur): array {
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':id_utilisateur', $idUtilisateur, PDO::PARAM_INT);
     $stmt->execute();
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $trajets = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    return [
+        'success' => true,
+        'trajets' => $trajets
+    ];
 }
 
 function chercher_trajets_par_ville_destination(int $id_utilisateur, string $ville_destination): array {
     $pdo = connexionBd();
 
     $sql = "
-        SELECT DISTINCT t.*, 
-               MIN(a1.heure_passage) AS heure_depart
+        SELECT DISTINCT 
+            vd.nom AS ville_depart,
+            va.nom AS ville_arrivee,
+            (t.date_depart + MIN(a1.heure_passage))::date AS date,
+            TO_CHAR(t.date_depart + MIN(a1.heure_passage), 'HH24:MI') AS heure_depart
         FROM trajet t
         JOIN etudiant e ON t.id_etudiant_creer = e.id_etudiant
         JOIN arret a1 ON t.id_trajet = a1.id_trajet_prevoir
+        JOIN ville vd ON a1.id_ville_situer = vd.id_ville
         JOIN arret a2 ON t.id_trajet = a2.id_trajet_prevoir
-        JOIN ville v ON a2.id_ville_situer = v.id_ville
+        JOIN ville va ON a2.id_ville_situer = va.id_ville
         WHERE e.id_utilisateur != :id_utilisateur
           AND t.annulation = FALSE
           AND t.date_depart + (
@@ -205,10 +138,10 @@ function chercher_trajets_par_ville_destination(int $id_utilisateur, string $vil
               FROM arret 
               WHERE id_trajet_prevoir = t.id_trajet
           )
-          AND v.nom ILIKE :ville_destination
+          AND va.nom ILIKE :ville_destination
           AND a2.ordre > 1
-        GROUP BY t.id_trajet
-        ORDER BY t.date_depart, heure_depart ASC
+        GROUP BY t.id_trajet, vd.nom, va.nom, t.date_depart
+        ORDER BY date ASC
     ";
 
     $stmt = $pdo->prepare($sql);
@@ -217,7 +150,12 @@ function chercher_trajets_par_ville_destination(int $id_utilisateur, string $vil
         ':ville_destination' => $ville_destination
     ]);
 
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    return [
+        'success' => true,
+        'trajets' => $results
+    ];
 }
 
 function chercher_trajets_par_ville_depart_destination(int $id_utilisateur, string $ville_depart, string $ville_destination): array {
@@ -258,5 +196,55 @@ function chercher_trajets_par_ville_depart_destination(int $id_utilisateur, stri
         ':ville_destination' => $ville_destination
     ]);
 
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    return [
+        'success' => true,
+        'trajets' => $results
+    ];
+}
+
+function getInfosCompletTrajet(int $id_trajet): array {
+    $pdo = connexionBd();
+
+    // Récupérer les infos du trajet
+    $sqlTrajet = "
+        SELECT t.*, 
+               tv.Libelle AS type_vehicule,
+               e.Id_Etudiant,
+               u.Prenom, u.Nom
+        FROM Trajet t
+        JOIN Type_Vehicule tv ON t.Id_Type_Vehicule_Effectuer = tv.Id_Type_Vehicule
+        JOIN Etudiant e ON t.Id_Etudiant_Creer = e.Id_Etudiant
+        JOIN Utilisateur u ON e.Id_Utilisateur = u.Id_Utilisateur
+        WHERE t.Id_Trajet = :id_trajet
+    ";
+
+    $stmtTrajet = $pdo->prepare($sqlTrajet);
+    $stmtTrajet->execute([':id_trajet' => $id_trajet]);
+    $trajet = $stmtTrajet->fetch(PDO::FETCH_ASSOC);
+
+    if (!$trajet) {
+        return ['success' => false, 'message' => 'Trajet introuvable'];
+    }
+
+    // Récupérer les arrêts du trajet
+    $sqlArrets = "
+        SELECT a.Id_Arret, a.Heure_Passage, a.Adresse, a.Informations_Complementaires, a.Ordre,
+               v.Nom AS Ville
+        FROM Arret a
+        JOIN Ville v ON a.Id_Ville_Situer = v.Id_Ville
+        WHERE a.Id_Trajet_Prevoir = :id_trajet
+        ORDER BY a.Ordre ASC
+    ";
+
+    $stmtArrets = $pdo->prepare($sqlArrets);
+    $stmtArrets->execute([':id_trajet' => $id_trajet]);
+    $arrets = $stmtArrets->fetchAll(PDO::FETCH_ASSOC);
+
+    return [
+        'success' => true,
+        'trajet' => $trajet,
+        'arrets' => $arrets
+    ];
 }

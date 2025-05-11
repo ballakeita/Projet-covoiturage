@@ -1,18 +1,33 @@
 <?php
-require_once '../config/config.php';
+
+require_once '../../config/config.php';
 
 function get_pub_aleatoire_active(): ?array {
     $pdo = connexionBd();
 
-    $sql = "SELECT * FROM pub
-            WHERE CURRENT_DATE BETWEEN date_debut AND date_fin
+    // Sélectionner la publicité active
+    $sql = "SELECT p.Id_Pub, p.Titre, p.Description, p.Status, p.Url_Image, p.Url_Video, p.Url_Redirection, p.Date_Debut, p.Date_Fin, s.Nom AS Sponsor_Nom
+            FROM pub p
+            JOIN sponsor s ON p.Id_Sponsor_Proposer = s.Id_Sponsor
+            WHERE CURRENT_DATE BETWEEN p.Date_Debut AND p.Date_Fin
             ORDER BY RANDOM()
             LIMIT 1";
 
     $stmt = $pdo->query($sql);
     $pub = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    return $pub ?: null;
+    return [
+        'id' => $pub['Id_Pub'],
+        'titre' => $pub['Titre'],
+        'description' => $pub['Description'],
+        'status' => $pub['Status'],
+        'url_image' => $pub['Url_Image'],
+        'url_video' => $pub['Url_Video'],
+        'url_redirection' => $pub['Url_Redirection'],
+        'date_debut' => $pub['Date_Debut'],
+        'date_fin' => $pub['Date_Fin'],
+        'sponsor' => $pub['Sponsor_Nom']
+    ];
 }
 
 function incrementer_nombre_pub_vu(int $id_utilisateur, int $id_pub): bool {

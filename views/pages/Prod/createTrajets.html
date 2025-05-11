@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0"/>
+  <title>Créer un trajet – SoraDrive</title>
+  <link rel="stylesheet" href="createTrajets.css">
+</head>
+<body>
+  <!-- TOP BAR identique -->
+  <header class="top-bar">
+    <svg class="car-icon" xmlns="http://www.w3.org/2000/svg"
+         viewBox="0 0 64 32" fill="none">
+      <rect x="4" y="12" width="56" height="12" rx="3"
+            fill="#ccc" stroke="#ccc" stroke-width="2"/>
+      <path d="M16,12 L20,6 H44 L48,12"
+            fill="#ccc" stroke="#ccc" stroke-width="2"/>
+      <circle cx="16" cy="26" r="4" fill="#ccc"/>
+      <circle cx="48" cy="26" r="4" fill="#ccc"/>
+    </svg>
+  </header>
+
+  <main class="route-container">
+    <!-- Départ -->
+    <div class="card depart">
+      <h3>
+        <svg class="icon" xmlns="http://www.w3.org/2000/svg"
+             viewBox="0 0 24 24">
+          <path fill="currentColor"
+                d="M12 2C8.134 2 5 5.134 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.866-3.134-7-7-7zm0 9a2 2 0 100-4 2 2 0 000 4z"/>
+        </svg>
+        Départ
+      </h3>
+      <label>
+        Adresse départ<br>
+        <input type="text" id="depart-adresse" placeholder="Ex : 12 rue des Fleurs" required>
+      </label><br><br>
+      <label>
+        Heure départ<br>
+        <input type="time" id="depart-heure" required>
+      </label>
+    </div>
+
+    <!-- Route SVG -->
+    <svg class="route-path" viewBox="0 0 1000 200"
+         preserveAspectRatio="none">
+      <path d="M290,100 C450,20 550,180 710,100"
+            stroke="#00474c" stroke-width="20" fill="none"/>
+      <path d="M290,100 C450,20 550,180 710,100"
+            stroke="#f4e9be" stroke-width="4"
+            stroke-dasharray="40,20" fill="none"/>
+    </svg>
+
+    <!-- Arrivée -->
+    <div class="card arrive">
+      <h3>
+        <svg class="icon" xmlns="http://www.w3.org/2000/svg"
+             viewBox="0 0 24 24">
+          <path fill="currentColor"
+                d="M6 2v20h2V8l6 4 6-4v14h2V2H6z"/>
+        </svg>
+        Arrivée
+      </h3>
+      <label>
+        Adresse arrivée<br>
+        <input type="text" id="arrivee-adresse" placeholder="Ex : 45 avenue du Port" required>
+      </label><br><br>
+      <label>
+        Heure arrivée<br>
+        <input type="time" id="arrivee-heure" required>
+      </label>
+    </div>
+
+    <!-- Arrêts -->
+    <div class="card arrets">
+      <h3>
+        <svg class="icon" xmlns="http://www.w3.org/2000/svg"
+             viewBox="0 0 24 24">
+          <circle fill="currentColor" cx="12" cy="12" r="6"/>
+        </svg>
+        Arrêts
+      </h3>
+      <div id="stops-list"></div>
+      <button id="add-stop" type="button" class="btn-secondary">+ Ajouter un arrêt</button>
+    </div>
+
+    <!-- Créer -->
+    <button id="btnCreate" class="btn-creer">Créer le trajet</button>
+  </main>
+
+  <script>
+    // Ajout dynamique d'un arrêt
+    document.getElementById('add-stop').addEventListener('click', () => {
+      const container = document.getElementById('stops-list');
+      const idx = container.children.length + 1;
+      const div = document.createElement('div');
+      div.innerHTML = `
+        <strong>Arrêt ${idx}</strong><br>
+        Adresse<br>
+        <input type="text" class="stop-adresse" data-idx="${idx-1}" placeholder="Adresse arrêt" required><br><br>
+        Heure<br>
+        <input type="time" class="stop-heure" data-idx="${idx-1}" required>
+        <hr>
+      `;
+      container.appendChild(div);
+    });
+
+    // Soumission AJAX
+    document.getElementById('btnCreate').addEventListener('click', e => {
+      e.preventDefault();
+      const depart = {
+        adresse: document.getElementById('depart-adresse').value,
+        heure:   document.getElementById('depart-heure').value
+      };
+      const arrivee = {
+        adresse: document.getElementById('arrivee-adresse').value,
+        heure:   document.getElementById('arrivee-heure').value
+      };
+      const stops = Array.from(document.querySelectorAll('.stop-adresse'))
+        .map(inp => ({
+          adresse: inp.value,
+          heure:   document.querySelector(`.stop-heure[data-idx="${inp.dataset.idx}"]`).value,
+          ordre:   Number(inp.dataset.idx) + 1
+        }));
+
+      fetch('/Soradrive/src/controllers/trajet_controller.php?action=create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ depart, stops, arrivee })
+      })
+      .then(res => res.json())
+      .then(json => {
+        if (json.success) {
+          parent.closeModal();
+          alert(`Trajet créé – ID : ${json.id_trajet}`);
+        } else {
+          alert('Erreur : ' + json.error);
+        }
+      })
+      .catch(err => alert('Échec réseau : ' + err.message));
+    });
+  </script>
+</body>
+</html>

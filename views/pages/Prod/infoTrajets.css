@@ -1,0 +1,189 @@
+/* infoTrajets.css */
+
+/* ==============================
+   BASE : copié depuis route.css
+   ============================== */
+
+:root {
+  --bg:         #ededed;
+  --teal:       #5fa09d;
+  --teal-dark:  #00474c;
+  --text-light: #f4e9be;
+  --white:      #ffffff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Sora', sans-serif;
+  background: var(--bg);
+  color: var(--text-light);
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/* ========== NAVBAR ========== */
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--teal);
+  padding: 0.5rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.car-icon {
+  width: 48px;
+  height: auto;
+  pointer-events: none;
+}
+
+/* ========== TRAJET CARD LAYOUT ========== */
+.route-container {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 80px);
+  overflow-y: auto;
+}
+
+.card {
+  position: absolute;
+  background: var(--teal-dark);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  color: var(--text-light);
+  overflow-y: auto;
+  z-index: 1;
+}
+.card h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  border-bottom: 1px solid var(--text-light);
+  padding-bottom: 0.5rem;
+}
+.card h3 .icon {
+  width: 20px;
+  height: 20px;
+  fill: var(--text-light);
+}
+
+/* ========== DÉPART et ARRIVÉE ========== */
+.depart {
+  top: 100px;
+  left: 5%;
+  width: 25%;
+  min-width: 250px;
+  height: 350px;
+}
+
+.arrive {
+  top: 100px;
+  right: 5%;
+  width: 25%;
+  min-width: 250px;
+  height: 350px;
+}
+
+/* ========== ARRÊTS ========== */
+.arrets {
+  top: calc(100px + 350px + 1rem);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50%;
+  min-width: 350px;
+  height: 300px;
+}
+
+/* ========== ROUTE (plein + dash) ========== */
+.route-path {
+  position: absolute;
+  width: 100%;
+  height: 200px;
+  top: 175px;
+  left: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ========== BOUTON Annuler ========== */
+.btn-annuler {
+  position: absolute;
+  top: 20px;
+  right: 5%;
+  background: var(--teal-dark);
+  color: var(--white);
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: background 0.2s;
+  z-index: 1;
+}
+.btn-annuler:hover {
+  background: var(--teal);
+}
+
+/* =================================
+   OVERRIDES POUR infoTrajets.html
+   ================================= */
+
+/* 1) Carte “Départ” réduite et en haut à gauche */
+.depart {
+  top: 2rem;
+  left: 2%;
+  width: 22%;
+  height: 250px;
+}
+
+/* 2) Carte “Arrivée” réduite et légèrement plus à gauche */
+.arrive {
+  top: 2rem;
+  right: 30%;
+  width: 22%;
+  height: 250px;
+}
+
+/* 3) Piste SVG ajustée pour toucher les deux cartes */
+.route-path {
+  top: 6rem;
+  left: 2%;
+  width: 68%; /* 100% − 2% − 30% */
+}
+
+/* 4) Bloc “Arrêts” encore descendu et déplacé légèrement vers la gauche */
+.arrets {
+  top: calc(6rem + 12.5rem + 4rem); /* ajoute 4rem de gap sous la piste */
+  left: 8%;   /* était 10%, maintenant un peu plus à gauche */
+  width: 60%;
+  transform: none;
+}
+
+/* 5) Bloc “Informations” (Participants) plein hauteur à droite */
+.card.info {
+  position: absolute;
+  top: 6rem;       /* juste sous le bouton */
+  right: 2%;
+  bottom: 2rem;
+  width: 22%;
+  transform: none;
+}
+
+/* 6) Bouton “Annuler” centré au-dessus de la carte info */
+.btn-annuler {
+  top: calc(6rem - 4rem);
+  left: calc(100% - 2% - 22%);
+  right: auto;
+  padding: 0.75rem 1.5rem;
+}
