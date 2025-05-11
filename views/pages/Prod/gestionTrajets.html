@@ -5,38 +5,47 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SoraDrive – Tableau de bord</title>
-  <link rel="stylesheet" href="trajets.css">
+  <link rel="stylesheet" href="gestionTrajets.css">
 </head>
 
 <body>
-  <header>
-    <div class="branding">
-      <img src="logo.png" alt="Logo SoraDrive">
-      <span class="brand-text">SoraDrive</span>
+  <!-- NAVBAR UNIFIÉE -->
+  <header class="main-header">
+    <a href="home.html" class="logo">
+      <div class="sora-logo" aria-label="SoraDrive"></div>
+    </a>
+
+    <div class="search-container">
+      <form id="searchForm" action="./searchResults.html" method="GET">
+        <input
+          type="text"
+          name="query"
+          id="searchInput"
+          placeholder="Recherche de trajets..."
+        />
+        <button type="submit">🔍</button>
+      </form>
     </div>
-    <div class="search">
-      <input class="search-input" type="text" placeholder="Search…">
-      <button class="btn-search" aria-label="Rechercher">🔍</button>
-    </div>
-    <nav class="nav-links">
-      <a href="./home.html">Accueil</a>
-      <a href="#">Présentation</a>
+
+    <nav class="main-nav">
+      <a href="home.html">Accueil</a>
+      <a href="gestionTrajets.html" class="active">Trajets</a>
       <a href="./profil.html">Profil</a>
-      <a href="#">Contact</a>
+      <a href="Contact.html">Contact</a>
     </nav>
   </header>
 
+  <!-- CONTENU -->
   <main class="layout">
     <div class="card list">
       <div class="card-header">
         <h2>Mes Trajets</h2>
-        <!-- on ajoute un ID pour le bouton -->
         <button class="add-btn" id="open-add">Ajouter</button>
       </div>
       <ul>
-        <li data-href="reserve.html">Trajet 1</li>
-        <li data-href="reserve.html">Résultat recherche 2</li>
-        <li data-href="reserve.html">Résultat recherche 3</li>
+        <li data-href="infoTrajets.html">Trajet 1</li>
+        <li data-href="infoTrajets.html">Trajet 2</li>
+        <li data-href="infoTrajets.html">Trajet 3</li>
       </ul>
     </div>
 
@@ -45,9 +54,9 @@
         <h2>Mes Réservations</h2>
       </div>
       <ul>
-        <li data-href="reserve.html">Résultat recherche 1</li>
-        <li data-href="reserve.html">Résultat recherche 2</li>
-        <li data-href="reserve.html">Résultat recherche 3</li>
+        <li data-href="annulerTrajets.html">Réservation 1</li>
+        <li data-href="annulerTrajets.html">Réservation 2</li>
+        <li data-href="annulerTrajets.html">Réservation 3</li>
       </ul>
     </div>
 
@@ -58,7 +67,7 @@
     </aside>
   </main>
 
-  <!-- modal partagé -->
+  <!-- MODAL PARTAGÉ -->
   <div class="modal" id="modal">
     <div class="modal-content">
       <button class="modal-close" id="modal-close">×</button>
@@ -67,31 +76,27 @@
   </div>
 
   <script>
-    // ouvre un modal avec l'URL passée
     function openModal(url) {
-      const m = document.getElementById('modal');
-      const f = document.getElementById('modal-iframe');
+      const m = document.getElementById('modal'),
+            f = document.getElementById('modal-iframe');
       f.src = url;
       m.classList.add('open');
     }
-    // ferme le modal
     function closeModal() {
-      const m = document.getElementById('modal');
-      const f = document.getElementById('modal-iframe');
+      const m = document.getElementById('modal'),
+            f = document.getElementById('modal-iframe');
       f.src = '';
       m.classList.remove('open');
     }
 
-    // clic sur un trajet => reserve.html
-    document.querySelectorAll('.list ul li').forEach(item => {
-      item.addEventListener('click', () => openModal(item.dataset.href));
-    });
+    document.querySelectorAll('.layout .card.list:first-child ul li')
+      .forEach(item => item.addEventListener('click', () => openModal(item.dataset.href)));
+    document.querySelectorAll('.layout .card.list:nth-child(2) ul li')
+      .forEach(item => item.addEventListener('click', () => openModal(item.dataset.href)));
 
-    // clic sur Ajouter => create_trajet.html
     document.getElementById('open-add')
-      .addEventListener('click', () => openModal('create_trajet.html'));
+      .addEventListener('click', () => openModal('createTrajets.html'));
 
-    // fermeture du modal
     document.getElementById('modal-close')
       .addEventListener('click', closeModal);
   </script>

@@ -8,22 +8,25 @@
     href="https://fonts.googleapis.com/css2?family=Sora:wght@400;700&display=swap"
     rel="stylesheet"
   >
-  <link rel="stylesheet" href="search.css">
+  <link rel="stylesheet" href="searchResults.css">
 </head>
 <body>
 
   <!-- Navbar -->
   <header class="top-bar">
-    <div class="logo">Logo SoraDrive</div>
+    <!-- logo rond en background, plus aucun texte à l'intérieur -->
+    <div class="logo" aria-label="SoraDrive"></div>
+
     <form class="search-box" id="searchForm" action="searchResults.html" method="GET">
-        <input type="text" name="query" id="searchInput" placeholder="Search">
-        <button type="submit">🔍</button>
+      <input type="text" name="query" id="searchInput" placeholder="Search">
+      <button type="submit">🔍</button>
     </form>
+
     <nav class="main-nav">
-      <a href="#">Accueil</a>
-      <a href="#">Présentation</a>
-      <a href="#">Profil</a>
-      <a href="#">Contact</a>
+      <a href="home.html">Accueil</a>
+      <a href="gestionTrajets.html">Trajets</a>
+      <a href="profil.html">Profil</a>
+      <a href="Contact.html">Contact</a>
     </nav>
   </header>
 
@@ -79,11 +82,11 @@
 
     <!-- Résultats -->
     <section class="results">
-      <h2>Titre de la recherche</h2>
+      <h2>Aucune recherche effectuée.</h2>
       <ul>
-        <li data-url="reserve.html">Résultat Trajet 1</li>
-        <li data-url="reserve.html">Résultat Trajet 2</li>
-        <li data-url="reserve.html">Résultat Trajet 3</li>
+        <li data-url="reserverTrajets.html">Résultat Trajet 1</li>
+        <li data-url="reserverTrajets.html">Résultat Trajet 2</li>
+        <li data-url="reserverTrajets.html">Résultat Trajet 3</li>
       </ul>
     </section>
 
@@ -101,7 +104,9 @@
     </div>
   </div>
 
+  <!-- Script : ouverture/fermeture modal + AJAX search -->
   <script>
+    // Gestion de la modal
     document.querySelectorAll('.results li').forEach(item => {
       item.addEventListener('click', () => {
         document.getElementById('modalFrame').src = item.dataset.url;
@@ -117,56 +122,49 @@
         document.getElementById('closeBtn').click();
       }
     });
-  </script>
-  <!-- AJAX searchResult.php -->
-  <script >
-  document.addEventListener("DOMContentLoaded", () => {
-  const params = new URLSearchParams(window.location.search);
-  const query = params.get("query")?.toLowerCase() || "";
-  const resultsContainer = document.querySelector(".results ul");
-  const titleElement = document.querySelector(".results h2");
 
-  titleElement.textContent = query
-    ? `Résultats pour : "${query}"`
-    : "Aucune recherche effectuée.";
+    // Recherche AJAX
+    document.addEventListener("DOMContentLoaded", () => {
+      const params = new URLSearchParams(window.location.search);
+      const query  = params.get("query")?.toLowerCase() || "";
+      const resultsContainer = document.querySelector(".results ul");
+      const titleElement     = document.querySelector(".results h2");
 
-  if (!query) return;
+      titleElement.textContent = query
+        ? `Résultats pour : "${query}"`
+        : "Aucune recherche effectuée.";
 
-  fetch(`/Soradrive/src/controllers/trajet_controller.php?action=recherche_par_destination&query=${encodeURIComponent(query)}`)
-    .then(response => {
-      if (!response.ok) throw new Error("Erreur réseau");
-      return response.json();
-    })
-    .then(data => {
-      resultsContainer.innerHTML = ""; // vide les résultats actuels
+      if (!query) return;
 
-      if (!Array.isArray(data.trajets) || data.length === 0) {
-        resultsContainer.innerHTML = "<li>Aucun trajet trouvé.</li>";
-        return;
-      }
-
-      data.trajets.forEach(trip => {
-        const li = document.createElement("li");
-        li.dataset.url = "reserve.html"; // ou autre URL dynamique
-        li.innerHTML = `
-          <strong>${trip.ville_depart} → ${trip.ville_arrivee}</strong><br>
-          ${trip.date} — ${trip.heure_depart}
-        `;
-        resultsContainer.appendChild(li);
-      });
-
-      // Ajout des listeners sur les nouveaux éléments
-      document.querySelectorAll('.results li').forEach(item => {
-        item.addEventListener('click', () => {
-          document.getElementById('modalFrame').src = item.dataset.url;
-          document.getElementById('modal').classList.add('open');
+      fetch(`/Soradrive/src/controllers/trajet_controller.php?action=recherche_par_destination&query=${encodeURIComponent(query)}`)
+        .then(response => {
+          if (!response.ok) throw new Error("Erreur réseau");
+          return response.json();
+        })
+        .then(data => {
+          resultsContainer.innerHTML = "";
+          if (!Array.isArray(data.trajets) || data.trajets.length === 0) {
+            resultsContainer.innerHTML = "<li>Aucun trajet trouvé.</li>";
+            return;
+          }
+          data.trajets.forEach(trip => {
+            const li = document.createElement("li");
+            li.dataset.url = "reserve.html";
+            li.innerHTML = `
+              <strong>${trip.ville_depart} → ${trip.ville_arrivee}</strong><br>
+              ${trip.date} — ${trip.heure_depart}
+            `;
+            resultsContainer.appendChild(li);
+            li.addEventListener('click', () => {
+              document.getElementById('modalFrame').src = li.dataset.url;
+              document.getElementById('modal').classList.add('open');
+            });
+          });
+        })
+        .catch(err => {
+          resultsContainer.innerHTML = `<li>Erreur : ${err.message}</li>`;
         });
-      });
-    })
-    .catch(err => {
-      resultsContainer.innerHTML = `<li>Erreur : ${err.message}</li>`;
     });
-});
-</script>
+  </script>
 </body>
 </html>
