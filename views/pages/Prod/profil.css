@@ -1,0 +1,282 @@
+/* ===== profil.css ===== */
+
+:root {
+  --bg-light:   #ededed;
+  --teal:       #5d9ca3;    /* comme sur index.html */
+  --teal-dark:  #104d4d;    /* comme sur index.html */
+  --white:      #ffffff;
+  --text-light: #f4e9be;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: 'Sora', sans-serif;
+  background: var(--bg-light);
+  color: var(--text-light);
+}
+
+.container {
+  display: flex;
+  height: 100%;
+}
+
+/* === Left Sidebar (navigation) === */
+.sidebar-left {
+  width: 260px;
+  /* même dégradé que la navbar de l'accueil */
+  background: linear-gradient(to bottom, var(--teal), var(--teal-dark));
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sidebar-left .logo {
+  width: 179px;
+  height: 179px;
+  background: url('https://design.penpot.app/assets/by-file-media-id/921945d0-8932-8162-8006-1d270b89b017')
+              no-repeat center/cover;
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  margin-bottom: 2rem;
+}
+
+.sidebar-left .logo img {
+  display: none; /* on masque l’ancienne image */
+}
+
+.sidebar-left nav ul {
+  list-style: none;
+  width: 100%;
+}
+
+.sidebar-left nav li {
+  margin: 1rem 0;
+  text-align: center;
+}
+
+.sidebar-left nav a {
+  text-decoration: none;
+  color: var(--white);
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.sidebar-left nav a.active {
+  opacity: 0.8;
+}
+
+/* === Main Content === */
+.main {
+  flex: 1;
+  overflow-y: auto;
+  padding: 2rem;
+}
+
+/* === Cards Générales === */
+.card {
+  position: relative;
+  background: var(--teal);
+  border-radius: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+  padding: 2rem;
+  color: var(--text-light);
+}
+
+/* -- Profil Card -- */
+.card.profile {
+  text-align: center;
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+.card.profile .btn-add,
+.card.profile .btn-edit {
+  background: var(--teal-dark);
+  border: none;
+  color: var(--text-light);
+  cursor: pointer;
+}
+
+.card.profile .btn-add {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  padding: .5rem 1rem;
+  border-radius: 8px;
+  font-weight: 700;
+}
+
+.card.profile .btn-edit {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+}
+
+.card.profile .avatar {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto 1rem;
+  border: 4px solid var(--bg-light);
+}
+
+.card.profile .avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card.profile .rating {
+  display: flex;
+  justify-content: center;
+  gap: .25rem;
+  font-size: 1.5rem;
+  margin-top: 1rem;
+}
+
+.card.profile .pin {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+}
+
+/* -- Stats Card -- */
+.card.stats {
+  padding-bottom: 4rem;
+}
+
+.card.stats .btn-settings {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+}
+
+.card.stats h1 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.card.stats .metrics {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.card.stats .metric {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+.card.stats h2 {
+  margin-bottom: .5rem;
+  font-size: 1.2rem;
+}
+
+.card.stats .numbers {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  font-size: .9rem;
+}
+
+.card.stats .icons-bottom {
+  display: flex;
+  gap: 1rem;
+}
+
+.card.stats .icons-bottom button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--teal-dark);
+  cursor: pointer;
+}
+
+/* === Right Sidebar === */
+.sidebar-right {
+  width: 260px;
+  background: var(--teal-dark);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sidebar-right .top-stats {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  font-weight: 700;
+}
+
+.sidebar-right .stat {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+.sidebar-right .friends {
+  width: 100%;
+  background: var(--teal);
+  border-radius: 16px;
+  padding: 1rem;
+}
+
+.sidebar-right .friends h3 {
+  text-align: center;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.sidebar-right .friends ul {
+  list-style: none;
+}
+
+.sidebar-right .friends li {
+  background: var(--teal-dark);
+  border-radius: 8px;
+  padding: .75rem;
+  margin-bottom: .75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: .95rem;
+}
+
+.sidebar-right .friends .actions {
+  display: flex;
+  gap: .5rem;
+}
+
+.sidebar-right .friends .actions button {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: var(--text-light);
+  cursor: pointer;
+}
