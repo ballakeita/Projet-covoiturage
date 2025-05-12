@@ -77,13 +77,16 @@
       <canvas id="ridesPerMonthChart"></canvas>
     </div>
 
-    <button class="collapsible">🏆 Voir le top 5 des destinations</button>
-    <div class="content top-dest-card">
-      <h3>Top 5 des destinations populaires</h3>
-      <ul id="top-destinations">
-        <li>Chargement...</li>
-      </ul>
-    </div>
+    <section class="charts-container">
+      <div class="collapsible">
+        <h3>Top 5 des destinations</h3>
+      </div>
+      <div class="destination-list" style="display: none;">
+        <ul id="destination-top-5">
+          <!-- Liste des 5 meilleures destinations sera insérée ici -->
+        </ul>
+      </div>
+    </section>
 
     <script>
       // Repliables
@@ -106,7 +109,20 @@
         trajetsData = trajets;
         annulationsData = annuls;
         destinationData = destination;
+        updateTopDestinationsDisplay();
       });
+
+      function updateTopDestinationsDisplay() {
+        const destinationList = document.getElementById('destination-top-5');
+        destinationList.innerHTML = ""; // Réinitialise la liste
+
+        destinationData.forEach((dest, index) => {
+          const listItem = document.createElement('li');
+          listItem.textContent = `${index + 1}. ${dest.ville_destination} (${dest.total} trajets)`;
+          destinationList.appendChild(listItem);
+        });
+      }
+
       /*   const fakeData = [
            { mois: "2025-01", total: 100 },
            { mois: "2025-02", total: 130 },
@@ -176,7 +192,7 @@
 
         const entryDestination = destinationData.find(e => selectedMonth && e.mois === selectedMonth);
         const valueDestination = entryDestination ? entryDestination.total : 0;
-        document.getElementById('destinationpop').textContent = valueAnnul;
+        document.getElementById('destinationpop').textContent = valueDestination;
 
 
         const yearData = trajetsData.filter(e => e.mois.startsWith(year));
@@ -188,7 +204,9 @@
 
         ridesChart.data.datasets[0].data = ridesByMonth;
         ridesChart.update();
+        updateTopDestinationsDisplay();
       });
+
     </script>
 
 </body>
