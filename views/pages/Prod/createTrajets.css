@@ -154,3 +154,25 @@ body {
 .btn-creer:hover {
   background: var(--teal);
 }
+
+/* En-tête de chaque stop */
+.stop-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Bouton pour retirer un arrêt */
+.remove-stop {
+  background: transparent;
+  border: none;
+  color: var(--text-light);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0.1rem;
+  transition: color 0.2s;
+}
+.remove-stop:hover {
+  color: var(--white);
+}

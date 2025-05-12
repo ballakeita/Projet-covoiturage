@@ -74,36 +74,45 @@
   </main>
 
   <script>
-    // Ajout dynamique d'un arrêt
-    document.getElementById('add-stop').addEventListener('click', () => {
-      const container = document.getElementById('stops-list');
-      const idx = container.children.length + 1;
-      const div = document.createElement('div');
-      div.innerHTML = `
-        <strong>Arrêt ${idx}</strong><br><br>
-        <label>Ordre<br>
-          <input type="number" class="stop-ordre" data-idx="${idx-1}"
-                 value="${idx}" min="1" required>
-        </label><br><br>
-        <label>Adresse<br>
-          <input type="text" class="stop-adresse" data-idx="${idx-1}"
-                 placeholder="Adresse arrêt" required>
-        </label><br><br>
-        <label>Heure<br>
-          <input type="time" class="stop-heure" data-idx="${idx-1}" required>
-        </label><br><br>
-        <label>Ville<br>
-          <input type="text" class="stop-ville" data-idx="${idx-1}"
-                 placeholder="Ville" required>
-        </label><br><br>
-        <label>Infos complémentaires<br>
-          <textarea class="stop-info" data-idx="${idx-1}"
-                    placeholder="Infos complémentaires"></textarea>
-        </label>
-        <hr>
-      `;
-      container.appendChild(div);
-    });
+   // Ajout dynamique d'un arrêt
+document.getElementById('add-stop').addEventListener('click', () => {
+  const container = document.getElementById('stops-list');
+  const idx = container.children.length + 1;
+  const div = document.createElement('div');
+
+  div.innerHTML = `
+    <div class="stop-header">
+      <strong>Arrêt ${idx}</strong>
+      <button type="button" class="remove-stop" title="Supprimer cet arrêt">✖</button>
+    </div><br>
+    <label>Ordre<br>
+      <input type="number" class="stop-ordre" data-idx="${idx-1}"
+             value="${idx}" min="1" required>
+    </label><br><br>
+    <label>Adresse<br>
+      <input type="text" class="stop-adresse" data-idx="${idx-1}"
+             placeholder="Adresse arrêt" required>
+    </label><br><br>
+    <label>Heure<br>
+      <input type="time" class="stop-heure" data-idx="${idx-1}" required>
+    </label><br><br>
+    <label>Ville<br>
+      <input type="text" class="stop-ville" data-idx="${idx-1}"
+             placeholder="Ville" required>
+    </label><br><br>
+    <label>Infos complémentaires<br>
+      <textarea class="stop-info" data-idx="${idx-1}"
+                placeholder="Infos complémentaires"></textarea>
+    </label>
+    <hr>
+  `;
+  container.appendChild(div);
+
+  // écouteur pour supprimer l'arrêt
+  div.querySelector('.remove-stop')
+     .addEventListener('click', () => div.remove());
+});
+
 
     // Soumission AJAX GET
     document.getElementById('btnCreate').addEventListener('click', e => {
