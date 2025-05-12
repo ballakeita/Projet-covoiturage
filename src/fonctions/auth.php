@@ -40,6 +40,9 @@ function loginUser(string $email, string $password): array {
         }
     }
 
+    // Stocke l'id_utilisateur dans la session
+    $_SESSION['id_utilisateur'] = $id;
+
     return [
         'success' => true,
         'user' => $user,

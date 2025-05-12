@@ -21,8 +21,7 @@ function get_villes_depart_populaires(): array {
         'success' => true,
         'villes' => $resultats
     ];
-}// Test fait
-
+}
 
 // les Villes les plus utilisées comme point de destination
 function getVillesPlusPopulairesDestination() {
@@ -42,7 +41,6 @@ function getVillesPlusPopulairesDestination() {
         ORDER BY total DESC
         LIMIT 5
     ";
-    //return $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
@@ -52,10 +50,9 @@ function getVillesPlusPopulairesDestination() {
         'success' => true,
         'villes_destination' => $resultats
     ]);
-}// Test fait
+}
 
 // le nombre de trajet par mois
-
 function get_nombre_trajets_par_mois(): string {
     $pdo = connexionBd();
     $sql = "
@@ -73,8 +70,7 @@ function get_nombre_trajets_par_mois(): string {
         'success' => true,
         'trajets_par_mois' => $resultats
     ]);
-}// Test fait
-
+}
 
 // L'utilsateur qui a le plus reserver
 function get_top_utilisateurs_reservations(): string {
@@ -99,7 +95,6 @@ function get_top_utilisateurs_reservations(): string {
     ]);
 }
 
-
 /** Objets les plus achetés */
 function get_objets_populaires(): string {
     $pdo = connexionBd();
@@ -123,7 +118,6 @@ function get_objets_populaires(): string {
 }
 
 /** Jours les plus populaires pour les achats */
-
 function get_jours_populaires_achats(): string {
     $pdo = connexionBd();
     $sql = "
@@ -143,7 +137,6 @@ function get_jours_populaires_achats(): string {
     ]);
 }
 
-
 // Les trahets annulés 
 function get_nombre_trajets_annules(): string {
     $pdo = connexionBd();
@@ -155,7 +148,6 @@ function get_nombre_trajets_annules(): string {
         'nombre_annulations' => $total
     ]);
 }
-
 
 // les users signalés
 function get_utilisateurs_signales(): string {
@@ -180,15 +172,26 @@ function get_utilisateurs_signales(): string {
     ]);
 }
 
-// Test en local sans passer par l'URL
-//echo "<pre>";
-//print_r(get_villes_depart_populaires());
-// print_r(getVillesPlusPopulairesDestination());
- //print_r(get_nombre_trajets_par_mois());
-// print_r(get_top_utilisateurs_reservations());
-// print_r(get_objets_populaires());
-// print_r(get_heures_populaires_trajets());
-// print_r(get_jours_populaires_achats());
-// echo get_nombre_trajets_annules();
-// print_r(get_utilisateurs_signales());
+function getPourcentageEtudiantsAvecPermis(): array {
+    $pdo = connexionBd();
 
+    $sql = "
+        SELECT 
+            ROUND(
+                (COUNT(DISTINCT p.Id_Etudiant_Disposer)::decimal / COUNT(DISTINCT e.Id_Etudiant)) * 100, 
+                2
+            ) AS pourcentage
+        FROM 
+            Etudiant e
+        LEFT JOIN 
+            Permis p ON e.Id_Etudiant = p.Id_Etudiant_Disposer;
+    ";
+
+    $stmt = $pdo->query($sql);
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    return [
+        'success' => true,
+        'pourcentage' => $result['pourcentage'] ?? 0
+    ];
+}

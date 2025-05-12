@@ -78,7 +78,7 @@
     // nombre trajet par mois
     async function fetchMonthlyRides() {
       try {
-        const response = await fetch('/src/controllers/statistique_contoller.php?action=trajets_par_mois');
+        const response = await fetch('../../../src/controllers/statistique_contoller.php?action=trajets_par_mois');
         const data = await response.json();
 
         if (!data.success) throw new Error("Données non récupérées");

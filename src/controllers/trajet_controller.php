@@ -2,20 +2,27 @@
 
 require_once '../../config/config.php';
 require_once '../fonctions/trajet.php';
+require_once '../fonctions/user.php';
 
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+header('Content-Type: application/json');
 
 if (isset($_GET["action"])) {
     switch ($_GET["action"]) {
 
         case "create_trajet":
             if (
-                isset($_GET['places_disponibles'], $_GET['repartition_points'], $_GET['id_type_vehicule_effectuer'])
+                isset($_GET['places_disponibles'], $_GET['repartition_points'])
             ) {
+                $response = getVehiculeTypeByUtilisateur($_SESSION['id_utilisateur']);
+                $id_vehicule = $response['success'] ? $response['vehicule']['Id_Type_Vehicule'] : $_GET['id_type_vehicule_effectuer'];
                 $success = create_trajet(
                     $_GET['places_disponibles'],
                     $_GET['repartition_points'],
-                    $_GET['id_type_vehicule_effectuer'],
+                    $id_vehicule,
                     $_SESSION['id_utilisateur']
                 );
                 if ($success) {
@@ -32,12 +39,14 @@ if (isset($_GET["action"])) {
 
         case "modifier_trajet":
             if (
-                isset($_GET['id_trajet'], $_GET['places_disponibles'], $_GET['repartition_points'], $_GET['id_type_vehicule_effectuer'])
+                isset($_GET['id_trajet'], $_GET['places_disponibles'])
             ) {
+                $response = getVehiculeTypeByUtilisateur($_SESSION['id_utilisateur']);
+                $id_vehicule = $response['success'] ? $response['vehicule']['Id_Type_Vehicule'] : $_GET['id_type_vehicule_effectuer'];
                 $success = modifier_trajet(
                     $_GET['id_trajet'],
                     $_GET['places_disponibles'],
-                    $_GET['repartition_points'],
+                    $id_vehicule,
                     $_GET['id_type_vehicule_effectuer']
                 );
                 if ($success) {
@@ -53,7 +62,7 @@ if (isset($_GET["action"])) {
             break;
 
         case "annuler_trajet":
-            if (isset($_GET['id_trajet'], $_GET['id_utilisateur'])) {
+            if (isset($_GET['id_trajet'])) {
                 $success = annuler_trajet($_GET['id_trajet'], $_SESSION['id_utilisateur']);
                 if ($success) {
                     echo json_encode(["success" => true]);
@@ -84,7 +93,7 @@ if (isset($_GET["action"])) {
         case "recherche_par_destination":
             if (isset($_GET['query'])) {
                 if (true) {
-                    $result = chercher_trajets_par_ville_destination(5, $_GET['query']);
+                    $result = chercher_trajets_par_ville_destination($_SESSION['id_utilisateur'], $_GET['query']);
                     echo json_encode($result);
                 } else {
                     http_response_code(401); // Unauthorized
@@ -97,9 +106,9 @@ if (isset($_GET["action"])) {
             break;
 
         case "recherche_depart_destination":
-            if (isset($_GET['id_utilisateur'], $_GET['ville_depart'], $_GET['ville_destination'])) {
+            if (isset($_GET['ville_depart'], $_GET['ville_destination'])) {
                 $result = chercher_trajets_par_ville_depart_destination(
-                    $_GET['id_utilisateur'],
+                    $_SESSION['id_utilisateur'],
                     $_GET['ville_depart'],
                     $_GET['ville_destination']
                 );
@@ -121,6 +130,16 @@ if (isset($_GET["action"])) {
             } else {
                 http_response_code(400);
                 echo json_encode(["error" => "Paramètre id_trajet manquant"]);
+            }
+            break;
+
+        case "lister_participants":
+            if (isset($_GET['id_trajet']) && isset($_SESSION['id_utilisateur'])) {
+                $result = lister_participants_trajet($_GET['id_trajet'], $_SESSION['id_utilisateur']);
+                echo json_encode($result);
+            } else {
+                http_response_code(400);
+                echo json_encode(["error" => "Paramètres manquants pour lister_participants"]);
             }
             break;
 

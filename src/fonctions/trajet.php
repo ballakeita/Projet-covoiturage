@@ -2,13 +2,14 @@
 
 require_once '../../config/config.php';
 
-function create_trajet($places_disponibles, $repartition_points, $id_type_vehicule_effectuer, $id_utilisateur): array {
+function create_trajet($places_disponibles, $repartition_points, $id_type_vehicule_effectuer, $id_utilisateur, $date_depart): array {
     $pdo = connexionBd();
 
     $sql = "INSERT INTO trajet (
                 places_disponibles, 
                 repartition_points, 
                 annulation, 
+                date_depart, 
                 id_type_vehicule_effectuer, 
                 id_etudiant_creer
             )
@@ -16,16 +17,18 @@ function create_trajet($places_disponibles, $repartition_points, $id_type_vehicu
                 :places_disponibles, 
                 :repartition_points, 
                 FALSE, 
-                :id_type_vehicule_effectuer,
+                :date_depart, 
+                :id_type_vehicule_effectuer, 
                 (SELECT Id_Etudiant FROM Etudiant WHERE Id_Utilisateur = :id_utilisateur)
             )";
 
     $stmt = $pdo->prepare($sql);
-    $success = $stmt->execute([ 
-        ':places_disponibles' => (int)$places_disponibles, 
-        ':repartition_points' => (bool)$repartition_points, 
-        ':id_type_vehicule_effectuer' => (int)$id_type_vehicule_effectuer, 
-        ':id_utilisateur' => (int)$id_utilisateur 
+    $success = $stmt->execute([
+        ':places_disponibles' => (int)$places_disponibles,
+        ':repartition_points' => (bool)$repartition_points,
+        ':date_depart' => $date_depart,
+        ':id_type_vehicule_effectuer' => (int)$id_type_vehicule_effectuer,
+        ':id_utilisateur' => (int)$id_utilisateur
     ]);
 
     return [
@@ -246,5 +249,33 @@ function getInfosCompletTrajet(int $id_trajet): array {
         'success' => true,
         'trajet' => $trajet,
         'arrets' => $arrets
+    ];
+}
+
+function lister_participants_trajet(int $id_trajet, int $id_utilisateur_createur): array {
+    $pdo = connexionBd();
+
+    $sql = "
+        SELECT u.nom, u.mail, e.id_etudiant
+        FROM reserver r
+        JOIN etudiant e ON r.id_etudiant_reserver = e.id_etudiant
+        JOIN utilisateur u ON e.id_utilisateur = u.id_utilisateur
+        WHERE r.id_trajet_reserver = :id_trajet
+          AND r.status = TRUE
+          AND e.id_etudiant != (
+              SELECT id_etudiant FROM etudiant WHERE id_utilisateur = :id_utilisateur
+          )
+    ";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':id_trajet', $id_trajet, PDO::PARAM_INT);
+    $stmt->bindParam(':id_utilisateur', $id_utilisateur_createur, PDO::PARAM_INT);
+    $stmt->execute();
+
+    $participants = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    return [
+        'success' => true,
+        'participants' => $participants
     ];
 }
