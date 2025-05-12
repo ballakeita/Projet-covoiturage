@@ -21,8 +21,15 @@
 
     <!-- Recherche -->
     <div class="search-container">
-      <input class="search-input" type="text" placeholder="Recherche de trajets…">
-      <button class="btn-search" aria-label="Rechercher">🔍</button>
+       <form id="searchForm" action="./searchResults.html" method="GET">
+        <input
+          type="text"
+          name="query"
+          id="searchInput"
+          placeholder="Recherche de trajets..."
+        />
+        <button type="submit">🔍</button>
+      </form>
     </div>
 
     <!-- Navigation -->
