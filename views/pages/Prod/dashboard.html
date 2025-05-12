@@ -102,9 +102,9 @@
       let topdestination = "";
 
       Promise.all([
-        fetch('/Projet-covoiturage/src/controllers/statistique_controller.php?action=trajets_par_mois').then(res => res.json()), // verifier l'arbo
-        fetch('/Projet-covoiturage/src/controllers/statistique_controller.php?action=annulations_par_mois').then(res => res.json()), // verifier l'arbo
-        fetch('/Projet-covoiturage/src/controllers/statistique_controller.php?action=villes_destination_populaires').then(res => res.json()), // verifier l'arbo
+        fetch('../../../src/controllers/statistique_controller.php?action=trajets_par_mois').then(res => res.json()), // verifier l'arbo
+        fetch('../../../src/controllers/statistique_controller.php?action=nombre_trajets_annules').then(res => res.json()), // verifier l'arbo
+        fetch('../../../src/controllers/statistique_controller.php?action=villes_destination_populaires').then(res => res.json()), // verifier l'arbo
       ]).then(([trajets, annuls, destination]) => {
         trajetsData = trajets;
         annulationsData = annuls;
