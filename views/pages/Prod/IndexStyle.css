@@ -136,5 +136,111 @@ body {
 /* ===== FORMULAIRES SIGNUP / LOGIN (le cas échéant) ===== */
 /* ... vos styles existants ... */
 
+.login-right button {
+  padding: 0.5rem;
+  margin-top: 1rem;
+  background: #0c4b4b;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.login-right button:hover {
+  background: #093838;
+}
+
+.results-section {
+  padding: 2rem;
+}
+
+.results-section h2 {
+  color: #0c4b4b;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.signup-container {
+  flex-direction: row;
+  background: #f4f4f4;
+  width: 800px;
+}
+
+.signup-left {
+  background-color: #5d9ca3;
+  color: #d6f1d0;
+  width: 40%;
+  padding: 2rem;
+  font-size: 1.8rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px 0 0 20px;
+}
+
+.signup-right {
+  width: 60%;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.signup-right input {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.signup-right button {
+  padding: 0.5rem;
+  margin-top: 1rem;
+  background: #0c4b4b;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.signup-right button:hover {
+  background: #093838;
+}
+
+.login-container {
+  display: flex;
+  flex-direction: row;
+  width: 600px;
+  max-width: 90%;
+  border-radius: 20px;
+  background: #f4f4f4;
+  overflow: hidden;
+}
+
+.login-left {
+  background-color: #5d9ca3;
+  color: #d6f1d0;
+  width: 40%;
+  padding: 2rem;
+  font-size: 1.8rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-right {
+  width: 60%;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.login-right input {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
 /* ===== SECTION RÉSULTATS ===== */
 /* ... vos styles existants ... */
