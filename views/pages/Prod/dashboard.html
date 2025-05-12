@@ -54,12 +54,12 @@
       <div class="stat-value" id="active-sponsors">12</div>
     </div>
     <div class="stat-box">
-      <div class="stat-title">Revenus générés (€)</div>
-      <div class="stat-value" id="monthly-revenue">chargement...</div>
-    </div>
-    <div class="stat-box">
       <div class="stat-title">% Étudiants avec permis</div>
       <div class="stat-value" id="resultat-permis">Chargement...</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-title">Trajet annulé</div>
+      <div class="stat-value" id="monthly-annulations">Chargement...</div>
     </div>
   </main>
 
@@ -68,42 +68,61 @@
       <h3>Trajets par mois</h3>
       <canvas id="ridesPerMonthChart"></canvas>
     </div>
-    <div class="chart-card">
-      <h3>Revenus générés (€) par mois</h3>
-      <canvas id="revenueChart"></canvas>
-    </div>
   </section>
 
   <script>
-    // nombre trajet par mois
-    async function fetchMonthlyRides() {
-      try {
-        const response = await fetch('/src/controllers/statistique_contoller.php?action=trajets_par_mois');
-        const data = await response.json();
+    let trajetsData = [];
+    let annulationsData = [];
 
-        if (!data.success) throw new Error("Données non récupérées");
+    Promise.all([
+      fetch('/Projet-covoiturage/src/controllers/statistique_controller.php?action=trajets_par_mois').then(res => res.json()), // verifier l'arbo
+      fetch('/Projet-covoiturage/src/controllers/statistique_controller.php?action=annulations_par_mois').then(res => res.json()) // verifier l'arbo
+    ]).then(([trajets, annuls]) => {
+      trajetsData = trajets;
+      annulationsData = annuls;
+    });
+    /*   const fakeData = [
+         { mois: "2025-01", total: 100 },
+         { mois: "2025-02", total: 130 },
+         { mois: "2025-03", total: 95 },
+         { mois: "2025-04", total: 150 },
+         { mois: "2025-05", total: 200 },
+         { mois: "2025-06", total: 180 },
+         { mois: "2024-01", total: 90 },
+         { mois: "2024-02", total: 85 },
+         { mois: "2024-03", total: 110 },
+         { mois: "2024-04", total: 120 },
+         { mois: "2024-05", total: 90 },
+         { mois: "2024-06", total: 95 },
+       ];
+   
+       const fakeAnnulationData = [
+         { mois: "2025-01", total: 10 },
+         { mois: "2025-02", total: 13 },
+         { mois: "2025-03", total: 9 },
+         { mois: "2025-04", total: 15 },
+         { mois: "2025-05", total: 8 },
+         { mois: "2025-06", total: 12 },
+         { mois: "2024-01", total: 5 },
+         { mois: "2024-02", total: 7 },
+         { mois: "2024-03", total: 6 },
+         { mois: "2024-04", total: 4 },
+         { mois: "2024-05", total: 9 },
+         { mois: "2024-06", total: 11 }
+       ];
+       */
 
-        const currentMonth = new Date().toISOString().slice(0, 7); // ex : "2025-05"
+    const moisLabels = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sept', 'Oct', 'Nov', 'Déc'];
 
-        const entry = data.trajets_par_mois.find(e => e.mois === currentMonth);
-        const value = entry ? entry.total : 0;
-
-        document.getElementById('monthly-rides').textContent = value;
-      } catch (error) {
-        console.error('Erreur :', error);
-        document.getElementById('monthly-rides').textContent = "Erreur";
-      }
-    }
-
-    fetchMonthlyRides();
-    // Création initiale des graphiques avec des données fictives
-    const ridesChart = new Chart(document.getElementById('ridesPerMonthChart'), {
+    // ➤ Création initiale du graphique
+    const ctx = document.getElementById('ridesPerMonthChart').getContext('2d');
+    const ridesChart = new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin'],
+        labels: moisLabels,
         datasets: [{
           label: 'Trajets',
-          data: [320, 412, 389, 478, 503, 450],
+          data: Array(12).fill(0),
           backgroundColor: '#5d9ca3',
           borderRadius: 5
         }]
@@ -114,75 +133,30 @@
       }
     });
 
-    const revenueChart = new Chart(document.getElementById('revenueChart'), {
-      type: 'line',
-      data: {
-        labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin'],
-        datasets: [{
-          label: 'Revenus (€)',
-          data: [800, 1120, 1340, 1420, 1690, 1860],
-          fill: true,
-          borderColor: '#104d4d',
-          backgroundColor: 'rgba(93, 156, 163, 0.2)',
-          tension: 0.4,
-          pointRadius: 5,
-          pointBackgroundColor: '#5d9ca3'
-        }]
-      },
-      options: {
-        responsive: true,
-        scales: { y: { beginAtZero: true } }
-      }
-    });
-
-    // Gestion du filtre dynamique
+    // ➤ Gestion du filtre
     document.getElementById('filter-form').addEventListener('submit', function (e) {
       e.preventDefault();
-
       const month = document.getElementById('month-select').value;
       const year = document.getElementById('year-select').value;
+      const selectedMonth = (month !== "all") ? `${year}-${month}` : null;
 
-      // Appel vers backend
-      /*fetch(`fetch_dashboard_data.php?month=${month}&year=${year}`)
-        .then(res => res.json())
-        .then(data => {
-          // Mise à jour des statistiques brutes
-          document.getElementById('total-users').textContent = data.totalUsers;
-          document.getElementById('monthly-rides').textContent = data.rides;
-          document.getElementById('active-sponsors').textContent = data.sponsors;
-          document.getElementById('monthly-revenue').textContent = data.revenue;
+      const entry = trajetsData.find(e => selectedMonth && e.mois === selectedMonth);
+      const value = entry ? entry.total : 0;
+      document.getElementById('monthly-rides').textContent = value;
 
-          // Mise à jour des graphiques
-          ridesChart.data.datasets[0].data = data.ridesPerMonth;
-          revenueChart.data.datasets[0].data = data.revenuePerMonth;
+      const entryAnnul = annulationsData.find(e => selectedMonth && e.mois === selectedMonth);
+      const valueAnnul = entryAnnul ? entryAnnul.total : 0;
+      document.getElementById('monthly-annulations').textContent = valueAnnul;
 
-          ridesChart.update();
-          revenueChart.update();
-        })
-        .catch(err => {
-          console.error("Erreur lors de la récupération des données du dashboard :", err);
-        });*/
-      const data = {
-        totalUsers: 2025,
-        rides: 430,
-        sponsors: 18,
-        revenue: 5600,
-        ridesPerMonth: [120, 140, 160, 180, 200, 220],
-        revenuePerMonth: [1000, 1100, 1200, 1300, 1400, 1500]
-      };
+      const yearData = trajetsData.filter(e => e.mois.startsWith(year));
+      const ridesByMonth = Array(12).fill(0);
+      yearData.forEach(e => {
+        const index = parseInt(e.mois.split('-')[1], 10) - 1;
+        ridesByMonth[index] = e.total;
+      });
 
-      // 🔁 Mise à jour statiques simulées
-      document.getElementById('total-users').textContent = data.totalUsers;
-      document.getElementById('monthly-rides').textContent = data.rides;
-      document.getElementById('active-sponsors').textContent = data.sponsors;
-      document.getElementById('monthly-revenue').textContent = data.revenue;
-
-      ridesChart.data.datasets[0].data = data.ridesPerMonth;
-      revenueChart.data.datasets[0].data = data.revenuePerMonth;
-
+      ridesChart.data.datasets[0].data = ridesByMonth;
       ridesChart.update();
-      revenueChart.update();
-
     });
   </script>
 
