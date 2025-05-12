@@ -5,6 +5,25 @@
     gap: 2rem;
 }
 
+.collapsible {
+    background-color: #5d9ca3;
+    color: white;
+    cursor: pointer;
+    padding: 12px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 16px;
+    border-radius: 8px;
+    margin: 10px 0;
+}
+
+.active,
+.collapsible:hover {
+    background-color: #49838b;
+}
+
 .stat-box {
     background-color: #0c4b4b;
     color: #faf8d4;
