@@ -14,7 +14,7 @@
 
     document.addEventListener('DOMContentLoaded', () => {
       // Charger les trajets de l'utilisateur
-      fetch('../../../src/controller/trajet_controller.php?action=trajets_utilisateur')
+      fetch('../../../src/controllers/trajet_controller.php?action=trajets_utilisateur')
       .then(res => res.json())
       .then(data => {
         const ul = document.getElementById('mes-trajets');
@@ -38,7 +38,7 @@
       });
 
       // Charger les réservations futures de l'utilisateur
-      fetch('../../../src/controller/reservation_controller.php?action=get_future_reservations')
+      fetch('../../../src/controllers/reservation_controller.php?action=get_future_reservations')
       .then(res => res.json())
       .then(data => {
         const ul = document.getElementById('mes-reservations');
