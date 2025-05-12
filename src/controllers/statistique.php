@@ -73,8 +73,3 @@ echo $classement_destinations;
 echo json_encode($result['pourcentage_etudiants_avec_permis']);
 
 ?>
-
-succes : defined
-permis : valeur
-villes : marseille : valeur
-            lille : 
