@@ -37,12 +37,13 @@ function create_trajet($places_disponibles, $repartition_points, $id_type_vehicu
     ];
 }
 
-function modifier_trajet(int $id_trajet, int $places_disponibles, bool $repartition_points, int $id_type_vehicule_effectuer): array {
+function modifier_trajet(int $id_trajet, int $places_disponibles, bool $repartition_points, int $id_type_vehicule_effectuer, $date_depart): array {
     $pdo = connexionBd();
     $sql = "UPDATE trajet
             SET places_disponibles = :places_disponibles,
                 repartition_points = :repartition_points,
                 id_type_vehicule_effectuer = :id_type_vehicule_effectuer
+                date_depart = : date_depart
             WHERE id_trajet = :id_trajet";
 
     $stmt = $pdo->prepare($sql);
@@ -50,7 +51,8 @@ function modifier_trajet(int $id_trajet, int $places_disponibles, bool $repartit
         ':places_disponibles' => $places_disponibles,
         ':repartition_points' => $repartition_points,
         ':id_type_vehicule_effectuer' => $id_type_vehicule_effectuer,
-        ':id_trajet' => $id_trajet
+        ':id_trajet' => $id_trajet,
+        ':date_depart' => $date_depart
     ]);
 
     return [

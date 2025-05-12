@@ -15,7 +15,7 @@ if (isset($_GET["action"])) {
 
         case "create_trajet":
             if (
-                isset($_GET['places_disponibles'], $_GET['repartition_points'])
+                isset($_GET['places_disponibles'], $_GET['repartition_points'], $_GET['date_depart'])
             ) {
                 $response = getVehiculeTypeByUtilisateur($_SESSION['id_utilisateur']);
                 $id_vehicule = $response['success'] ? $response['vehicule']['Id_Type_Vehicule'] : $_GET['id_type_vehicule_effectuer'];
@@ -23,7 +23,8 @@ if (isset($_GET["action"])) {
                     $_GET['places_disponibles'],
                     $_GET['repartition_points'],
                     $id_vehicule,
-                    $_SESSION['id_utilisateur']
+                    $_SESSION['id_utilisateur'],
+                    $_GET['date_depart']
                 );
                 if ($success) {
                     echo json_encode(["success" => true]);
@@ -39,7 +40,7 @@ if (isset($_GET["action"])) {
 
         case "modifier_trajet":
             if (
-                isset($_GET['id_trajet'], $_GET['places_disponibles'])
+                isset($_GET['id_trajet'], $_GET['places_disponibles'], $_GET['date_depart'])
             ) {
                 $response = getVehiculeTypeByUtilisateur($_SESSION['id_utilisateur']);
                 $id_vehicule = $response['success'] ? $response['vehicule']['Id_Type_Vehicule'] : $_GET['id_type_vehicule_effectuer'];
@@ -47,7 +48,8 @@ if (isset($_GET["action"])) {
                     $_GET['id_trajet'],
                     $_GET['places_disponibles'],
                     $id_vehicule,
-                    $_GET['id_type_vehicule_effectuer']
+                    $_GET['id_type_vehicule_effectuer'],
+                    $_GET['date_depart']
                 );
                 if ($success) {
                     echo json_encode(["success" => true]);
