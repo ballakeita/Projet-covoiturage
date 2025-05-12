@@ -1,6 +1,10 @@
 <?php
 require_once '../../config/config.php';
-require_once '../fonctions/statistiques.php';
+require_once '../fonctions/statistique.php';
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 header('Content-Type: application/json');
 
@@ -43,6 +47,10 @@ switch ($action) {
 
     case 'utilisateurs_signales':
         echo get_utilisateurs_signales();
+        break;
+
+    case 'pourcentage_permis':
+        echo json_encode(getPourcentageEtudiantsAvecPermis());
         break;
 
     default:

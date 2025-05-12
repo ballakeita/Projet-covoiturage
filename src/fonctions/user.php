@@ -39,3 +39,39 @@ function getUserByEmail(string $email): ?array {
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
     return $user ?: null;
 }
+
+function getVehiculeTypeByUtilisateur(int $id_utilisateur): array {
+    $pdo = connexionBd();
+
+    $sql = "
+        SELECT tv.Id_Type_Vehicule, tv.Libelle
+        FROM Type_Vehicule tv
+        JOIN Vehicule v ON v.Id_Type_Vehicule = tv.Id_Type_Vehicule
+        JOIN Etudiant e ON e.Id_Etudiant = v.Id_Etudiant_Appartenir
+        WHERE e.Id_Utilisateur = :id_utilisateur
+        LIMIT 1
+    ";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':id_utilisateur', $id_utilisateur, PDO::PARAM_INT);
+
+    if ($stmt->execute()) {
+        $vehicule = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($vehicule) {
+            return [
+                'success' => true,
+                'vehicule' => $vehicule
+            ];
+        } else {
+            return [
+                'success' => false,
+                'error' => 'Aucun véhicule trouvé pour cet utilisateur.'
+            ];
+        }
+    } else {
+        return [
+            'success' => false,
+            'error' => 'Erreur lors de la récupération du véhicule.'
+        ];
+    }
+}

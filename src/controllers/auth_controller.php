@@ -3,7 +3,11 @@
 require_once '../../config/config.php';
 require_once '../fonctions/auth.php';
 
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+header('Content-Type: application/json');
 
 if (isset($_GET["action"])) {
     switch ($_GET["action"]) {
