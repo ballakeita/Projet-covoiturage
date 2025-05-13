@@ -46,8 +46,8 @@ function getVehiculeTypeByUtilisateur(int $id_utilisateur): array {
     $sql = "
         SELECT tv.Id_Type_Vehicule, tv.Libelle
         FROM Type_Vehicule tv
-        JOIN Vehicule v ON v.Id_Type_Vehicule = tv.Id_Type_Vehicule
-        JOIN Etudiant e ON e.Id_Etudiant = v.Id_Etudiant_Appartenir
+        JOIN Posseder p ON p.Id_Type_Vehicule_Posseder = tv.Id_Type_Vehicule
+        JOIN Etudiant e ON e.Id_Etudiant = p.Id_Etudiant_Posseder
         WHERE e.Id_Utilisateur = :id_utilisateur
         LIMIT 1
     ";
