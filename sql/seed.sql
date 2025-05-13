@@ -70,11 +70,11 @@ INSERT INTO Utilisateur (Nom, Prenom, Mail, Telephone, Mot_De_Passe, Avatar, Der
 
 -- Emplacement_Pub
 INSERT INTO Emplacement_Pub (Libelle) VALUES
-('Page d''accueil'),
-('Page profil'),
-('Espace pub trajet'),
+('Bannière principale'),
+('Pub profil vidéo'),
+('Pub trajet image'),
 ('Bannière latérale'),
-('Application mobile');
+('Pub mobile native'),
 
 -- Marque_Vehicule
 INSERT INTO Marque_Vehicule (Libelle) VALUES
