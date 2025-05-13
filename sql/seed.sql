@@ -48,7 +48,7 @@ INSERT INTO Utilisateur (Nom, Prenom, Mail, Telephone, Mot_De_Passe, Avatar, Der
 ('Durand', 'Nicolas', 'nicolas.durand@example.com', '678901234', '$2y$10$WVeNfALWjxM71Oa7xytQ0edrBmbwdN5B9yZOIywiu2t5v3X3W1VHy ', 'avatar7.png', '03/05/2025 15:30:00')",
 ('Leroy', 'Emma', 'emma.leroy@example.com', '689012345', '$2y$10$2UdvV4EOOVMIwd5S2ukdmeqWe8NGlJ1lfKQoDBYGnc6l9QlDFwIAu ', 'avatar8.jpg', '02/05/2025 11:25:00')",
 ('Moreau', 'Thomas', 'thomas.moreau@example.com', '690123456', '$2y$10$nPI6/Lgnz2D1wJRGanOicOguVtfLtcJGeGxpRfHwe/n0lOanrbGfS ', 'avatar9.png', '01/05/2025 16:00:00')",
-('Simon', 'Laura', 'laura.simon@example.com', '601234567', '$2y$10$zn2AZgmwB0KCVXNsTVTuWO98.7TrEGNKkBHTyF9iBvAh4fTSIKhgO ', 'avatar10.jpg', '30/04/2025 18:40:00')",
+('Simon', 'Laura', 'laura.simon@example.com', '601234567', '$2y$10$zn2AZgmwB0KCVXNsTVTuWO98.7TrEGNKkBHTyF9iBvAh4fTSIKhgO ', 'avatar10.jpg', '30/04/2025 18:40:00')";
 
 -- Emplacement_Pub
 INSERT INTO Emplacement_Pub (Libelle) VALUES
@@ -176,9 +176,11 @@ INSERT INTO Sponsor (Nom, Id_Utilisateur) VALUES
 
 -- Etudiant
 INSERT INTO Etudiant (Status, Nombre_Points, Multiplicateur_Points, Date_Expiration_Multiplicateur, Date_Fin_Protection, Identifiant_Carte_Etudiant, Annee_Expiration_Carte_Etudiante, Photo_Carte_Etudiante, Pub, Id_Utilisateur) VALUES
-(true, 120, 1.2, '2025-05-20', '2025-05-20', '1234567890123', '2025', 'photo1.jpg', true, 3),  -- Id_Utilisateur 3 doit exister
-(true, 95, 1.1, '2025-06-10', '2025-06-10', '1234567890124', '2026', 'photo2.jpg', false, 4),  -- Id_Utilisateur 4 doit exister
-(false, 150, 1.5, '2025-07-15', '2025-07-15', '1234567890125', '2027', 'photo3.jpg', true, 5);  -- Id_Utilisateur 5 doit exister
+('true', '120', '1.5', '46022', '45838', 'ETU000000001', '2027', 'photo1.jpg', 'true', '1'), -- Id_Utilisateur 1 doit exister
+('true', '85', '1.0', '45945', '45797', 'ETU000000002', '2026', 'photo2.png', 'false', '2'), -- Id_Utilisateur 2 doit exister
+('true', '200', '2.0', '46023', '45839', 'ETU000000003', '2028', 'photo3.jpg', 'true', '3'), -- Id_Utilisateur 4 doit exister
+('true', '45', '1.2', '45748', '45772', 'ETU000000004', '2026', 'photo4.png', 'false', '4'), -- Id_Utilisateur 4 doit exister
+('false', '0', '1.0', '45787', '45787', 'ETU000000005', '2027', 'photo5.jpg', 'true', '5'); -- Id_Utilisateur 5 doit exister
 
 -- Type_Pub
 INSERT INTO Type_Pub (Libelle, Id_Emplacement_Pub_Positionner) VALUES
