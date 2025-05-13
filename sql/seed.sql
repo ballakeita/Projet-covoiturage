@@ -162,11 +162,18 @@ INSERT INTO Acheter (Id_Etudiant_Acheter, Id_Objet_Acheter, Nombre_Acheter, Date
 
 -- Etre_Amis
 INSERT INTO Etre_Amis (Id_Etudiant_Etre_Amis, Id_Etudiant_Etre_Amis_1) VALUES
-(1, 2),
-(2, 3),
-(3, 4),
-(4, 5),
-(5, 1);
+('1', '2'),
+('1', '3'),
+('1', '4'),
+('2', '1'),
+('2', '3'),
+('2', '4'),
+('3', '1'),
+('3', '2'),
+('3', '4'),
+('4', '1'),
+('4', '2'),
+('4', '3');
 
 -- Laisser_Avis
 INSERT INTO Laisser_Avis (Id_Etudiant_Laisser_Avis, Note, Commentaire, Signaler, Id_Trajet_Laisser_Avis) VALUES
