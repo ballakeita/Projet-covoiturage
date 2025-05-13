@@ -60,7 +60,12 @@ INSERT INTO Emplacement_Pub (Libelle) VALUES
 
 -- Marque_Vehicule
 INSERT INTO Marque_Vehicule (Libelle) VALUES
-('Peugeot'), ('Renault'), ('Citroën'), ('Tesla'), ('Toyota');
+('Renault'),
+('Peugeot'),
+('Tesla'),
+('Volkswagen'),
+('Citroën');
+
 
 -- Type_Vehicule
 INSERT INTO Type_Vehicule (Modele, Annee, Couleur, Id_Marque_Vehicule_Produire) VALUES
