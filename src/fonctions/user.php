@@ -44,7 +44,7 @@ function getVehiculeTypeByUtilisateur(int $id_utilisateur): array {
     $pdo = connexionBd();
 
     $sql = "
-        SELECT tv.Id_Type_Vehicule, tv.Libelle
+        SELECT tv.Id_Type_Vehicule
         FROM Type_Vehicule tv
         JOIN Posseder p ON p.Id_Type_Vehicule_Posseder = tv.Id_Type_Vehicule
         JOIN Etudiant e ON e.Id_Etudiant = p.Id_Etudiant_Posseder
