@@ -64,11 +64,12 @@ INSERT INTO Marque_Vehicule (Libelle) VALUES
 
 -- Type_Vehicule
 INSERT INTO Type_Vehicule (Modele, Annee, Couleur, Id_Marque_Vehicule_Produire) VALUES
-('Retirer', '2023', 'Jaune clair', 1),
-('Mieux', '2020', 'Vert foncé', 2),
-('Souvent', '2020', 'Blanc fumée', 3),
-('Oiseau', '2023', 'Vert océan foncé', 4),
-('Route', '2023', 'Jaune blanc navaro', 5);
+('Clio V', '2020', 'Rouge', '1'),
+('208', '2021', 'Bleu nuit', '2'),
+('Model 3', '2022', 'Blanc perle', '3'),
+('Golf 7', '2019', 'Noir', '4'),
+('C3', '2023', 'Gris métal', '5');
+
 
 -- Permis
 INSERT INTO Permis (Date_Expiration, Photo, Id_Etudiant_Disposer) VALUES
