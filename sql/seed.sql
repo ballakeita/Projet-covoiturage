@@ -222,7 +222,7 @@ INSERT INTO Administrateur (Date_Naissance, Adresse, Date_Creation_Compte, Id_Ro
 
 -- Sponsor
 INSERT INTO Sponsor (Nom, Id_Utilisateur) VALUES
-('TechPub SAS', 2);  -- Id_Utilisateur 2 doit exister dans la table Utilisateur
+('TechPub SAS', 7);  -- Id_Utilisateur 7 doit exister dans la table Utilisateur
 
 -- Etudiant
 INSERT INTO Etudiant (Status, Nombre_Points, Multiplicateur_Points, Date_Expiration_Multiplicateur, Date_Fin_Protection, Identifiant_Carte_Etudiant, Annee_Expiration_Carte_Etudiante, Photo_Carte_Etudiante, Pub, Id_Utilisateur) VALUES
