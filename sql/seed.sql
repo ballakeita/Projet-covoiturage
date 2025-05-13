@@ -261,8 +261,8 @@ INSERT INTO Arret (Heure_Passage, Adresse, Informations_Complementaires, Ordre, 
 ('18:30:00', 'Place de la Victoire', 'À côté du kiosque à journaux', '2', 'Bordeaux', '4'),
 ('10:00:00', 'Campus universitaire', 'Proche de la cafétéria', '1', 'Nantes', '5'),
 ('12:45:00', 'Centre-ville', 'Devant la médiathèque municipale', '2', 'Angers', '5'),
-('15:30:00', 'Port de commerce', 'Quai 2, près de l'entrepôt n°5', '3', 'La Rochelle', '5'),
-('17:00:00', 'Place centrale', 'Sous l’abribus près du rond-point', '1', 'Rennes', '6'),
+('15:30:00', 'Port de commerce', 'Quai 2, près de l entrepôt n°5', '3', 'La Rochelle', '5'),
+('17:00:00', 'Place centrale', 'Sous labribus près du rond-point', '1', 'Rennes', '6'),
 ('19:00:00', 'Université Rennes 2', 'Parking vélo couvert, entrée sud', '2', 'Rennes', '6');
 
 -- Trajet (utilise les arrets créés)
@@ -273,7 +273,6 @@ INSERT INTO Trajet (Places_Disponibles, Repartition_Points, Annulation, Date_Dep
 ('1', 'false', 'true', '2025-06-01', '1', '1'), -- Id_Type_Vehicule 1 et Id_Etudiant 1 doivent exister
 ('3', 'true', 'false', '2025-07-05', '4', '4'), -- Id_Type_Vehicule 4 et Id_Etudiant 4 doivent exister
 ('2', 'false', 'false', '2025-05-25', '3', '3'); -- Id_Type_Vehicule 3 et Id_Etudiant 3 doivent exister
-
 
 -- Réactiver les contraintes de clés étrangères
 SET session_replication_role = origin;
