@@ -3,15 +3,33 @@ SET session_replication_role = replica;
 
 -- Message
 INSERT INTO Message (Date_Message, Contenu) VALUES
-('1998-08-15 02:40:09', 'Bienvenue sur la plateforme !'),
-('1993-02-06 15:09:56', 'Nouveau trajet disponible.'),
-('1970-12-31 06:07:31', 'Votre réservation est confirmée.'),
-('1991-12-22 15:16:26', 'N''oubliez pas de laisser un avis.'),
-('2023-12-11 05:18:38', 'Votre publicité a été validée.');
+('2025-05-08 07:45:00', 'Quelqu’un part de La Roche pour aller à la fac ce matin ?'),
+('2025-05-08 07:47:00', 'Oui, je pars à 8h10. Il me reste 2 places.'),
+('2025-05-08 07:49:00', 'Super, tu peux me prendre devant la gare ?'),
+('2025-05-08 07:51:00', 'Pas de problème. Je passe vers 8h05.'),
+('2025-05-08 07:55:00', 'Moi aussi je cherche un covoit pour demain matin.'),
+('2025-05-08 07:58:00', 'Je pense y aller demain en voiture, départ à 7h50.'),
+('2025-05-08 08:00:00', 'Parfait, tu passes par le centre-ville ?'),
+('2025-05-08 08:02:00', 'Oui, je peux faire un détour rapide si besoin.'),
+('2025-05-08 08:05:00', 'Merci ! Je te confirme ce soir si je viens.'),
+('2025-05-08 08:10:00', 'Pensez à partager les frais d’essence');
 
 -- Categorie_Permis
 INSERT INTO Categorie_Permis (Libelle) VALUES
-('A'), ('B'), ('C'), ('D'), ('E');
+('AM'),
+('A1'),
+('A2'),
+('A'),
+('B'),
+('BE'),
+('C1'),
+('C1E'),
+('C'),
+('CE'),
+('D1'),
+('D1E'),
+('D'),
+('DE');
 
 -- Effet_Objet
 INSERT INTO Effet_Objet (Libelle) VALUES
@@ -39,11 +57,16 @@ INSERT INTO Code_Postal (Numero) VALUES
 
 -- Utilisateur
 INSERT INTO Utilisateur (Nom, Prenom, Mail, Telephone, Mot_De_Passe, Avatar, Derniere_Connexion) VALUES
-('Nom', 'Prenom', 'test@gmail.com', '3167439523', '$2y$10$wui1DUwP0aCYEkBvsF4nNeHTfTqRgTvJ4yToYe8rETVp86YazIGx6', 'https://www.lorempixel.com/100/100', '2025-04-09 17:32:49'),
-('Benard', 'Alex', 'tessieralfred@orange.fr', '7196129136', 'O++5gPnwasMF', 'https://dummyimage.com/100x100', '2024-07-17 16:15:14'),
-('Guérin', 'Paul', 'anouk15@gauthier.fr', '0966434282', ')lR1SIiBxcjG', 'https://www.lorempixel.com/100/100', '2024-08-22 20:03:34'),
-('Dos Santos', 'Denise', 'edenis@bruneau.fr', '0174083600', '$+@GdQkWt)S3', 'https://www.lorempixel.com/100/100', '2024-12-29 19:33:43'),
-('Albert', 'Marie', 'salmonthibaut@gmail.com', '2600089250', 'itwnQltD_v7&', 'https://placeimg.com/100/100/any', '2025-03-30 03:43:31');
+('Dupont', 'Jean', 'jean.dupont@example.com', '612345678', '$2y$10$HdWVjbvzJadktnz7Lco4m.AP/RCvOGG6Xhrgqy8iKxPu3DNev/THS', 'avatar1.png', '09/05/2025 08:45:00')",
+('Martin', 'Claire', 'claire.martin@example.com', '623456789', '$2y$10$n1UiDrdrX2Y3nLQAIFgWPeEVXDI92J39NhuiePw7YByZyHsI4f56S ', 'avatar2.jpg', '08/05/2025 17:20:00')",
+('Bernard', 'Luc', 'luc.bernard@example.com', '634567890', '$2y$10$XlEL0jjou6U/BbUqTdU1Pe7vtIzFIp/VCrTdRaPagEskq6C3A8z/C ', 'avatar3.png', '07/05/2025 12:10:00')",
+('Petit', 'Julie', 'julie.petit@example.com', '645678901', '$2y$10$DKNJMetIjg8ozoqn3bMKUekdx96qEb3X93vV3QvVaYB6yZSJL5n4m ', 'avatar4.jpg', '06/05/2025 10:00:00')",
+('Robert', 'Marc', 'marc.robert@example.com', '656789012', '$2y$10$lvO9/E1lbE.HroiD.mVjM.a9c.wIHwKtSOhtWjnddRIQPUBgZXCnm ', 'avatar5.png', '05/05/2025 09:15:00')",
+('Richard', 'Sophie', 'sophie.richard@example.com', '667890123', '$2y$10$tiNm73WBfjCVxFWaJON0b.Y8Quqpat/e3yFNZsqtzg5KkqDn8qHKG ', 'avatar6.jpg', '04/05/2025 13:50:00')",
+('Durand', 'Nicolas', 'nicolas.durand@example.com', '678901234', '$2y$10$WVeNfALWjxM71Oa7xytQ0edrBmbwdN5B9yZOIywiu2t5v3X3W1VHy ', 'avatar7.png', '03/05/2025 15:30:00')",
+('Leroy', 'Emma', 'emma.leroy@example.com', '689012345', '$2y$10$2UdvV4EOOVMIwd5S2ukdmeqWe8NGlJ1lfKQoDBYGnc6l9QlDFwIAu ', 'avatar8.jpg', '02/05/2025 11:25:00')",
+('Moreau', 'Thomas', 'thomas.moreau@example.com', '690123456', '$2y$10$nPI6/Lgnz2D1wJRGanOicOguVtfLtcJGeGxpRfHwe/n0lOanrbGfS ', 'avatar9.png', '01/05/2025 16:00:00')",
+('Simon', 'Laura', 'laura.simon@example.com', '601234567', '$2y$10$zn2AZgmwB0KCVXNsTVTuWO98.7TrEGNKkBHTyF9iBvAh4fTSIKhgO ', 'avatar10.jpg', '30/04/2025 18:40:00')";
 
 -- Emplacement_Pub
 INSERT INTO Emplacement_Pub (Libelle) VALUES
@@ -55,23 +78,29 @@ INSERT INTO Emplacement_Pub (Libelle) VALUES
 
 -- Marque_Vehicule
 INSERT INTO Marque_Vehicule (Libelle) VALUES
-('Peugeot'), ('Renault'), ('Citroën'), ('Tesla'), ('Toyota');
+('Renault'),
+('Peugeot'),
+('Tesla'),
+('Volkswagen'),
+('Citroën');
+
 
 -- Type_Vehicule
 INSERT INTO Type_Vehicule (Modele, Annee, Couleur, Id_Marque_Vehicule_Produire) VALUES
-('Retirer', '2023', 'Jaune clair', 1),
-('Mieux', '2020', 'Vert foncé', 2),
-('Souvent', '2020', 'Blanc fumée', 3),
-('Oiseau', '2023', 'Vert océan foncé', 4),
-('Route', '2023', 'Jaune blanc navaro', 5);
+('Clio V', '2020', 'Rouge', '1'),
+('208', '2021', 'Bleu nuit', '2'),
+('Model 3', '2022', 'Blanc perle', '3'),
+('Golf 7', '2019', 'Noir', '4'),
+('C3', '2023', 'Gris métal', '5');
+
 
 -- Permis
 INSERT INTO Permis (Date_Expiration, Photo, Id_Etudiant_Disposer) VALUES
-('2026-06-15', 'https://photos.permis/1.jpg', 1),
-('2027-08-12', 'https://photos.permis/2.jpg', 2),
-('2025-12-30', 'https://photos.permis/3.jpg', 3),
-('2028-03-01', 'https://photos.permis/4.jpg', 4),
-('2026-10-10', 'https://photos.permis/5.jpg', 5);
+('48714', 'permis1.jpg', '1'),
+('47809', 'permis2.jpg', '2'),
+('47339', 'permis3.jpg', '3'),
+('47880', 'permis4.jpg', '4');
+
 
 -- Concerner
 INSERT INTO Concerner (Id_Permis_Concerner, Id_Categorie_Permis_Concerner) VALUES
@@ -171,9 +200,11 @@ INSERT INTO Sponsor (Nom, Id_Utilisateur) VALUES
 
 -- Etudiant
 INSERT INTO Etudiant (Status, Nombre_Points, Multiplicateur_Points, Date_Expiration_Multiplicateur, Date_Fin_Protection, Identifiant_Carte_Etudiant, Annee_Expiration_Carte_Etudiante, Photo_Carte_Etudiante, Pub, Id_Utilisateur) VALUES
-(true, 120, 1.2, '2025-05-20', '2025-05-20', '1234567890123', '2025', 'photo1.jpg', true, 3),  -- Id_Utilisateur 3 doit exister
-(true, 95, 1.1, '2025-06-10', '2025-06-10', '1234567890124', '2026', 'photo2.jpg', false, 4),  -- Id_Utilisateur 4 doit exister
-(false, 150, 1.5, '2025-07-15', '2025-07-15', '1234567890125', '2027', 'photo3.jpg', true, 5);  -- Id_Utilisateur 5 doit exister
+('true', '120', '1.5', '46022', '45838', 'ETU000000001', '2027', 'photo1.jpg', 'true', '1'), -- Id_Utilisateur 1 doit exister
+('true', '85', '1.0', '45945', '45797', 'ETU000000002', '2026', 'photo2.png', 'false', '2'), -- Id_Utilisateur 2 doit exister
+('true', '200', '2.0', '46023', '45839', 'ETU000000003', '2028', 'photo3.jpg', 'true', '3'), -- Id_Utilisateur 4 doit exister
+('true', '45', '1.2', '45748', '45772', 'ETU000000004', '2026', 'photo4.png', 'false', '4'), -- Id_Utilisateur 4 doit exister
+('false', '0', '1.0', '45787', '45787', 'ETU000000005', '2027', 'photo5.jpg', 'true', '5'); -- Id_Utilisateur 5 doit exister
 
 -- Type_Pub
 INSERT INTO Type_Pub (Libelle, Id_Emplacement_Pub_Positionner) VALUES
