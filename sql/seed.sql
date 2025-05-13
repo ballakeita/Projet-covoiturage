@@ -178,11 +178,12 @@ INSERT INTO Laisser_Avis (Id_Etudiant_Laisser_Avis, Note, Commentaire, Signaler,
 
 -- Reserver
 INSERT INTO Reserver (Id_Trajet_Reserver, Id_Etudiant_Reserver, Date_Reservation, Annulation, Arret_Depart, Arret_Arrivee, Validation) VALUES
-(1, 2, '2024-04-15 08:00:00', true, 1, 2, true),
-(2, 3, '2024-04-16 09:30:00', true, 2, 3, false),
-(3, 4, '2024-04-17 07:45:00', false, 1, 3, false),
-(4, 5, '2024-04-18 10:00:00', true, 1, 2, true),
-(5, 1, '2024-04-19 11:15:00', false, 2, 3, true);
+('1', '2', '01/05/2025 12:00:00', 'false', '1', '3', 'true'),
+('1', '3', '02/05/2025 14:30:00', 'false', '2', '3', 'true'),
+('2', '1', '01/06/2025 11:00:00', 'false', '4', '5', 'false'),
+('3', '4', '05/05/2025 10:00:00', 'false', '6', '7', 'true'),
+('5', '1', '20/06/2025 17:00:00', 'false', '10', '12', 'false'),
+('6', '2', '18/05/2025 09:00:00', 'true', '13', '14', 'false');
 
 -- Voir
 INSERT INTO Voir (Id_Etudiant, Id_Pub, Nombre_Vu) VALUES
