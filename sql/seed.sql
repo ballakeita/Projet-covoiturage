@@ -91,11 +91,11 @@ INSERT INTO Type_Vehicule (Modele, Annee, Couleur, Id_Marque_Vehicule_Produire) 
 
 -- Permis
 INSERT INTO Permis (Date_Expiration, Photo, Id_Etudiant_Disposer) VALUES
-('2026-06-15', 'https://photos.permis/1.jpg', 1),
-('2027-08-12', 'https://photos.permis/2.jpg', 2),
-('2025-12-30', 'https://photos.permis/3.jpg', 3),
-('2028-03-01', 'https://photos.permis/4.jpg', 4),
-('2026-10-10', 'https://photos.permis/5.jpg', 5);
+('48714', 'permis1.jpg', '1'),
+('47809', 'permis2.jpg', '2'),
+('47339', 'permis3.jpg', '3'),
+('47880', 'permis4.jpg', '4');
+
 
 -- Concerner
 INSERT INTO Concerner (Id_Permis_Concerner, Id_Categorie_Permis_Concerner) VALUES
