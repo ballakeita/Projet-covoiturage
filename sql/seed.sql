@@ -112,11 +112,16 @@ INSERT INTO Concerner (Id_Permis_Concerner, Id_Categorie_Permis_Concerner) VALUE
 
 -- Envoyer
 INSERT INTO Envoyer (Id_Message_Envoyer, Id_Etudiant_Envoyer) VALUES
-(1, 1),
-(2, 2),
-(3, 3),
-(4, 4),
-(5, 5);
+('1', '1'),
+('2', '2'),
+('3', '3'),
+('4', '2'),
+('5', '4'),
+('6', '1'),
+('7', '4'),
+('8', '2'),
+('9', '3'),
+('10', '1');
 
 -- Recevoir
 INSERT INTO Recevoir (Id_Message_Recevoir, Id_Etudiant_Recevoir) VALUES
