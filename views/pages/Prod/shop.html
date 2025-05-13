@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Boutique Virtuelle</title>
+  <link rel="stylesheet" href="shop.css">
+</head>
+
+<body>
+ <header class="main-header">
+    <!-- Logo -->
+    <a href="home.html" class="logo">
+      <img src="logo.png" alt="Logo SoraDrive">
+      <div class="sora-logo"></div>
+    </a>
+
+    <!-- Recherche -->
+    <div class="search-container">
+      <input class="search-input" type="text"
+             id="searchInput"
+             placeholder="Rechercher un objet..."
+             oninput="filterItems()">
+      <button class="btn-search" aria-label="Rechercher">🔍</button>
+    </div>
+
+    <!-- Navigation principale -->
+    <nav class="main-nav">
+      <a href="home.html">Accueil</a>
+      <a href="gestionTrajets.html">Trajets</a>
+      <a href="./profil.html">Profil</a>
+      <a href="Contact.html">Contact</a>
+    </nav>
+  </header>
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Rechercher un objet..." oninput="filterItems()">
+  </div>
+  <div class="shop-container" id="shop">
+    <div class="item-card" data-name="Potion de Soin" data-price="100" data-effect="Restaure 50 PV" data-img="https://via.placeholder.com/200x120?text=Potion">
+      <img src="https://via.placeholder.com/200x120?text=Potion" alt="Potion">
+      <h4>Potion de Soin</h4>
+      <p>100 points</p>
+    </div>
+    <div class="item-card" data-name="Cape d’Invisibilité" data-price="300" data-effect="Invisibilité pendant 10s" data-img="https://via.placeholder.com/200x120?text=Cape">
+      <img src="https://via.placeholder.com/200x120?text=Cape" alt="Cape">
+      <h4>Cape d’invisibilité</h4>
+      <p>300 points</p>
+    </div>
+  </div>
+
+  <div class="overlay" id="productOverlay">
+    <div class="product-popup" id="popup">
+      <img id="popupImg" src="" alt="Image produit">
+      <h3 id="popupName"></h3>
+      <p id="popupEffect"></p>
+      <p><strong id="popupPrice"></strong> points</p>
+      <button class="btn" onclick="buyProduct()">Acheter</button>
+    </div>
+  </div>
+
+  <audio id="buy-sound" src="https://www.soundjay.com/buttons/sounds/button-09.mp3" preload="auto"></audio>
+
+  <script>
+    const overlay = document.getElementById('productOverlay');
+    const popupName = document.getElementById('popupName');
+    const popupPrice = document.getElementById('popupPrice');
+    const popupEffect = document.getElementById('popupEffect');
+    const popupImg = document.getElementById('popupImg');
+    let currentProduct = null;
+
+    document.querySelectorAll('.item-card').forEach(card => {
+      card.addEventListener('click', () => {
+        currentProduct = {
+          name: card.dataset.name,
+          price: card.dataset.price,
+          effect: card.dataset.effect,
+          img: card.dataset.img
+        };
+        popupName.textContent = currentProduct.name;
+        popupPrice.textContent = currentProduct.price;
+        popupEffect.textContent = currentProduct.effect;
+        popupImg.src = currentProduct.img;
+        overlay.style.display = 'flex';
+      });
+    });
+
+    function buyProduct() {
+      document.getElementById('buy-sound').play();
+      alert(`Vous avez acheté : ${currentProduct.name} pour ${currentProduct.price} points !`);
+      overlay.style.display = 'none';
+      // fetch('acheter.php', { method: 'POST', body: JSON.stringify(currentProduct), headers: { 'Content-Type': 'application/json' }});
+    }
+
+    overlay.addEventListener('click', e => {
+      if (e.target === overlay) {
+        overlay.style.display = 'none';
+      }
+    });
+
+    function filterItems() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      document.querySelectorAll('.item-card').forEach(card => {
+        const name = card.dataset.name.toLowerCase();
+        card.style.display = name.includes(query) ? '' : 'none';
+      });
+    }
+  </script>
+</body>
+</html>
