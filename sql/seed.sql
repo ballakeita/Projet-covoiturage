@@ -258,12 +258,12 @@ INSERT INTO Arret (Heure_Passage, Adresse, Informations_Complementaires, Ordre, 
 
 -- Trajet (utilise les arrets créés)
 INSERT INTO Trajet (Places_Disponibles, Repartition_Points, Annulation, Date_Depart, Id_Type_Vehicule_Effectuer, Id_Etudiant_Creer) VALUES
-('3', 'true', 'false', '45787', '1', '1'), -- Id_Type_Vehicule 1 et Id_Etudiant 3 doivent exister
-('2', 'false', 'false', '45823', '2', '2'), -- Id_Type_Vehicule 2 et Id_Etudiant 2 doivent exister
-('4', 'true', 'false', '45790', '3', '3'), -- Id_Type_Vehicule 3 et Id_Etudiant 3 doivent exister
-('1', 'false', 'true', '45809', '1', '1'), -- Id_Type_Vehicule 1 et Id_Etudiant 1 doivent exister
-('3', 'true', 'false', '45843', '4', '4'), -- Id_Type_Vehicule 4 et Id_Etudiant 4 doivent exister
-('2', 'false', 'false', '45802', '3', '3'); -- Id_Type_Vehicule 3 et Id_Etudiant 3 doivent exister
+('3', 'true', 'false', '2025-05-10', '1', '1'), -- Id_Type_Vehicule 1 et Id_Etudiant 3 doivent exister
+('2', 'false', 'false', '2025-06-15', '2', '2'), -- Id_Type_Vehicule 2 et Id_Etudiant 2 doivent exister
+('4', 'true', 'false', '2025-05-13', '3', '3'), -- Id_Type_Vehicule 3 et Id_Etudiant 3 doivent exister
+('1', 'false', 'true', '2025-06-01', '1', '1'), -- Id_Type_Vehicule 1 et Id_Etudiant 1 doivent exister
+('3', 'true', 'false', '2025-07-05', '4', '4'), -- Id_Type_Vehicule 4 et Id_Etudiant 4 doivent exister
+('2', 'false', 'false', '2025-05-25', '3', '3'); -- Id_Type_Vehicule 3 et Id_Etudiant 3 doivent exister
 
 
 -- Réactiver les contraintes de clés étrangères
