@@ -218,7 +218,7 @@ INSERT INTO Pub (Titre, Description, Status, Url_Image, Url_Video, Url_Redirecti
 
 -- Administrateur
 INSERT INTO Administrateur (Date_Naissance, Adresse, Date_Creation_Compte, Id_Role_Detenir, Id_Ville_Vivre, Id_Utilisateur) VALUES
-('1990-11-23', '57 Rue Pierre Taittinger', '2025-05-12', '1', '17246', '6');
+('1990-11-23', '57 Rue Pierre Taittinger', '2025-05-12', '1', '17246', '6'); -- Id_Utilisateur 6 doit exister dans la table Utilisateur
 
 -- Sponsor
 INSERT INTO Sponsor (Nom, Id_Utilisateur) VALUES
