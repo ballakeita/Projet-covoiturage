@@ -18,7 +18,7 @@ if (isset($_GET["action"])) {
                 isset($_GET['places_disponibles'], $_GET['repartition_points'], $_GET['date_depart'])
             ) {
                 $response = getVehiculeTypeByUtilisateur($_SESSION['id_utilisateur']);
-                $id_vehicule = $response['success'] ? $response['vehicule']['Id_Type_Vehicule'] : $_GET['id_type_vehicule_effectuer'];
+                $id_vehicule = $response['success'] ? $response['vehicule']['id_type_vehicule'] : 0;
                 $success = create_trajet(
                     $_GET['places_disponibles'],
                     $_GET['repartition_points'],
