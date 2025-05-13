@@ -120,11 +120,32 @@ INSERT INTO Envoyer (Id_Message_Envoyer, Id_Etudiant_Envoyer) VALUES
 
 -- Recevoir
 INSERT INTO Recevoir (Id_Message_Recevoir, Id_Etudiant_Recevoir) VALUES
-(1, 2),
-(2, 3),
-(3, 4),
-(4, 5),
-(5, 1);
+('1', '2'),
+('1', '3'),
+('1', '4'),
+('2', '1'),
+('2', '3'),
+('2', '4'),
+('3', '2'),
+('3', '4'),
+('4', '1'),
+('4', '3'),
+('5', '2'),
+('5', '3'),
+('5', '4'),
+('6', '1'),
+('6', '3'),
+('6', '4'),
+('7', '2'),
+('7', '4'),
+('8', '1'),
+('8', '3'),
+('9', '2'),
+('9', '4'),
+('10', '1'),
+('10', '2'),
+('10', '3'),
+('10', '4');
 
 -- Acheter
 INSERT INTO Acheter (Id_Etudiant_Acheter, Id_Objet_Acheter, Nombre_Acheter, Date_Achat) VALUES
