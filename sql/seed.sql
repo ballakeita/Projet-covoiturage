@@ -3,11 +3,16 @@ SET session_replication_role = replica;
 
 -- Message
 INSERT INTO Message (Date_Message, Contenu) VALUES
-('1998-08-15 02:40:09', 'Bienvenue sur la plateforme !'),
-('1993-02-06 15:09:56', 'Nouveau trajet disponible.'),
-('1970-12-31 06:07:31', 'Votre réservation est confirmée.'),
-('1991-12-22 15:16:26', 'N''oubliez pas de laisser un avis.'),
-('2023-12-11 05:18:38', 'Votre publicité a été validée.');
+('2025-05-08 07:45:00', 'Quelqu’un part de La Roche pour aller à la fac ce matin ?'),
+('2025-05-08 07:47:00', 'Oui, je pars à 8h10. Il me reste 2 places.'),
+('2025-05-08 07:49:00', 'Super, tu peux me prendre devant la gare ?'),
+('2025-05-08 07:51:00', 'Pas de problème. Je passe vers 8h05.'),
+('2025-05-08 07:55:00', 'Moi aussi je cherche un covoit pour demain matin.'),
+('2025-05-08 07:58:00', 'Je pense y aller demain en voiture, départ à 7h50.'),
+('2025-05-08 08:00:00', 'Parfait, tu passes par le centre-ville ?'),
+('2025-05-08 08:02:00', 'Oui, je peux faire un détour rapide si besoin.'),
+('2025-05-08 08:05:00', 'Merci ! Je te confirme ce soir si je viens.'),
+('2025-05-08 08:10:00', 'Pensez à partager les frais d’essence');
 
 -- Categorie_Permis
 INSERT INTO Categorie_Permis (Libelle) VALUES
