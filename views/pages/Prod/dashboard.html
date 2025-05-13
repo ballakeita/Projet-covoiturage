@@ -50,16 +50,12 @@
       <div class="stat-value" id="monthly-rides">çamarchepas</div>
     </div>
     <div class="stat-box">
-      <div class="stat-title">Sponsors actifs</div>
-      <div class="stat-value" id="active-sponsors">12</div>
-    </div>
-    <div class="stat-box">
-      <div class="stat-title">Destination populaire du mois</div>
-      <div class="stat-value" id="destinationpop">Chargement...</div>
-    </div>
-    <div class="stat-box">
       <div class="stat-title">Trajet annulé</div>
       <div class="stat-value" id="monthly-annulations">Chargement...</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-title">Utilisateurs avec Permis</div>
+      <div class="stat-value" id="Permis">Chargement...</div>
     </div>
   </main>
 
@@ -105,10 +101,13 @@
         fetch('../../../src/controllers/statistique_controller.php?action=trajets_par_mois').then(res => res.json()), // verifier l'arbo
         fetch('../../../src/controllers/statistique_controller.php?action=nombre_trajets_annules').then(res => res.json()), // verifier l'arbo
         fetch('../../../src/controllers/statistique_controller.php?action=villes_destination_populaires').then(res => res.json()), // verifier l'arbo
-      ]).then(([trajets, annuls, destination]) => {
+        fetch('../../../src/controllers/statistique_controller.php?action=pourcentage_permis').then(res => res.json())
+      ]).then(([trajets, annuls, destination, permis]) => {
         trajetsData = trajets;
         annulationsData = annuls;
         destinationData = destination;
+
+        document.getElementById('Permis').textContent = permis.pourcentage + ' %';
         updateTopDestinationsDisplay();
       });
 
