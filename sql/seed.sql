@@ -11,7 +11,20 @@ INSERT INTO Message (Date_Message, Contenu) VALUES
 
 -- Categorie_Permis
 INSERT INTO Categorie_Permis (Libelle) VALUES
-('A'), ('B'), ('C'), ('D'), ('E');
+('AM'),
+('A1'),
+('A2'),
+('A'),
+('B'),
+('BE'),
+('C1'),
+('C1E'),
+('C'),
+('CE'),
+('D1'),
+('D1E'),
+('D'),
+('DE');
 
 -- Effet_Objet
 INSERT INTO Effet_Objet (Libelle) VALUES
