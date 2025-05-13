@@ -250,11 +250,20 @@ INSERT INTO Objet (Libelle, Prix, Virtuel, Id_Effet_Objet_Avoir) VALUES
 
 -- Arret (on suppose que chaque ville a un arrêt)
 INSERT INTO Arret (Heure_Passage, Adresse, Informations_Complementaires, Ordre, Id_Ville_Situer, Id_Trajet_Prevoir) VALUES
-('08:00:00', 'Gare Paris', 'À côté de la sortie principale', 1, 1, 1),  -- Id_Ville 1 et Id_Trajet 1 doivent exister
-('09:30:00', 'Station Lyon Centre', 'Près du centre commercial', 2, 2, 2),
-('10:15:00', 'Vieux-Port Marseille', 'En face du musée', 3, 3, 3),
-('11:00:00', 'Place du Capitole', 'Proche du théâtre', 4, 4, 4),
-('12:00:00', 'Grand Place Lille', 'À côté du métro', 5, 5, 5);
+('08:00:00', 'Gare Lille Flandres', 'Départ principal', '1', 'Lille', '1'),
+('10:30:00', 'Place de la République', 'Pause', '2', 'Amiens', '1'),
+('12:00:00', 'Gare Saint-Lazare', 'Arrivée prévue', '3', 'Paris', '1'),
+('14:00:00', 'Université de Montpellier', 'Départ', '1', 'Montpellier', '2'),
+('16:30:00', 'Place de la Comédie', 'Fin de trajet', '2', 'Nîmes', '2'),
+('09:00:00', 'Centre ville', 'Départ', '1', 'Lyon', '3'),
+('11:15:00', 'Parking Leclerc', 'Fin', '2', 'Saint-Étienne', '3'),
+('15:00:00', 'Gare Bordeaux Saint-Jean', 'Départ', '1', 'Bordeaux', '4'),
+('18:30:00', 'Place de la Victoire', 'Unique arrêt', '2', 'Bordeaux', '4'),
+('10:00:00', 'Campus universitaire', 'Trajet vers festival', '1', 'Nantes', '5'),
+('12:45:00', 'Centre-ville', 'Escale', '2', 'Angers', '5'),
+('15:30:00', 'Port de commerce', 'Fin de trajet', '3', 'La Rochelle', '5'),
+('17:00:00', 'Place centrale', 'Départ', '1', 'Rennes', '6'),
+('19:00:00', 'Université Rennes 2', 'Fin', '2', 'Rennes', '6');
 
 -- Trajet (utilise les arrets créés)
 INSERT INTO Trajet (Places_Disponibles, Repartition_Points, Annulation, Date_Depart, Id_Type_Vehicule_Effectuer, Id_Etudiant_Creer) VALUES
