@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8" />
   <title>Boutique Virtuelle</title>
@@ -7,44 +8,50 @@
 </head>
 
 <body>
- <header class="main-header">
+  <header class="main-header">
     <!-- Logo -->
     <a href="home.html" class="logo">
       <img src="logo.png" alt="Logo SoraDrive">
       <div class="sora-logo"></div>
     </a>
+    <div class="user-stats">
+      <div class="stat">✒ <span id="points-display">Chargement</span></div>
+    </div><!-- Ajout -->
 
     <!-- Recherche -->
     <div class="search-container">
-      <input class="search-input" type="text"
-             id="searchInput"
-             placeholder="Rechercher un objet..."
-             oninput="filterItems()">
+      <input class="search-input" type="text" id="searchInput" placeholder="Rechercher un objet..."
+        oninput="filterItems()">
       <button class="btn-search" aria-label="Rechercher">🔍</button>
     </div>
 
     <!-- Navigation principale -->
     <nav class="main-nav">
-  <a href="home.html">Accueil</a>
-  <a href="gestionTrajets.html">Trajets</a>
-  <a href="./profil.html">Profil</a>
-  <a href="Contact.html">Contact</a>
-  <a href="shop.html">Boutique</a> <!-- Ajout -->
-  </nav>
+      <a href="home.html">Accueil</a>
+      <a href="gestionTrajets.html">Trajets</a>
+      <a href="./profil.html">Profil</a>
+      <a href="Contact.html">Contact</a>
+      <a href="shop.html">Boutique</a>
+
+    </nav>
   </header>
   <div class="search-bar">
     <input type="text" id="searchInput" placeholder="Rechercher un objet..." oninput="filterItems()">
   </div>
   <div class="shop-container" id="shop">
-    <div class="item-card" data-name="Potion de Soin" data-price="100" data-effect="Restaure 50 PV" data-img="https://via.placeholder.com/200x120?text=Potion">
+    <div class="item-card" data-name="Potion de Soin" data-price="100" data-effect="Restaure 50 PV"
+      data-img="https://via.placeholder.com/200x120?text=Potion">
       <img src="https://via.placeholder.com/200x120?text=Potion" alt="Potion">
       <h4>Potion de Soin</h4>
       <p>100 points</p>
+      Quantité : <span class="item-qty">0</span>
     </div>
-    <div class="item-card" data-name="Cape d’Invisibilité" data-price="300" data-effect="Invisibilité pendant 10s" data-img="https://via.placeholder.com/200x120?text=Cape">
+    <div class="item-card" data-name="Cape d’Invisibilité" data-price="300" data-effect="Invisibilité pendant 10s"
+      data-img="https://via.placeholder.com/200x120?text=Cape">
       <img src="https://via.placeholder.com/200x120?text=Cape" alt="Cape">
       <h4>Cape d’invisibilité</h4>
       <p>300 points</p>
+      Quantité : <span class="item-qty">0</span>
     </div>
   </div>
 
@@ -61,6 +68,12 @@
   <audio id="buy-sound" src="https://www.soundjay.com/buttons/sounds/button-09.mp3" preload="auto"></audio>
 
   <script>
+
+    let userPoints = 5000;
+    document.getElementById('points-display').textContent = userPoints.toLocaleString();
+
+    const itemQuantities = {}; // Clé = nom du produit, valeur = quantité achetée
+
     const overlay = document.getElementById('productOverlay');
     const popupName = document.getElementById('popupName');
     const popupPrice = document.getElementById('popupPrice');
@@ -85,10 +98,38 @@
     });
 
     function buyProduct() {
-      document.getElementById('buy-sound').play();
-      alert(`Vous avez acheté : ${currentProduct.name} pour ${currentProduct.price} points !`);
-      overlay.style.display = 'none';
-      // fetch('acheter.php', { method: 'POST', body: JSON.stringify(currentProduct), headers: { 'Content-Type': 'application/json' }});
+      const price = parseInt(currentProduct.price);
+
+      if (userPoints >= price) {
+        userPoints -= price;
+        document.getElementById('buy-sound').play();
+        document.getElementById('buy-sound').play();
+        alert(`Vous avez acheté : ${currentProduct.name} pour ${currentProduct.price} points !`);
+        overlay.style.display = 'none';
+        // fetch('acheter.php', { method: 'POST', body: JSON.stringify(currentProduct), headers: { 'Content-Type': 'application/json' }});
+        alert(`Vous avez acheté : ${currentProduct.name} pour ${price} points !`);
+
+        // Met à jour l'affichage des points
+        document.getElementById('points-display').textContent = userPoints.toLocaleString();
+
+        // Incrémente la quantité
+        if (!itemQuantities[currentProduct.name]) {
+          itemQuantities[currentProduct.name] = 0;
+        }
+        itemQuantities[currentProduct.name]++;
+
+        // Mets à jour le champ quantité dans la carte
+        document.querySelectorAll('.item-card').forEach(card => {
+          if (card.dataset.name === currentProduct.name) {
+            card.querySelector('.item-qty').textContent = itemQuantities[currentProduct.name];
+          }
+        });
+
+        overlay.style.display = 'none';
+      } else {
+        alert("Vous n'avez pas assez de points !");
+      }
+
     }
 
     overlay.addEventListener('click', e => {
@@ -106,4 +147,5 @@
     }
   </script>
 </body>
+
 </html>
