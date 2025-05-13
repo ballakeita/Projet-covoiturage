@@ -162,27 +162,33 @@ INSERT INTO Acheter (Id_Etudiant_Acheter, Id_Objet_Acheter, Nombre_Acheter, Date
 
 -- Etre_Amis
 INSERT INTO Etre_Amis (Id_Etudiant_Etre_Amis, Id_Etudiant_Etre_Amis_1) VALUES
-(1, 2),
-(2, 3),
-(3, 4),
-(4, 5),
-(5, 1);
+('1', '2'),
+('1', '3'),
+('1', '4'),
+('2', '1'),
+('2', '3'),
+('2', '4'),
+('3', '1'),
+('3', '2'),
+('3', '4'),
+('4', '1'),
+('4', '2'),
+('4', '3');
 
 -- Laisser_Avis
 INSERT INTO Laisser_Avis (Id_Etudiant_Laisser_Avis, Note, Commentaire, Signaler, Id_Trajet_Laisser_Avis) VALUES
-(1, 5, 'Très bon trajet !', false, 1),
-(2, 4, 'Ponctuel et sympa', false, 2),
-(3, 3, 'Peut mieux faire', true, 3),
-(4, 5, 'Parfait !', false, 4),
-(5, 2, 'Retardé', true, 5);
+('2', '5', 'Chauffeur très ponctuel, merci !', 'false', '1'),
+('3', '4', 'Un peu de retard mais agréable.', 'false', '1'),
+('4', '5', 'Super trajet, je recommande !', 'false', '3');
 
 -- Reserver
 INSERT INTO Reserver (Id_Trajet_Reserver, Id_Etudiant_Reserver, Date_Reservation, Annulation, Arret_Depart, Arret_Arrivee, Validation) VALUES
-(1, 2, '2024-04-15 08:00:00', true, 1, 2, true),
-(2, 3, '2024-04-16 09:30:00', true, 2, 3, false),
-(3, 4, '2024-04-17 07:45:00', false, 1, 3, false),
-(4, 5, '2024-04-18 10:00:00', true, 1, 2, true),
-(5, 1, '2024-04-19 11:15:00', false, 2, 3, true);
+('1', '2', '01/05/2025 12:00:00', 'false', '1', '3', 'true'),
+('1', '3', '02/05/2025 14:30:00', 'false', '2', '3', 'true'),
+('2', '1', '01/06/2025 11:00:00', 'false', '4', '5', 'false'),
+('3', '4', '05/05/2025 10:00:00', 'false', '6', '7', 'true'),
+('5', '1', '20/06/2025 17:00:00', 'false', '10', '12', 'false'),
+('6', '2', '18/05/2025 09:00:00', 'true', '13', '14', 'false');
 
 -- Voir
 INSERT INTO Voir (Id_Etudiant, Id_Pub, Nombre_Vu) VALUES
@@ -250,21 +256,29 @@ INSERT INTO Objet (Libelle, Prix, Virtuel, Id_Effet_Objet_Avoir) VALUES
 
 -- Arret (on suppose que chaque ville a un arrêt)
 INSERT INTO Arret (Heure_Passage, Adresse, Informations_Complementaires, Ordre, Id_Ville_Situer, Id_Trajet_Prevoir) VALUES
-('08:00:00', 'Gare Paris', 'À côté de la sortie principale', 1, 1, 1),  -- Id_Ville 1 et Id_Trajet 1 doivent exister
-('09:30:00', 'Station Lyon Centre', 'Près du centre commercial', 2, 2, 2),
-('10:15:00', 'Vieux-Port Marseille', 'En face du musée', 3, 3, 3),
-('11:00:00', 'Place du Capitole', 'Proche du théâtre', 4, 4, 4),
-('12:00:00', 'Grand Place Lille', 'À côté du métro', 5, 5, 5);
+('08:00:00', 'Gare Lille Flandres', 'Devant la sortie principale', '1', 'Lille', '1'),
+('10:30:00', 'Place de la République', 'Près de la fontaine centrale', '2', 'Amiens', '1'),
+('12:00:00', 'Gare Saint-Lazare', 'Parking dépose-minute, quai 3', '3', 'Paris', '1'),
+('14:00:00', 'Université de Montpellier', 'Arrêt de bus devant l'entrée B', '1', 'Montpellier', '2'),
+('16:30:00', 'Place de la Comédie', 'À côté du manège', '2', 'Nîmes', '2'),
+('09:00:00', 'Centre ville', 'Parking souterrain sortie Nord', '1', 'Lyon', '3'),
+('11:15:00', 'Parking Leclerc', 'Zone stationnement longue durée', '2', 'Saint-Étienne', '3'),
+('15:00:00', 'Gare Bordeaux Saint-Jean', 'Devant le panneau info voyageurs', '1', 'Bordeaux', '4'),
+('18:30:00', 'Place de la Victoire', 'À côté du kiosque à journaux', '2', 'Bordeaux', '4'),
+('10:00:00', 'Campus universitaire', 'Proche de la cafétéria', '1', 'Nantes', '5'),
+('12:45:00', 'Centre-ville', 'Devant la médiathèque municipale', '2', 'Angers', '5'),
+('15:30:00', 'Port de commerce', 'Quai 2, près de l entrepôt n°5', '3', 'La Rochelle', '5'),
+('17:00:00', 'Place centrale', 'Sous labribus près du rond-point', '1', 'Rennes', '6'),
+('19:00:00', 'Université Rennes 2', 'Parking vélo couvert, entrée sud', '2', 'Rennes', '6');
 
 -- Trajet (utilise les arrets créés)
 INSERT INTO Trajet (Places_Disponibles, Repartition_Points, Annulation, Date_Depart, Id_Type_Vehicule_Effectuer, Id_Etudiant_Creer) VALUES
-('3', 'true', 'false', '45787', '1', '1'), -- Id_Type_Vehicule 1 et Id_Etudiant 3 doivent exister
-('2', 'false', 'false', '45823', '2', '2'), -- Id_Type_Vehicule 2 et Id_Etudiant 2 doivent exister
-('4', 'true', 'false', '45790', '3', '3'), -- Id_Type_Vehicule 3 et Id_Etudiant 3 doivent exister
-('1', 'false', 'true', '45809', '1', '1'), -- Id_Type_Vehicule 1 et Id_Etudiant 1 doivent exister
-('3', 'true', 'false', '45843', '4', '4'), -- Id_Type_Vehicule 4 et Id_Etudiant 4 doivent exister
-('2', 'false', 'false', '45802', '3', '3'); -- Id_Type_Vehicule 3 et Id_Etudiant 3 doivent exister
-
+('3', 'true', 'false', '2025-05-10', '1', '1'), -- Id_Type_Vehicule 1 et Id_Etudiant 3 doivent exister
+('2', 'false', 'false', '2025-06-15', '2', '2'), -- Id_Type_Vehicule 2 et Id_Etudiant 2 doivent exister
+('4', 'true', 'false', '2025-05-13', '3', '3'), -- Id_Type_Vehicule 3 et Id_Etudiant 3 doivent exister
+('1', 'false', 'true', '2025-06-01', '1', '1'), -- Id_Type_Vehicule 1 et Id_Etudiant 1 doivent exister
+('3', 'true', 'false', '2025-07-05', '4', '4'), -- Id_Type_Vehicule 4 et Id_Etudiant 4 doivent exister
+('2', 'false', 'false', '2025-05-25', '3', '3'); -- Id_Type_Vehicule 3 et Id_Etudiant 3 doivent exister
 
 -- Réactiver les contraintes de clés étrangères
 SET session_replication_role = origin;
