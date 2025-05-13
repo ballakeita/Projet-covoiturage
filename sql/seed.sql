@@ -170,9 +170,9 @@ INSERT INTO Etre_Amis (Id_Etudiant_Etre_Amis, Id_Etudiant_Etre_Amis_1) VALUES
 
 -- Laisser_Avis
 INSERT INTO Laisser_Avis (Id_Etudiant_Laisser_Avis, Note, Commentaire, Signaler, Id_Trajet_Laisser_Avis) VALUES
-('2', '5', 'Chauffeur très ponctuel, merci !', 'false', '1',
-('3', '4', 'Un peu de retard mais agréable.', 'false', '1',
-('4', '5', 'Super trajet, je recommande !', 'false', '3';
+('2', '5', 'Chauffeur très ponctuel, merci !', 'false', '1'),
+('3', '4', 'Un peu de retard mais agréable.', 'false', '1'),
+('4', '5', 'Super trajet, je recommande !', 'false', '3');
 
 -- Reserver
 INSERT INTO Reserver (Id_Trajet_Reserver, Id_Etudiant_Reserver, Date_Reservation, Annulation, Arret_Depart, Arret_Arrivee, Validation) VALUES
