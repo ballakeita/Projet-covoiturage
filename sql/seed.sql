@@ -210,11 +210,11 @@ INSERT INTO Lier (Id_Ville_Lier, Numero_Lier) VALUES
 
 -- Pub
 INSERT INTO Pub (Titre, Description, Status, Url_Image, Url_Video, Url_Redirection, Date_Debut, Date_Fin, Id_Type_Pub_Appartenir, Id_Sponsor_Proposer) VALUES
-('Promo Été', 'Des réductions incroyables pour l''été', true, 'https://pubs.com/img1.jpg', 'https://pubs.com/vid1.mp4', 'https://promo-ete.com', '2024-06-01 00:00:00', '2024-09-01 00:00:00', 1, 1),
-('Nouvelle Appli', 'Découvrez notre nouvelle application', true, 'https://pubs.com/img2.jpg', 'https://pubs.com/vid2.mp4', 'https://app.com', '2024-05-10 00:00:00', '2024-08-10 00:00:00', 2, 2),
-('Concours', 'Participez et gagnez des cadeaux', false, 'https://pubs.com/img3.jpg', NULL, 'https://concours.com', '2024-04-20 00:00:00', '2024-07-20 00:00:00', 3, 3),
-('Partenaire Officiel', 'Notre sponsor officiel vous récompense', true, 'https://pubs.com/img4.jpg', NULL, 'https://sponsor.com', '2024-03-01 00:00:00', '2024-06-01 00:00:00', 4, 4),
-('Offre Étudiante', 'Réductions spéciales étudiants', true, 'https://pubs.com/img5.jpg', 'https://pubs.com/vid5.mp4', 'https://etudiant-offre.com', '2024-05-01 00:00:00', '2024-09-01 00:00:00', 5, 5);
+('Promo Étudiant', '-10% sur les abonnements étudiants', 'TRUE', 'img/promo1.jpg', 'NULL', 'https://pubmania.fr/promo1', '45778,3333333333', '45809,9999884259', '1', '1'),
+('Profil Premium', 'Active ton profil premium maintenant', 'TRUE', 'NULL', 'vid/premium.mp4', 'https://pubmania.fr/premium', '45782,375', '45839,9999884259', '2', '1'),
+('Trajets verts', 'Covoiturez et gagnez des points', 'TRUE', 'img/trajet.jpg', 'NULL', 'https://pubmania.fr/trajets', '45787,2916666667', '45853,9999884259', '3', '1'),
+('Restez informé !', 'Infos étudiantes chaque semaine', 'FALSE', 'img/info.jpg', 'NULL', 'https://pubmania.fr/infos', '45717', '45777,9999884259', '4', '1'),
+('Notre app est dispo !', 'Téléchargez l’appli mobile', 'TRUE', 'NULL', 'vid/app.mp4', 'https://pubmania.fr/app', '45789,5', '45870,9999884259', '5', '1');
 
 -- Administrateur
 INSERT INTO Administrateur (Date_Naissance, Adresse, Date_Creation_Compte, Id_Role_Detenir, Id_Ville_Vivre, Id_Utilisateur) VALUES
