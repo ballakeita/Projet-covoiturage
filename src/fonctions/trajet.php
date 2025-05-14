@@ -215,7 +215,6 @@ function getInfosCompletTrajet(int $id_trajet): array {
     // Récupérer les infos du trajet
     $sqlTrajet = "
         SELECT t.*, 
-               tv.Libelle AS type_vehicule,
                e.Id_Etudiant,
                u.Prenom, u.Nom
         FROM Trajet t
