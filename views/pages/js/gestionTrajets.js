@@ -1,3 +1,4 @@
+    console.log("Script up");
     function openModal(url) {
       const m = document.getElementById('modal');
       const f = document.getElementById('modal-iframe');
@@ -22,9 +23,9 @@
         if (Array.isArray(data)) {
           data.forEach(trajet => {
             const li = document.createElement('li');
-            li.textContent = trajet.titre || `Trajet #${trajet.id_trajet}`;
+            li.textContent = trajet.titre || `Trajet #${trajet.Id_Trajet}`;
             li.addEventListener('click', () =>
-              openModal(`infoTrajets.html?id=${trajet.id_trajet}`)
+              openModal(`infoTrajets.html?id=${trajet.Id_Trajet}`)
             );
             ul.appendChild(li);
           });
@@ -46,9 +47,9 @@
         if (Array.isArray(data)) {
           data.forEach(resa => {
             const li = document.createElement('li');
-            li.textContent = resa.titre_trajet || `Réservation #${resa.id_reservation}`;
+            li.textContent = resa.titre_trajet || `Réservation #${resa.Id_Trajet_Reserver}`;
             li.addEventListener('click', () =>
-              openModal(`annulerTrajets.html?id=${resa.id_reservation}`)
+              openModal(`annulerTrajets.html?id=${resa.Id_Trajet_Reserver}`)
             );
             ul.appendChild(li);
           });
