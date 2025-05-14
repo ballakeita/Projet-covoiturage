@@ -21,11 +21,11 @@
         const ul = document.getElementById('mes-trajets');
         ul.innerHTML = '';
         if (Array.isArray(data)) {
-          data.forEach(trajet => {
+          data.trajets.forEach(trajet => {
             const li = document.createElement('li');
-            li.textContent = trajet.titre || `Trajet #${trajet.Id_Trajet}`;
+            li.textContent = trajet.titre || `Trajet #${trajet.id_trajet}`;
             li.addEventListener('click', () =>
-              openModal(`infoTrajets.html?id=${trajet.Id_Trajet}`)
+              openModal(`infoTrajets.html?id=${trajet.id_trajet}`)
             );
             ul.appendChild(li);
           });
@@ -45,11 +45,11 @@
         const ul = document.getElementById('mes-reservations');
         ul.innerHTML = '';
         if (Array.isArray(data)) {
-          data.forEach(resa => {
+          data.reservations.forEach(resa => {
             const li = document.createElement('li');
-            li.textContent = resa.titre_trajet || `Réservation #${resa.Id_Trajet_Reserver}`;
+            li.textContent = resa.titre_trajet || `Réservation #${resa.id_trajet_reserver}`;
             li.addEventListener('click', () =>
-              openModal(`annulerTrajets.html?id=${resa.Id_Trajet_Reserver}`)
+              openModal(`annulerTrajets.html?id=${resa.id_trajet_reserver}`)
             );
             ul.appendChild(li);
           });
