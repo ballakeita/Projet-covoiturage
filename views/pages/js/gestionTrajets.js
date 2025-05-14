@@ -20,7 +20,7 @@
       .then(data => {
         const ul = document.getElementById('mes-trajets');
         ul.innerHTML = '';
-        if (Array.isArray(data)) {
+        if (Array.isArray(data.trajets)) {
           data.trajets.forEach(trajet => {
             const li = document.createElement('li');
             li.textContent = trajet.titre || `Trajet #${trajet.id_trajet}`;
@@ -44,7 +44,7 @@
       .then(data => {
         const ul = document.getElementById('mes-reservations');
         ul.innerHTML = '';
-        if (Array.isArray(data)) {
+        if (Array.isArray(data.reservations)) {
           data.reservations.forEach(resa => {
             const li = document.createElement('li');
             li.textContent = resa.titre_trajet || `Réservation #${resa.id_trajet_reserver}`;
