@@ -74,7 +74,7 @@ INSERT INTO Emplacement_Pub (Libelle) VALUES
 ('Pub profil vidéo'),
 ('Pub trajet image'),
 ('Bannière latérale'),
-('Pub mobile native'),
+('Pub mobile native');
 
 -- Marque_Vehicule
 INSERT INTO Marque_Vehicule (Libelle) VALUES
