@@ -93,10 +93,6 @@ document.getElementById('add-stop').addEventListener('click', () => {
       <strong>Arrêt ${idx}</strong>
       <button type="button" class="remove-stop" title="Supprimer cet arrêt">✖</button>
     </div><br>
-    <label>Ordre<br>
-      <input type="number" class="stop-ordre" data-idx="${idx-1}"
-             value="${idx}" min="1" required>
-    </label><br><br>
     <label>Adresse<br>
       <input type="text" class="stop-adresse" data-idx="${idx-1}"
              placeholder="Adresse arrêt" required>
@@ -122,38 +118,63 @@ document.getElementById('add-stop').addEventListener('click', () => {
 });
 
 
-   // Soumission AJAX GET pour créer le trajet
   document.getElementById('btnCreate').addEventListener('click', e => {
-    e.preventDefault();
+  e.preventDefault();
 
-    const places = document.getElementById('places-disponibles').value;
-    const dateDepart   = document.getElementById('depart-date').value;
-    const repartPoints = document.getElementById('repartition-points').checked ? 1 : 0;
-    
+  // Bloc principal
+  const places = document.getElementById('places-disponibles').value;
+  const dateDepart = document.getElementById('depart-date').value;
+  const repartPoints = document.getElementById('repartition-points').checked ? 1 : 0;
 
-    fetch('../../../src/controllers/trajet_controller.php'
-      + `?action=create_trajet`
-      + `&places_disponibles=${encodeURIComponent(places)}`
-      + `&repartition_points=${encodeURIComponent(repartPoints)}`
-      + `&date_depart=${encodeURIComponent(dateDepart)}`  
-    )
-    
-    .then(response => {
-      if (!response.ok) throw new Error("Erreur réseau");
-      return response.json();
-    })
-    .then(data => {
-      if (data.success) {
-        parent.closeModal();
-        alert("Trajet créé avec succès !");
-      } else {
-        alert("Erreur : " + (data.error || "Erreur inconnue"));
-      }
-    })
-    .catch(err => {
-      alert("Échec : " + err.message);
+  // Bloc arrêts dynamiques
+  const container = document.getElementById('stops-list');
+  const adresses = container.querySelectorAll('.stop-adresse');
+  const heures = container.querySelectorAll('.stop-heure');
+  const villes = container.querySelectorAll('.stop-ville');
+  const infos = container.querySelectorAll('.stop-info');
+
+  const arrets = [];
+  for (let i = 0; i < adresses.length; i++) {
+    arrets.push({
+      adresse: adresses[i].value,
+      heure: heures[i].value,
+      ville: villes[i].value,
+      infos: infos[i].value
     });
+  }
+
+  // Construction du JSON final
+  const trajetData = {
+    action: "create_trajet",
+    places_disponibles: places,
+    date_depart: dateDepart,
+    repartition_points: repartPoints,
+    arrets: arrets
+  };
+
+  fetch('../../../src/controllers/trajet_controller.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(trajetData)
+  })
+  .then(response => {
+    if (!response.ok) throw new Error("Erreur réseau");
+    return response.json();
+  })
+  .then(data => {
+    if (data.success) {
+      parent.closeModal();
+      alert("Trajet créé avec succès !");
+    } else {
+      alert("Erreur : " + (data.error || "Erreur inconnue"));
+    }
+  })
+  .catch(err => {
+    alert("Échec : " + err.message);
   });
+});
   </script>
 </body>
 </html>
