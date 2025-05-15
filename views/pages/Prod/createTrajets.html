@@ -145,14 +145,13 @@ document.getElementById('add-stop').addEventListener('click', () => {
 
   // Construction du JSON final
   const trajetData = {
-    action: "create_trajet",
     places_disponibles: places,
     date_depart: dateDepart,
     repartition_points: repartPoints,
     arrets: arrets
   };
 
-  fetch('../../../src/controllers/trajet_controller.php', {
+  fetch('../../../src/controllers/trajet_controller.php?action=create_trajet', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

@@ -3,6 +3,8 @@
 require_once '../../config/config.php';
 require_once '../fonctions/trajet.php';
 require_once '../fonctions/user.php';
+require_once '../fonctions/arret.php';
+require_once '../fonctions/ville.php';
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -14,28 +16,73 @@ if (isset($_GET["action"])) {
     switch ($_GET["action"]) {
 
         case "create_trajet":
-            if (
-                isset($_GET['places_disponibles'], $_GET['repartition_points'], $_GET['date_depart'])
-            ) {
-                $response = getVehiculeTypeByUtilisateur($_SESSION['id_utilisateur']);
-                $id_vehicule = $response['success'] ? $response['vehicule']['id_type_vehicule'] : 0;
-                $success = create_trajet(
-                    $_GET['places_disponibles'],
-                    $_GET['repartition_points'],
-                    $id_vehicule,
-                    $_SESSION['id_utilisateur'],
-                    $_GET['date_depart']
-                );
-                if ($success) {
-                    echo json_encode(["success" => true]);
-                } else {
-                    http_response_code(500);
-                    echo json_encode(["error" => "Erreur lors de la création du trajet"]);
-                }
-            } else {
+            // Lire les données JSON brutes du corps de la requête
+            $json = file_get_contents("php://input");
+            $data = json_decode($json, true);
+
+            if (!is_array($data)) {
+                http_response_code(400);
+                echo json_encode(["error" => "Format JSON invalide"]);
+                break;
+            }
+
+            // Vérifier paramètres nécessaires pour create_trajet
+            if (!isset($data['places_disponibles'], $data['repartition_points'], $data['date_depart'])) {
                 http_response_code(400);
                 echo json_encode(["error" => "Paramètres manquants pour create_trajet"]);
+                break;
             }
+
+            // Récupérer le type véhicule
+            $response = getVehiculeTypeByUtilisateur($_SESSION['id_utilisateur']);
+            $id_vehicule = $response['success'] ? $response['vehicule']['id_type_vehicule'] : 0;
+
+            // Créer le trajet
+            $id_trajet = create_trajet(
+                $data['places_disponibles'],
+                $data['repartition_points'],
+                $id_vehicule,
+                $_SESSION['id_utilisateur'],
+                $data['date_depart']
+            );
+
+            if (!$id_trajet) {
+                http_response_code(500);
+                echo json_encode(["error" => "Erreur lors de la création du trajet"]);
+                break;
+            }
+
+            // Maintenant traiter les arrêts (s'ils existent)
+            $results_arrets = [];
+            if (isset($data['arrets']) && is_array($data['arrets'])) {
+                foreach ($data['arrets'] as $index => $arret) {
+                    // Préparer les données obligatoires pour create_arret
+                    if (
+                        isset($arret['heure'], $arret['adresse'], $arret['infos'], $arret['ville'])
+                    ) {
+                        // Ici, il te faut récupérer l'id_ville_situer à partir de la ville (à adapter)
+                        $id_ville = getIdVilleByName($arret['ville']); // fonction à créer si besoin
+
+                        $result = create_arret(
+                            $arret['heure'],                 // heure_passage
+                            $arret['adresse'],               // adresse
+                            $arret['infos'],                 // infos_complementaires
+                            $index + 1,                     // ordre (ordre dans la liste)
+                            $id_ville,
+                            $id_trajet                      // id_trajet_prevoir
+                        );
+                        $results_arrets[] = $result;
+                    } else {
+                        $results_arrets[] = ["error" => "Paramètres manquants pour un arrêt"];
+                    }
+                }
+            }
+
+            echo json_encode([
+                "success" => true,
+                "id_trajet" => $id_trajet,
+                "arrets" => $results_arrets
+            ]);
             break;
 
         case "modifier_trajet":
@@ -136,7 +183,7 @@ if (isset($_GET["action"])) {
             break;
 
         case "lister_participants":
-            if (isset($_GET['id_trajet']) && isset($_SESSION['id_utilisateur'])) {
+            if (isset($_GET['id_trajet'], $_SESSION['id_utilisateur'])) {
                 $result = lister_participants_trajet($_GET['id_trajet'], $_SESSION['id_utilisateur']);
                 echo json_encode($result);
             } else {

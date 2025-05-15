@@ -69,7 +69,7 @@ if (isset($_GET["action"])) {
 
         case 'get_future_reservations':
 
-            if ($_SESSION['id_utilisateur']) {
+            if (isset($_SESSION['id_utilisateur'])) {
                 // Récupérer les réservations futures de l'utilisateur
                 $reservations = get_future_reservations_by_user($_SESSION['id_utilisateur']);
                 
