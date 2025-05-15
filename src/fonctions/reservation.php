@@ -48,7 +48,21 @@ function reserver_trajet(int $id_trajet, int $id_utilisateur, int $arret_depart,
     $stmt = $pdo->prepare($sql);
     $stmt->execute([':id_trajet' => $id_trajet, ':id_etudiant' => $id_etudiant]);
     if ($stmt->fetchColumn() > 0) {
-        return ['success' => false, 'error' => 'Réservation déjà existante pour ce trajet'];
+
+        // Réactiver la réservation existante en mettant annulation à FALSE
+        $sql = "UPDATE reserver 
+                SET annulation = FALSE 
+                WHERE id_trajet_reserver = :id_trajet AND id_etudiant_reserver = :id_etudiant";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([
+            ':id_trajet' => $id_trajet,
+            ':id_etudiant' => $id_etudiant
+        ]);
+
+        return [
+            'success' => true,
+            'message' => 'Réservation réactivée avec succès'
+        ];
     }
 
     // 3. Enregistrer la réservation
