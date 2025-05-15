@@ -4,22 +4,21 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>SoraDrive - Accueil</title>
-  <link rel="stylesheet" href="IndexStyle.css" />
+  <link rel="stylesheet" href="../CSS/IndexStyle.css" />
 </head>
 <body>
   <header class="main-header">
-    <a href="index.html" class="logo">
-      <img src="SoraDrive.png" alt="Logo SoraDrive" />
+    <a href="homeNotConnected.php" class="logo">
+      <img src="../image/SoraDrive.png" alt="Logo SoraDrive" />
     </a>
     <div class="search-container">
         <input type="text" placeholder="Search" />
         <button>🔍</button>
       </div>
     <nav class="main-nav">
-      <a href="index.html">Accueil</a>
-      <a href="#presentation">Présentation</a>
+      <a href="homeNotConnected.php">Accueil</a>
       <button class="btn-login" onclick="document.getElementById('loginOverlay').classList.remove('hidden')">Login</button>
-      <a href="#contact">Contact</a>
+      <a href="Contact.php">Contact</a>
     </nav>
   </header>
 
@@ -145,7 +144,7 @@
       // Exemple : POST /api/signup avec JSON des champs
 
       // Redirection vers la page connectée
-      window.location.href = "IndexConnected.html";
+      window.location.href = "home.php";
     }
     // Ferme tous les overlays au clic en dehors
     document.querySelectorAll('.overlay').forEach(overlay => {

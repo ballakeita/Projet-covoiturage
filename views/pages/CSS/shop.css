@@ -1,0 +1,227 @@
+ /* ===== GLOBAL ET NAVBAR UNIFIÉE ===== */
+ :root {
+   --teal: #5d9ca3;
+   --teal-dark: #104d4d;
+   --text-light: #ffffff;
+   --header-h: 80px;
+ }
+
+ .user-stats {
+   display: flex;
+   gap: 10px;
+   font-weight: bold;
+   font-size: 1.1rem;
+ }
+
+ .stat {
+   background: var(--teal-dark);
+   color: var(--text-light);
+   border-radius: 5px;
+   padding: 5px 10px;
+ }
+
+ * {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+ }
+
+ header.main-header {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   background: linear-gradient(to bottom, #5d9ca3, #104d4d);
+   color: white;
+   padding: 1rem 2rem;
+   height: var(--header-h);
+   position: sticky;
+   top: 0;
+   z-index: 100;
+ }
+
+ /* Logo */
+ .logo {
+   position: relative;
+   width: 80px;
+   height: 80px;
+ }
+
+ .logo img {
+   display: none;
+ }
+
+ .sora-logo {
+   position: absolute;
+   top: 50%;
+   left: 0;
+   transform: translateY(-50%);
+   width: 80px;
+   height: 80px;
+   background: url("https://design.penpot.app/assets/by-file-media-id/921945d0-8932-8162-8006-1d270b89b017") no-repeat center center / cover;
+   border-radius: 50%;
+   box-shadow: 10px 6px 15px rgba(0, 0, 0, 0.2);
+ }
+
+ /* Barre de recherche */
+ .search-container {
+   flex-grow: 1;
+   display: flex;
+   justify-content: center;
+   gap: 0.5rem;
+   max-width: 500px;
+   margin: 0 2rem;
+ }
+
+ .search-container input {
+   width: 300px;
+   padding: 0.5rem;
+   border-radius: 20px;
+   border: none;
+ }
+
+ .btn-search {
+   background: transparent;
+   border: 1px solid white;
+   border-radius: 50%;
+   width: 32px;
+   height: 32px;
+   color: white;
+   cursor: pointer;
+ }
+
+ /* Navigation principale */
+ .main-nav {
+   display: flex;
+   gap: 1rem;
+ }
+
+ .main-nav a {
+   color: white;
+   text-decoration: none;
+   font-size: 1rem;
+   font-weight: 500;
+ }
+
+ .main-nav a.active {
+   text-decoration: none;
+ }
+
+ body {
+   font-family: sans-serif;
+   margin: 0;
+   background: #f8f8f8;
+ }
+
+ header {
+   background: #333;
+   color: white;
+   padding: 1rem;
+   text-align: center;
+ }
+
+ .search-bar {
+   padding: 1rem;
+   position: relative;
+   left: 34%;
+ }
+
+ .search-bar input {
+   padding: 0.5rem;
+   width: 300px;
+   max-width: 90%;
+   border-radius: 6px;
+   border: 1px solid #ccc;
+ }
+
+ .shop-container {
+   display: flex;
+   overflow-x: auto;
+   padding: 1rem;
+   gap: 1rem;
+ }
+
+ .item-card {
+   background-color: var(--bg-light, #fff);
+   /* par défaut */
+   border-radius: 12px;
+   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+   padding: 16px;
+   margin: 12px;
+   transition: transform 0.2s;
+   width: 200px;
+   /* ← ajoute une largeur fixe pour l’uniformité si besoin */
+ }
+
+ .item-card.premium {
+   background-color: #fff6e5;
+   border: 2px solid #ffae42;
+ }
+
+ .item-card:hover {
+   transform: scale(1.03);
+ }
+
+ .item-card img {
+   width: 100%;
+   height: 120px;
+   object-fit: contain;
+ }
+
+
+ .overlay {
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100vw;
+   height: 100vh;
+   background: rgba(0, 0, 0, 0.4);
+   display: none;
+   justify-content: center;
+   align-items: center;
+   z-index: 1000;
+ }
+
+ .product-popup {
+   background: white;
+   border-radius: 12px;
+   padding: 2rem;
+   max-width: 400px;
+   width: 90%;
+   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+   position: relative;
+   animation: fadeIn 0.3s ease;
+ }
+
+ @keyframes fadeIn {
+   from {
+     opacity: 0;
+     transform: scale(0.9);
+   }
+
+   to {
+     opacity: 1;
+     transform: scale(1);
+   }
+ }
+
+ .product-popup img {
+   width: 100%;
+   height: 200px;
+   object-fit: contain;
+   margin-bottom: 1rem;
+ }
+
+ .btn {
+   display: inline-block;
+   margin-top: 1rem;
+   background: #28a745;
+   color: white;
+   padding: 0.5rem 1rem;
+   border: none;
+   border-radius: 8px;
+   cursor: pointer;
+ }
+
+ .btn:hover {
+   background: #218838;
+ }

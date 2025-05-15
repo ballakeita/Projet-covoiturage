@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Boutique Virtuelle</title>
-  <link rel="stylesheet" href="shop.css">
+  <link rel="stylesheet" href="../CSS/shop.css">
 </head>
 
 <body>

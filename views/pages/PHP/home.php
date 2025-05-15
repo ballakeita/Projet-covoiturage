@@ -5,29 +5,27 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SoraDrive - Accueil Connecté</title>
-  <link rel="stylesheet" href="IndexStyle.css" />
+  <link rel="stylesheet" href="../CSS/IndexStyle.css"/>
 </head>
 
 <body>
   <header class="main-header">
     <a href="home.php" class="logo">
-      <!-- Nouveau conteneur pour l’icône Penpot -->
-      <div class="sora-logo"></div>
+      <img src="../image/SoraDrive.png" alt="Logo SoraDrive" />
     </a>
-
     <div class="search-container">
-      <form id="searchForm" action="./searchResults.html" method="GET">
+      <form id="searchForm" action="searchResults.php" method="GET">
         <input type="text" name="query" id="searchInput" placeholder="Recherche de trajets..." />
         <button type="submit">🔍</button>
       </form>
     </div>
 
     <nav class="main-nav">
-      <a href="home.html">Accueil</a>
-      <a href="gestionTrajets.html">Trajets</a>
-      <a href="shop.html">Boutique</a>
-      <a href="profil.html">Profil</a>
-      <a href="Contact.html">Contact</a>
+      <a href="home.php">Accueil</a>
+      <a href="gestionTrajets.php">Trajets</a>
+      <a href="shop.php">Boutique</a>
+      <a href="profil.php">Profil</a>
+      <a href="Contact.php">Contact</a>
 
     </nav>
   </header>
@@ -41,7 +39,9 @@
       <div class="card">
         <h2>Conduire</h2>
         <p>Fais le plein de bons plans en roulant.</p>
-        <div class="sub-card">🌱 Écologique<br /><small>ecologie.gouv.fr</small></div>
+        <a href="https://ecologie.gouv.fr" class="sub-card-link">
+          <div class="sub-card">🌱 Écologique<br /><small>ecologie.gouv.fr</small></div>
+        </a>
         <div class="sub-card">🤝 Rencontrer<br /><small>Trouver votre copilote en 1 clic</small></div>
       </div>
 
@@ -73,4 +73,4 @@
   </script>
 </body>
 
-</html>
+  </html>

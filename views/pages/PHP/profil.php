@@ -8,7 +8,7 @@
   <!-- Google Font Sora -->
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;700&display=swap" rel="stylesheet">
   <!-- Feuille de style externe -->
-  <link rel="stylesheet" href="profil.css">
+  <link rel="stylesheet" href="../CSS/profil.css">
 </head>
 
 <body>
