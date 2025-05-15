@@ -96,10 +96,10 @@ INSERT INTO Type_Vehicule (Modele, Annee, Couleur, Id_Marque_Vehicule_Produire) 
 
 -- Permis
 INSERT INTO Permis (Date_Expiration, Photo, Id_Etudiant_Disposer) VALUES
-('48714', 'permis1.jpg', '1'),
-('47809', 'permis2.jpg', '2'),
-('47339', 'permis3.jpg', '3'),
-('47880', 'permis4.jpg', '4');
+('2033-05-15', 'permis1.jpg', '1'),
+('2030-11-22', 'permis2.jpg', '2'),
+('2029-08-09', 'permis3.jpg', '3'),
+('2031-02-01', 'permis4.jpg', '4');
 
 
 -- Concerner
