@@ -10,9 +10,8 @@
 <body>
   <header class="main-header">
     <!-- Logo -->
-    <a href="home.html" class="logo">
-      <img src="logo.png" alt="Logo SoraDrive">
-      <div class="sora-logo"></div>
+    <a href="home.php" class="logo">
+      <img src="../image/SoraDrive.png" alt="Logo SoraDrive" />
     </a>
     <div class="user-stats">
       <div class="stat">✒ <span id="points-display">Chargement</span></div>
@@ -27,11 +26,11 @@
 
     <!-- Navigation principale -->
     <nav class="main-nav">
-      <a href="home.html">Accueil</a>
-      <a href="gestionTrajets.html">Trajets</a>
-      <a href="./profil.html">Profil</a>
-      <a href="Contact.html">Contact</a>
-      <a href="shop.html">Boutique</a>
+      <a href="home.php">Accueil</a>
+      <a href="gestionTrajets.php">Trajets</a>
+      <a href="profil.php">Profil</a>
+      <a href="Contact.php">Contact</a>
+      <a href="shop.php">Boutique</a>
 
     </nav>
   </header>
@@ -93,6 +92,8 @@
       data-img="https://via.placeholder.com/200x120?text=Pass">
       <img src="https://via.placeholder.com/200x120?text=Pass" alt="Nytro">
       <h4>Nitroglycérine</h4>
+      <p>Descritpion : Plus de personnalisation !</p>
+      <p>Durée : 1 mois</p>
       <p>4,99 €</p>
     </div>
   </div>

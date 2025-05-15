@@ -1,10 +1,12 @@
 /* ===== profil.css ===== */
 
 :root {
-  --bg-light:   #ededed;
-  --teal:       #5d9ca3;    /* comme sur index.html */
-  --teal-dark:  #104d4d;    /* comme sur index.html */
-  --white:      #ffffff;
+  --bg-light: #ededed;
+  --teal: #5d9ca3;
+  /* comme sur index.html */
+  --teal-dark: #104d4d;
+  /* comme sur index.html */
+  --white: #ffffff;
   --text-light: #f4e9be;
 }
 
@@ -14,7 +16,8 @@
   padding: 0;
 }
 
-html, body {
+html,
+body {
   height: 100%;
   overflow: hidden;
 }
@@ -44,15 +47,24 @@ body {
 .sidebar-left .logo {
   width: 179px;
   height: 179px;
-  background: url('https://design.penpot.app/assets/by-file-media-id/921945d0-8932-8162-8006-1d270b89b017')
-              no-repeat center/cover;
+  background: url('https://design.penpot.app/assets/by-file-media-id/921945d0-8932-8162-8006-1d270b89b017') no-repeat center/cover;
   border-radius: 50%;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   margin-bottom: 2rem;
 }
 
 .sidebar-left .logo img {
-  display: none; /* on masque l’ancienne image */
+  width: 179px;
+  height: 179px;
+  /* background: url('https://...') no-repeat center/cover; <--- SUPPRIME ou COMmente cette ligne si tu utilises l'image <img> */
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  margin-bottom: 2rem;
+  /* Ajoute ou garde ces lignes pour centrer l'image et masquer ce qui dépasse */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
 
 .sidebar-left nav ul {

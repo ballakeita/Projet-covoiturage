@@ -39,7 +39,7 @@
       <div class="card">
         <h2>Conduire</h2>
         <p>Fais le plein de bons plans en roulant.</p>
-        <a href="https://ecologie.gouv.fr" class="sub-card-link">
+        <a href="https://www.ecologie.gouv.fr/politiques-publiques/covoiturage-france-ses-avantages-reglementation-vigueur" class="sub-card-link">
           <div class="sub-card">🌱 Écologique<br /><small>ecologie.gouv.fr</small></div>
         </a>
         <div class="sub-card">🤝 Rencontrer<br /><small>Trouver votre copilote en 1 clic</small></div>

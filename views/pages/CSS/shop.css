@@ -40,14 +40,9 @@
  }
 
  /* Logo */
- .logo {
-   position: relative;
-   width: 80px;
-   height: 80px;
- }
-
  .logo img {
-   display: none;
+   height: 60px;
+   border-radius: 50%;
  }
 
  .sora-logo {

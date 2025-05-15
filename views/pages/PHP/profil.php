@@ -15,16 +15,16 @@
   <div class="container">
     <!-- LEFT -->
     <aside class="sidebar-left">
-      <div class="logo">
-        <img src="soradrive-logo.svg" alt="SoraDrive">
-      </div>
+  <div class="logo">
+      <img src="../image/SoraDrive.png" alt="Logo SoraDrive" />
+    </div>
       <nav>
         <ul>
-           <li><a href="home.html">Accueil</a></li>
-           <li><a href="gestionTrajets.html">Trajets</a></li>
-           <li><a href="shop.html">Boutique</a></li>
-           <li><a href="profil.html">Profil</a></li>
-          <li><a href="Contact.html">Contact</a></li>
+           <li><a href="home.php">Accueil</a></li>
+           <li><a href="gestionTrajets.php">Trajets</a></li>
+           <li><a href="shop.php">Boutique</a></li>
+           <li><a href="profil.php">Profil</a></li>
+          <li><a href="Contact.php">Contact</a></li>
         </ul>
       </nav>
     </aside>
@@ -36,7 +36,7 @@
         <button class="btn-add">+ Ajouter</button>
         <button class="btn-edit">✎</button>
         <div class="avatar">
-          <img src="ton-photo.jpg" alt="Avatar">
+          <img src="../image/linkedin.png" alt="Avatar">
         </div>
         <div class="rating">
           <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
@@ -67,7 +67,7 @@
     <!-- RIGHT -->
     <aside class="sidebar-right">
       <div class="top-stats">
-        <div class="stat">✒ 12 345</div>
+        <div class="stat">✒ 5 000</div>
         <div class="stat">🔥 1 234</div>
       </div>
       <div class="friends">
