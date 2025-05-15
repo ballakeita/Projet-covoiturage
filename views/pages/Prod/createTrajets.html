@@ -37,6 +37,14 @@
         <input type="number" id="places-disponibles" min="1" required>
       </label><br><br>
       <label>
+
+    <label>
+    
+    Date du trajet<br>
+    <input type="date" id="depart-date" required>
+  
+    </label><br><br>
+
         Répartition des points<br>
         <input type="checkbox" id="repartition-points">
       </label><br><br>
@@ -114,36 +122,38 @@ document.getElementById('add-stop').addEventListener('click', () => {
 });
 
 
-    // Soumission AJAX GET
-    document.getElementById('btnCreate').addEventListener('click', e => {
-      e.preventDefault();
+   // Soumission AJAX GET pour créer le trajet
+  document.getElementById('btnCreate').addEventListener('click', e => {
+    e.preventDefault();
 
-      const places = document.getElementById('places-disponibles').value;
-      const repartPoints = document.getElementById('repartition-points').checked ? 1 : 0;
-      const vehicule = document.getElementById('id-type-vehicule').value;
+    const places = document.getElementById('places-disponibles').value;
+    const dateDepart   = document.getElementById('depart-date').value;
+    const repartPoints = document.getElementById('repartition-points').checked ? 1 : 0;
+    
 
-      // Construction de la query string pour create_trajet
-      const url = `../controllers/trajet_controller.php`
-                + `?action=create_trajet`
-                + `&places_disponibles=${encodeURIComponent(places)}`
-                + `&repartition_points=${encodeURIComponent(repartPoints)}`
-                + `&id_type_vehicule_effectuer=${encodeURIComponent(vehicule)}`;
-
-      fetch(url, {
-        method: 'GET',
-        credentials: 'same-origin'
-      })
-      .then(res => res.json().then(json => ({ status: res.status, body: json })))
-      .then(({ status, body }) => {
-        if (status === 200 && body.success) {
-          parent.closeModal();
-          alert('Trajet créé avec succès !'); 
-        } else {
-          alert('Erreur : ' + (body.error || 'Statut ' + status));
-        }
-      })
-      .catch(err => alert('Échec réseau : ' + err.message));
+    fetch('../../../src/controllers/trajet_controller.php'
+      + `?action=create_trajet`
+      + `&places_disponibles=${encodeURIComponent(places)}`
+      + `&repartition_points=${encodeURIComponent(repartPoints)}`
+      + `&date_depart=${encodeURIComponent(dateDepart)}`  
+    )
+    
+    .then(response => {
+      if (!response.ok) throw new Error("Erreur réseau");
+      return response.json();
+    })
+    .then(data => {
+      if (data.success) {
+        parent.closeModal();
+        alert("Trajet créé avec succès !");
+      } else {
+        alert("Erreur : " + (data.error || "Erreur inconnue"));
+      }
+    })
+    .catch(err => {
+      alert("Échec : " + err.message);
     });
+  });
   </script>
 </body>
 </html>
