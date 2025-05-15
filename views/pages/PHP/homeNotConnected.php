@@ -31,15 +31,17 @@
       <div class="card">
         <h2>Conduire</h2>
         <p>Fais le plein de bons plans en roulant.</p>
-        <div class="sub-card">🌱 Écologique<br/><small>ecologie.gouv.fr</small></div>
-        <div class="sub-card">🤝 Rencontrer<br/><small>Trouver votre copilote en 1 clic</small></div>
+        <a href="https://ecologie.gouv.fr" class="sub-card-link">
+          <div class="sub-card">🌱 Écologique<br /><small>ecologie.gouv.fr</small></div>
+        </a>
+        <div class="sub-card">🤝 Rencontrer<br /><small>Trouver votre copilote en 1 clic</small></div>
       </div>
 
       <div class="card">
         <h2>Gagner !</h2>
         <p>Rouler ensemble, gagner ensemble.</p>
-        <div class="sub-card" onclick="openOverlay('cashshop')">🎁 Récompenses<br/><small>Accès à la boutique</small></div>
-        <div class="sub-card">🎮 Ludique<br/><small>Gain de points</small></div>
+        <div class="sub-card" onclick="openOverlay('cashshop')">🎁 Récompenses<br /><small>Accès à la boutique</small></div>
+        <div class="sub-card">🎮 Ludique<br /><small>Gain de points</small></div>
       </div>
     </section>
 
