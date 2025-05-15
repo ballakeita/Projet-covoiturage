@@ -13,25 +13,41 @@ if (isset($_GET["action"])) {
     switch ($_GET["action"]) {
 
         case "create_arret":
-            if (
-                isset($_GET['heure_passage'], $_GET['adresse'], $_GET['ordre'], $_GET['id_ville_situer'], $_GET['id_trajet_prevoir'])
-            ) {
-                $infos_complementaires = $_GET['infos_complementaires'] ?? null;
+            // Lire les données JSON brutes du corps de la requête
+            $json = file_get_contents("php://input");
+            $data = json_decode($json, true);
 
-                $result = create_arret(
-                    $_GET['heure_passage'],
-                    $_GET['adresse'],
-                    $infos_complementaires,
-                    (int)$_GET['ordre'],
-                    (int)$_GET['id_ville_situer'],
-                    (int)$_GET['id_trajet_prevoir']
-                );
-
-                echo json_encode($result);
-            } else {
+            if (!is_array($data)) {
                 http_response_code(400);
-                echo json_encode(["error" => "Paramètres manquants pour create_arret"]);
+                echo json_encode(["error" => "Format JSON invalide"]);
+                break;
             }
+
+            $results = [];
+            foreach ($data as $arret) {
+                if (
+                    isset($arret['heure_passage']) &&
+                    isset($arret['adresse']) &&
+                    isset($arret['infos_complementaires']) &&
+                    isset($arret['ordre']) &&
+                    isset($arret['id_ville_situer']) &&
+                    isset($arret['id_trajet_prevoir'])
+                ) {
+                    $result = create_arret(
+                        $arret['heure_passage'],
+                        $arret['adresse'],
+                        $arret['infos_complementaires'],
+                        (int)$arret['ordre'],
+                        (int)$arret['id_ville_situer'],
+                        (int)$arret['id_trajet_prevoir']
+                    );
+                    $results[] = $result;
+                } else {
+                    $results[] = ["error" => "Paramètres manquants pour un arrêt"];
+                }
+            }
+
+            echo json_encode($results);
             break;
 
         case "modifier_arret":
