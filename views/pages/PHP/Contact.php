@@ -29,8 +29,7 @@
     <div class="contact-card">
       <h3>Filio Taron</h3>
       <p class="info">📧 filio.taron@gmail.com</p>
-      <p class="info">📞 06 37 97 06 61</p>
-      <p class="info">📍 Léguevin</p>
+      <p class="info">📍 Toulouse</p>
     </div>
 
     <div class="contact-card">
