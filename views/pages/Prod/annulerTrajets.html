@@ -8,7 +8,7 @@
     href="https://fonts.googleapis.com/css2?family=Sora:wght@400;700&display=swap"
     rel="stylesheet"
   >
-  <link rel="stylesheet" href="route.css">
+  <link rel="stylesheet" href="overlayTrajets.css">
 </head>
 <body>
 
@@ -32,7 +32,7 @@
         </svg>
         Départ
       </h3>
-      <p>Ici tu pourras placer toutes les infos du point de départ…</p>
+      <p id="info-depart">Chargement…</p>
     </div>
 
     <!-- Route entre Départ et Arrivée -->
@@ -53,7 +53,7 @@
         </svg>
         Arrivée (*)
       </h3>
-      <p>Ici tu pourras placer toutes les infos du point d’arrivée…</p>
+      <p id="info-arrive">Chargement…</p>
     </div>
 
     <!-- Carte Arrêts -->
@@ -64,17 +64,110 @@
         </svg>
         Arrêts
       </h3>
-      <p>Ici tu pourras lister plusieurs arrêts intermédiaires…</p>
+      <div id="info-arrets">Chargement…</div>
     </div>
 
-    <!-- Bouton Annuler → renvoie vers reserve.html -->
-    <button
-      class="btn-reserver"
-      onclick="window.location.href='reserverTrajets.html'"
-    >
-      Annuler
-    </button>
+    <!-- Bouton Annuler -->
+    <button id="btn-annuler" class="btn-reserver">Annuler</button>
   </main>
+
+ <script>
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('Overlay annulation chargé');
+
+  // 1) Récupération de l’ID depuis l’URL
+  const params   = new URLSearchParams(window.location.search);
+  const idTrajet = params.get('id');
+  if (!idTrajet) return console.error('Pas d’ID de trajet en paramètre');
+
+  // 2) Chemins relatifs vers les controllers
+  const trajetCtl = '../../../src/controllers/trajet_controller.php';
+  const resaCtl   = '../../../src/controllers/reservation_controller.php';
+
+  // 3) Chargement des infos du trajet
+  const urlInfo = `${trajetCtl}?action=infos_trajet&id_trajet=${encodeURIComponent(idTrajet)}`;
+  fetch(urlInfo)
+    .then(r => {
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      return r.json();
+    })
+    .then(data => {
+      if (!data.success) throw new Error(data.message);
+      const { trajet, arrets } = data;
+
+      // Extraction des champs (snake_case ou CamelCase)
+      const dateDepart  = trajet.date_depart    || trajet.Date_Depart;
+
+      // --- DÉPART ---
+      const dep         = arrets[0];
+      const villeDep    = dep.ville         || dep.Ville;
+      const adresseDep  = dep.adresse       || dep.Adresse;
+      const heureDep    = dep.heure_passage || dep.Heure_Passage;
+      document.getElementById('info-depart').textContent =
+        `${villeDep} — ${adresseDep} — ${dateDepart} ${heureDep}`;
+
+      // --- ARRIVÉE ---
+      const arr         = arrets[arrets.length - 1];
+      const villeArr    = arr.ville         || arr.Ville;
+      const adresseArr  = arr.adresse       || arr.Adresse;
+      const heureArr    = arr.heure_passage || arr.Heure_Passage;
+      document.getElementById('info-arrive').textContent =
+        `${villeArr} — ${adresseArr} — ${dateDepart} ${heureArr}`;
+
+      // --- ARRÊTS INTERMÉDIAIRES ---
+      const container = document.getElementById('info-arrets');
+      container.innerHTML = '';
+      if (arrets.length > 2) {
+        arrets.slice(1, -1).forEach(a => {
+          const v   = a.ville         || a.Ville;
+          const ad  = a.adresse       || a.Adresse;
+          const h   = a.heure_passage || a.Heure_Passage;
+          const d   = document.createElement('div');
+          d.textContent = `${v} — ${ad} — ${h}`;
+          container.appendChild(d);
+        });
+      } else {
+        container.textContent = 'Aucun arrêt intermédiaire';
+      }
+    })
+    .catch(err => {
+      console.error('Erreur chargement infos_trajet →', err);
+      ['info-depart','info-arrive','info-arrets'].forEach(id => {
+        document.getElementById(id).textContent = 'Erreur de chargement';
+      });
+    });
+
+ // 4) Gestion du bouton Annuler en POST JSON
+  const resaCtl2 = '../../../src/controllers/reservation_controller.php?action=annuler_reservation';
+  document.getElementById('btn-annuler')
+    .addEventListener('click', e => {
+      e.preventDefault();
+
+      fetch(resaCtl2, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id_trajet: idTrajet })
+      })
+      .then(r => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        return r.json();
+      })
+      .then(json => {
+        console.log('Réponse annulation:', json);
+        if (json.success) {
+          alert('Réservation annulée avec succès.');
+          window.parent.location.reload();
+        } else {
+          alert('Erreur : ' + (json.error || json.message || 'inconnue'));
+        }
+      })
+      .catch(err => {
+        alert('Échec réseau : ' + err.message);
+      });
+    });
+});
+</script>
+
 
 </body>
 </html>
