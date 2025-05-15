@@ -1,0 +1,186 @@
+:root {
+  --bg:         #ededed;
+  --teal:       #5fa09d;
+  --teal-dark:  #00474c;
+  --text-light: #f4e9be;
+  --white:      #ffffff;
+}
+
+/* ========== RESET ========== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Sora', sans-serif;
+  background: var(--bg);
+  color: var(--text-light);
+}
+
+/* ========== NAVBAR ========== */
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--teal);
+  padding: 0.5rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.car-icon {
+  width: 48px;
+  height: auto;
+  pointer-events: none;
+}
+
+/* ========== TRAJET CARD LAYOUT ========== */
+.route-container {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 80px);
+  overflow-y: auto;
+}
+
+.card {
+  position: absolute;
+  background: var(--teal-dark);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  color: var(--text-light);
+  overflow-y: auto;
+  z-index: 1;
+}
+.card h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  border-bottom: 1px solid var(--text-light);
+  padding-bottom: 0.5rem;
+}
+.card h3 .icon {
+  width: 20px;
+  height: 20px;
+  fill: var(--text-light);
+}
+
+/* ========== DÉPART ========== */
+.depart {
+  top: 100px;
+  left: 5%;
+  width: 25%;
+  min-width: 250px;
+  height: 350px;
+}
+
+/* ========== ARRÊTS (remplace Arrivée) ========== */
+.arrets {
+  top: 100px;
+  right: 5%;
+  width: 25%;
+  min-width: 250px;
+  height: 350px;
+}
+
+/* ========== ROUTE ========== */
+.route-path {
+  position: absolute;
+  width: 100%;
+  height: 200px;
+  top: 175px;
+  left: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ========== CHAMPS STOP ========== */
+.stop-ordre,
+.stop-adresse,
+.stop-heure,
+.stop-ville,
+.stop-info {
+  width: 100%;
+  margin-top: 0.25rem;
+  margin-bottom: 0.75rem;
+  border-radius: 6px;
+  border: none;
+  padding: 0.5rem;
+}
+.stop-info {
+  height: 4rem;
+  resize: vertical;
+  font-family: 'Sora', sans-serif;
+  background: #fff;
+  color: #333;
+}
+
+/* ========== BOUTON Ajouter un arrêt ========== */
+.btn-secondary {
+  display: inline-block;
+  margin-top: 1rem;
+  background: var(--teal);
+  color: var(--white);
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.btn-secondary:hover {
+  background: var(--teal-dark);
+}
+
+/* ========== BOUTON Créer ========== */
+.btn-creer {
+  position: absolute;
+  top: 20px;
+  right: 15%;
+  background: var(--teal-dark);
+  color: var(--white);
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: background 0.2s;
+  z-index: 1;
+}
+.btn-creer:hover {
+  background: var(--teal);
+}
+
+/* En-tête de chaque stop */
+.stop-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Bouton pour retirer un arrêt */
+.remove-stop {
+  background: transparent;
+  border: none;
+  color: var(--text-light);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0.1rem;
+  transition: color 0.2s;
+}
+.remove-stop:hover {
+  color: var(--white);
+}
+
+.depart input[type="date"] {
+  width: 100%;
+  margin: 0.25rem 0 0.75rem;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 6px;
+}

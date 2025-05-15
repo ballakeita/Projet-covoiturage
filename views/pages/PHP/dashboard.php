@@ -5,9 +5,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard Admin</title>
-  <link rel="stylesheet" href="IndexStyle.css">
+  <link rel="stylesheet" href="../CSS/IndexStyle.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <link rel="stylesheet" href="dashboard.css">
+  <link rel="stylesheet" href="../CSS/dashboard.css">
 </head>
 
 <body>

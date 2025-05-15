@@ -5,21 +5,21 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SoraDrive – Gestion des trajets</title>
-  <link rel="stylesheet" href="gestionTrajets.css">
+  <link rel="stylesheet" href="../CSS/gestionTrajets.css">
 </head>
 
 <body>
   <!-- HEADER -->
   <header class="main-header">
     <!-- Logo -->
-    <a href="home.html" class="logo">
+    <a href="home.php" class="logo">
       <img src="logo.png" alt="Logo SoraDrive">
       <div class="sora-logo"></div>
     </a>
 
     <!-- Recherche -->
     <div class="search-container">
-       <form id="searchForm" action="./searchResults.html" method="GET">
+       <form id="searchForm" action="./searchResults.php" method="GET">
         <input
           type="text"
           name="query"
@@ -32,11 +32,11 @@
 
     <!-- Navigation -->
     <nav class="main-nav">
-      <a href="home.html">Accueil</a>
-      <a href="gestionTrajets.html">Trajets</a>
-      <a href="shop.html">Boutique</a>
-      <a href="./profil.html">Profil</a>
-      <a href="Contact.html">Contact</a>
+      <a href="home.php">Accueil</a>
+      <a href="gestionTrajets.php">Trajets</a>
+      <a href="shop.php">Boutique</a>
+      <a href="profil.php">Profil</a>
+      <a href="Contact.php">Contact</a>
     </nav>
   </header>
 
