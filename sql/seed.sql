@@ -3,7 +3,7 @@ SET session_replication_role = replica;
 
 -- Message
 INSERT INTO Message (Date_Message, Contenu) VALUES
-('2025-05-08 07:45:00', 'Quelqu’un part de La Roche pour aller à la fac ce matin ?'),
+('2025-05-08 07:45:00', 'Quelqu un part de La Roche pour aller à la fac ce matin ?'),
 ('2025-05-08 07:47:00', 'Oui, je pars à 8h10. Il me reste 2 places.'),
 ('2025-05-08 07:49:00', 'Super, tu peux me prendre devant la gare ?'),
 ('2025-05-08 07:51:00', 'Pas de problème. Je passe vers 8h05.'),
@@ -255,7 +255,7 @@ INSERT INTO Arret (Heure_Passage, Adresse, Informations_Complementaires, Ordre, 
 ('08:00:00', 'Gare Lille Flandres', 'Devant la sortie principale', '1', 'Lille', '1'),
 ('10:30:00', 'Place de la République', 'Près de la fontaine centrale', '2', 'Amiens', '1'),
 ('12:00:00', 'Gare Saint-Lazare', 'Parking dépose-minute, quai 3', '3', 'Paris', '1'),
-('14:00:00', 'Université de Montpellier', 'Arrêt de bus devant l'entrée B', '1', 'Montpellier', '2'),
+('14:00:00', 'Université de Montpellier', 'Arrêt de bus devant l entrée B', '1', 'Montpellier', '2'),
 ('16:30:00', 'Place de la Comédie', 'À côté du manège', '2', 'Nîmes', '2'),
 ('09:00:00', 'Centre ville', 'Parking souterrain sortie Nord', '1', 'Lyon', '3'),
 ('11:15:00', 'Parking Leclerc', 'Zone stationnement longue durée', '2', 'Saint-Étienne', '3'),
