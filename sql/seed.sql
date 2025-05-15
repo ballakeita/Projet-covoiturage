@@ -212,11 +212,11 @@ INSERT INTO Lier (Id_Ville_Lier, Numero_Lier) VALUES
 
 -- Pub
 INSERT INTO Pub (Titre, Description, Status, Url_Image, Url_Video, Url_Redirection, Date_Debut, Date_Fin, Id_Type_Pub_Appartenir, Id_Sponsor_Proposer) VALUES
-('Promo Étudiant', '-10% sur les abonnements étudiants', 'TRUE', 'img/promo1.jpg', 'NULL', 'https://pubmania.fr/promo1', '45778,3333333333', '45809,9999884259', '1', '1'),
-('Profil Premium', 'Active ton profil premium maintenant', 'TRUE', 'NULL', 'vid/premium.mp4', 'https://pubmania.fr/premium', '45782,375', '45839,9999884259', '2', '1'),
-('Trajets verts', 'Covoiturez et gagnez des points', 'TRUE', 'img/trajet.jpg', 'NULL', 'https://pubmania.fr/trajets', '45787,2916666667', '45853,9999884259', '3', '1'),
-('Restez informé !', 'Infos étudiantes chaque semaine', 'FALSE', 'img/info.jpg', 'NULL', 'https://pubmania.fr/infos', '45717', '45777,9999884259', '4', '1'),
-('Notre app est dispo !', 'Téléchargez l’appli mobile', 'TRUE', 'NULL', 'vid/app.mp4', 'https://pubmania.fr/app', '45789,5', '45870,9999884259', '5', '1');
+('Promo Étudiant', '-10% sur les abonnements étudiants', 'TRUE', 'img/promo1.jpg', 'NULL', 'https://pubmania.fr/promo1', '01/05/2025 08:00:00', '01/06/2025 23:59:59', '1', '1'),
+('Profil Premium', 'Active ton profil premium maintenant', 'TRUE', 'NULL', 'vid/premium.mp4', 'https://pubmania.fr/premium', '05/05/2025 09:00:00', '01/07/2025 23:59:59', '2', '1'),
+('Trajets verts', 'Covoiturez et gagnez des points', 'TRUE', 'img/trajet.jpg', 'NULL', 'https://pubmania.fr/trajets', '10/05/2025 07:00:00', '15/07/2025 23:59:59', '3', '1'),
+('Restez informé !', 'Infos étudiantes chaque semaine', 'FALSE', 'img/info.jpg', 'NULL', 'https://pubmania.fr/infos', '01/03/2025 10:10:00', '30/04/2025 23:59:59', '4', '1'),
+('Notre app est dispo !', 'Téléchargez l’appli mobile', 'TRUE', 'NULL', 'vid/app.mp4', 'https://pubmania.fr/app', '12/05/2025 12:00:00', '01/08/2025 23:59:59', '5', '1');
 
 -- Administrateur
 INSERT INTO Administrateur (Date_Naissance, Adresse, Date_Creation_Compte, Id_Role_Detenir, Id_Ville_Vivre, Id_Utilisateur) VALUES
