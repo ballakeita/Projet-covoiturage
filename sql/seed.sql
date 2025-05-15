@@ -252,20 +252,20 @@ INSERT INTO Objet (Libelle, Prix, Virtuel, Id_Effet_Objet_Avoir) VALUES
 
 -- Arret (on suppose que chaque ville a un arrêt)
 INSERT INTO Arret (Heure_Passage, Adresse, Informations_Complementaires, Ordre, Id_Ville_Situer, Id_Trajet_Prevoir) VALUES
-('08:00:00', 'Gare Lille Flandres', 'Devant la sortie principale', '1', 'Lille', '1'),
-('10:30:00', 'Place de la République', 'Près de la fontaine centrale', '2', 'Amiens', '1'),
-('12:00:00', 'Gare Saint-Lazare', 'Parking dépose-minute, quai 3', '3', 'Paris', '1'),
-('14:00:00', 'Université de Montpellier', 'Arrêt de bus devant l entrée B', '1', 'Montpellier', '2'),
-('16:30:00', 'Place de la Comédie', 'À côté du manège', '2', 'Nîmes', '2'),
-('09:00:00', 'Centre ville', 'Parking souterrain sortie Nord', '1', 'Lyon', '3'),
-('11:15:00', 'Parking Leclerc', 'Zone stationnement longue durée', '2', 'Saint-Étienne', '3'),
-('15:00:00', 'Gare Bordeaux Saint-Jean', 'Devant le panneau info voyageurs', '1', 'Bordeaux', '4'),
-('18:30:00', 'Place de la Victoire', 'À côté du kiosque à journaux', '2', 'Bordeaux', '4'),
-('10:00:00', 'Campus universitaire', 'Proche de la cafétéria', '1', 'Nantes', '5'),
-('12:45:00', 'Centre-ville', 'Devant la médiathèque municipale', '2', 'Angers', '5'),
-('15:30:00', 'Port de commerce', 'Quai 2, près de l entrepôt n°5', '3', 'La Rochelle', '5'),
-('17:00:00', 'Place centrale', 'Sous labribus près du rond-point', '1', 'Rennes', '6'),
-('19:00:00', 'Université Rennes 2', 'Parking vélo couvert, entrée sud', '2', 'Rennes', '6');
+('08:00:00', 'Gare Lille Flandres', 'Devant la sortie principale', '1', '20690', '1'),
+('10:30:00', 'Place de la République', 'Près de la fontaine centrale', '2', '29185', '1'),
+('12:00:00', 'Gare Saint-Lazare', 'Parking dépose-minute, quai 3', '3', '27606', '1'),
+('14:00:00', 'Université de Montpellier', 'Arrêt de bus devant l entrée B', '1', '12350', '2'),
+('16:30:00', 'Place de la Comédie', 'À côté du manège', '2', '10573', '2'),
+('09:00:00', 'Centre ville', 'Parking souterrain sortie Nord', '1', '25568', '3'),
+('11:15:00', 'Parking Leclerc', 'Zone stationnement longue durée', '2', '7063', '3'),
+('15:00:00', 'Gare Bordeaux Saint-Jean', 'Devant le panneau info voyageurs', '1', '11866', '4'),
+('18:30:00', 'Place de la Victoire', 'À côté du kiosque à journaux', '2', '11866', '4'),
+('10:00:00', 'Campus universitaire', 'Proche de la cafétéria', '1', '15473', '5'),
+('12:45:00', 'Centre-ville', 'Devant la médiathèque municipale', '2', '16661', '5'),
+('15:30:00', 'Port de commerce', 'Quai 2, près de l entrepôt n°5', '3', '5447', '5'),
+('17:00:00', 'Place centrale', 'Sous labribus près du rond-point', '1', '12655', '6'),
+('19:00:00', 'Université Rennes 2', 'Parking vélo couvert, entrée sud', '2', '12655', '6');
 
 -- Trajet (utilise les arrets créés)
 INSERT INTO Trajet (Places_Disponibles, Repartition_Points, Annulation, Date_Depart, Id_Type_Vehicule_Effectuer, Id_Etudiant_Creer) VALUES
