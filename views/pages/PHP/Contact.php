@@ -12,13 +12,15 @@
 <body>
   <div class="sidebar">
     <!-- Logo en background -->
-    <div class="logo"></div>
+    <div class="logo">
+      <img src="../image/SoraDrive.png" alt="Logo SoraDrive" />
+    </div>
     <nav class="sidebar-nav">
-      <a href="home.html">Accueil</a>
-      <a href="gestionTrajets.html">Trajets</a>
-      <a href="shop.html">Boutique</a>
-      <a href="profil.html">Profil</a>
-      <a href="Contact.html">Contact</a>
+      <a href="home.php">Accueil</a>
+      <a href="gestionTrajets.php">Trajets</a>
+      <a href="shop.php">Boutique</a>
+      <a href="profil.php">Profil</a>
+      <a href="Contact.php">Contact</a>
       
     </nav>
   </div>

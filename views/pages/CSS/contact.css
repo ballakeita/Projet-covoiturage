@@ -1,8 +1,8 @@
 /* contact.css */
 :root {
-  --teal:      #5da6a7;
+  --teal: #5da6a7;
   --teal-dark: #00474c;
-  --white:     #ffffff;
+  --white: #ffffff;
 }
 
 body {
@@ -28,11 +28,28 @@ body {
 .sidebar .logo {
   width: 100px;
   height: 100px;
-  background: url('https://design.penpot.app/assets/by-file-media-id/921945d0-8932-8162-8006-1d270b89b017')
-              no-repeat center/cover;
+  background: url('https://design.penpot.app/assets/by-file-media-id/921945d0-8932-8162-8006-1d270b89b017') no-repeat center/cover;
   border-radius: 50%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  /* Très important pour masquer ce qui dépasse si object-fit: cover ne suffit pas */
+}
+
+.sidebar .logo img {
+  display: block;
+  /* Souvent utile pour les images */
+  width: 100%;
+  /* L'image prend 100% de la largeur du parent (100px) */
+  height: 100%;
+  /* L'image prend 100% de la hauteur du parent (100px) */
+  object-fit: cover;
+  /* Redimensionne l'image pour couvrir tout l'espace sans déformer, en coupant si nécessaire */
+  border-radius: 50%;
+  /* Rend l'image elle-même circulaire pour qu'elle épouse la forme du conteneur */
 }
 
 .sidebar-nav {
