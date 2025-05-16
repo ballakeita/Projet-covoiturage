@@ -22,13 +22,13 @@ document.getElementById("loginSubmit").addEventListener("click", async function 
             // Rediriger en fonction du rôle
             switch (result.role) {
                 case 'etudiant':
-                    window.location.href = "../../../views/etudiant.php";
+                    window.location.href = "../../../views/pages/PHP/home.php";
                     break;
                 case 'administrateur':
-                    window.location.href = "../../../views/admin.php";
+                    window.location.href = "../../../views/pages/PHP/home.php";
                     break;
                 case 'sponsor':
-                    window.location.href = "../../../views/sponsor.php";
+                    window.location.href = "../../../views/pages/PHP/dashboard.php";
                     break;
                 default:
                     alert("Rôle inconnu !");
