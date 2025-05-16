@@ -190,6 +190,13 @@ INSERT INTO Reserver (Id_Trajet_Reserver, Id_Etudiant_Reserver, Date_Reservation
 ('5', '1', '20/06/2025 17:00:00', 'false', '10', '12', 'false'),
 ('6', '2', '18/05/2025 09:00:00', 'true', '13', '14', 'false');
 
+('6', '2', '01/05/2025 12:00:00', 'false', '1', '3', 'true'),
+('8', '3', '02/05/2025 14:30:00', 'false', '2', '3', 'true'),
+('9', '1', '01/06/2025 11:00:00', 'false', '4', '5', 'false'),
+('10', '4', '05/05/2025 10:00:00', 'false', '6', '7', 'true'),
+('11', '1', '20/06/2025 17:00:00', 'false', '10', '12', 'false'),
+('12', '2', '18/05/2025 09:00:00', 'true', '13', '14', 'false');
+
 -- Voir
 INSERT INTO Voir (Id_Etudiant, Id_Pub, Nombre_Vu) VALUES
 (1, 1, 4),
@@ -267,9 +274,31 @@ INSERT INTO Arret (Heure_Passage, Adresse, Informations_Complementaires, Ordre, 
 ('17:00:00', 'Place centrale', 'Sous labribus près du rond-point', '1', '12655', '6'),
 ('19:00:00', 'Université Rennes 2', 'Parking vélo couvert, entrée sud', '2', '12655', '6');
 
+('08:00:00', 'Gare Lille Flandres', 'Devant la sortie principale', '1', '20690', '7'),
+('10:30:00', 'Place de la République', 'Près de la fontaine centrale', '2', '29185', '7'),
+('12:00:00', 'Gare Saint-Lazare', 'Parking dépose-minute, quai 3', '3', '27606', '7'),
+('14:00:00', 'Université de Montpellier', 'Arrêt de bus devant l entrée B', '1', '12350', '8'),
+('16:30:00', 'Place de la Comédie', 'À côté du manège', '2', '10573', '8'),
+('09:00:00', 'Centre ville', 'Parking souterrain sortie Nord', '1', '25568', '9'),
+('11:15:00', 'Parking Leclerc', 'Zone stationnement longue durée', '2', '7063', '9'),
+('15:00:00', 'Gare Bordeaux Saint-Jean', 'Devant le panneau info voyageurs', '1', '11866', '10'),
+('18:30:00', 'Place de la Victoire', 'À côté du kiosque à journaux', '2', '11866', '10'),
+('10:00:00', 'Campus universitaire', 'Proche de la cafétéria', '1', '15473', '11'),
+('12:45:00', 'Centre-ville', 'Devant la médiathèque municipale', '2', '16661', '11'),
+('15:30:00', 'Port de commerce', 'Quai 2, près de l entrepôt n°5', '3', '5447', '11'),
+('17:00:00', 'Place centrale', 'Sous labribus près du rond-point', '1', '12655', '12'),
+('19:00:00', 'Université Rennes 2', 'Parking vélo couvert, entrée sud', '2', '12655', '12');
+
 -- Trajet (utilise les arrets créés)
 INSERT INTO Trajet (Places_Disponibles, Repartition_Points, Annulation, Date_Depart, Id_Type_Vehicule_Effectuer, Id_Etudiant_Creer) VALUES
-('3', 'true', 'false', '2025-05-10', '1', '1'), -- Id_Type_Vehicule 1 et Id_Etudiant 3 doivent exister
+('3', 'true', 'false', '2025-05-20', '1', '1'), -- Id_Type_Vehicule 1 et Id_Etudiant 3 doivent exister
+('2', 'false', 'false', '2025-06-15', '2', '2'), -- Id_Type_Vehicule 2 et Id_Etudiant 2 doivent exister
+('4', 'true', 'false', '2025-05-13', '3', '3'), -- Id_Type_Vehicule 3 et Id_Etudiant 3 doivent exister
+('1', 'false', 'true', '2025-06-01', '1', '1'), -- Id_Type_Vehicule 1 et Id_Etudiant 1 doivent exister
+('3', 'true', 'false', '2025-07-05', '4', '4'), -- Id_Type_Vehicule 4 et Id_Etudiant 4 doivent exister
+('2', 'false', 'false', '2025-05-25', '3', '3'); -- Id_Type_Vehicule 3 et Id_Etudiant 3 doivent exister
+
+('3', 'true', 'false', '2025-05-20', '1', '1'), -- Id_Type_Vehicule 1 et Id_Etudiant 3 doivent exister
 ('2', 'false', 'false', '2025-06-15', '2', '2'), -- Id_Type_Vehicule 2 et Id_Etudiant 2 doivent exister
 ('4', 'true', 'false', '2025-05-13', '3', '3'), -- Id_Type_Vehicule 3 et Id_Etudiant 3 doivent exister
 ('1', 'false', 'true', '2025-06-01', '1', '1'), -- Id_Type_Vehicule 1 et Id_Etudiant 1 doivent exister
