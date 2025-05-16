@@ -188,7 +188,7 @@ INSERT INTO Reserver (Id_Trajet_Reserver, Id_Etudiant_Reserver, Date_Reservation
 ('2', '1', '01/06/2025 11:00:00', 'false', '4', '5', 'false'),
 ('3', '4', '05/05/2025 10:00:00', 'false', '6', '7', 'true'),
 ('5', '1', '20/06/2025 17:00:00', 'false', '10', '12', 'false'),
-('6', '2', '18/05/2025 09:00:00', 'true', '13', '14', 'false');
+('6', '2', '18/05/2025 09:00:00', 'true', '13', '14', 'false'),
 
 ('6', '2', '01/05/2025 12:00:00', 'false', '1', '3', 'true'),
 ('8', '3', '02/05/2025 14:30:00', 'false', '2', '3', 'true'),
@@ -272,7 +272,7 @@ INSERT INTO Arret (Heure_Passage, Adresse, Informations_Complementaires, Ordre, 
 ('12:45:00', 'Centre-ville', 'Devant la médiathèque municipale', '2', '16661', '5'),
 ('15:30:00', 'Port de commerce', 'Quai 2, près de l entrepôt n°5', '3', '5447', '5'),
 ('17:00:00', 'Place centrale', 'Sous labribus près du rond-point', '1', '12655', '6'),
-('19:00:00', 'Université Rennes 2', 'Parking vélo couvert, entrée sud', '2', '12655', '6');
+('19:00:00', 'Université Rennes 2', 'Parking vélo couvert, entrée sud', '2', '12655', '6'),
 
 ('08:00:00', 'Gare Lille Flandres', 'Devant la sortie principale', '1', '20690', '7'),
 ('10:30:00', 'Place de la République', 'Près de la fontaine centrale', '2', '29185', '7'),
@@ -296,7 +296,7 @@ INSERT INTO Trajet (Places_Disponibles, Repartition_Points, Annulation, Date_Dep
 ('4', 'true', 'false', '2025-05-13', '3', '3'), -- Id_Type_Vehicule 3 et Id_Etudiant 3 doivent exister
 ('1', 'false', 'true', '2025-06-01', '1', '1'), -- Id_Type_Vehicule 1 et Id_Etudiant 1 doivent exister
 ('3', 'true', 'false', '2025-07-05', '4', '4'), -- Id_Type_Vehicule 4 et Id_Etudiant 4 doivent exister
-('2', 'false', 'false', '2025-05-25', '3', '3'); -- Id_Type_Vehicule 3 et Id_Etudiant 3 doivent exister
+('2', 'false', 'false', '2025-05-25', '3', '3'), -- Id_Type_Vehicule 3 et Id_Etudiant 3 doivent exister
 
 ('3', 'true', 'false', '2025-05-20', '1', '1'), -- Id_Type_Vehicule 1 et Id_Etudiant 3 doivent exister
 ('2', 'false', 'false', '2025-06-15', '2', '2'), -- Id_Type_Vehicule 2 et Id_Etudiant 2 doivent exister
