@@ -1,4 +1,11 @@
-<!-- contact.html -->
+<?php
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+?>
+<!-- contact.php -->
 <!DOCTYPE html>
 <html lang="fr">
 
