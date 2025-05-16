@@ -5,7 +5,7 @@ function getIdVilleByName($nomVille) {
     $pdo = connexionBd();
 
     $nomVille = trim($nomVille);
-    $search = '$nomVille';
+    $search = '%' . $nomVille . '%';
 
     $stmt = $pdo->prepare("
         SELECT Id_Ville, Nom
