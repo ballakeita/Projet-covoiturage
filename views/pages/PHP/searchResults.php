@@ -98,8 +98,11 @@ if (session_status() === PHP_SESSION_NONE) {
     </section>
 
     <!-- Pub -->
+    <!-- PUBLICITÉ -->
     <aside class="ad">
-      <h3>PUB ?</h3>
+      <h2>PUB ?</h2>
+      <img src="../../../uploads/pub/pub.png" alt="Logo Pub">
+      <p>Texte Pub</p>
     </aside>
   </div>
 

@@ -73,7 +73,7 @@ if (session_status() === PHP_SESSION_NONE) {
     <!-- PUBLICITÉ -->
     <aside class="card sidebar pub">
       <h2>PUB ?</h2>
-      <img src="pub-logo.png" alt="Logo Pub">
+      <img src="../../../uploads/pub/pub.png" alt="Logo Pub">
       <p>Texte Pub</p>
     </aside>
   </main>

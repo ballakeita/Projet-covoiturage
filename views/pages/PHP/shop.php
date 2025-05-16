@@ -36,8 +36,8 @@
   </header>
   <div class="shop-container" id="shop">
     <div class="item-card" data-name="Potion de Soin" data-price="100" data-effect="Restaure 50 PV"
-      data-img="https://via.placeholder.com/200x120?text=Potion">
-      <img src="https://via.placeholder.com/200x120?text=Potion" alt="Potion">
+      data-img="../../../uploads/pub/pub.png">
+      <img src="../../../uploads/pub/pub.png" alt="Potion">
       <h4>Potion de Soin</h4>
       <p>100 points</p>
       <p>Description : *2 pts / Trajets</p>
@@ -45,8 +45,8 @@
       Quantité : <span class="item-qty">0</span>
     </div>
     <div class="item-card" data-name="Cape d’Invisibilité" data-price="300" data-effect="Invisibilité pendant 10s"
-      data-img="https://via.placeholder.com/200x120?text=Cape">
-      <img src="https://via.placeholder.com/200x120?text=Cape" alt="Cape">
+      data-img="../../../uploads/pub/pub.png">
+      <img src="../../../uploads/pub/pub.png" alt="Cape">
       <h4>Cape d’invisibilité</h4>
       <p>300 points</p>
       <p>Description : + 1 personne / trajet</p>
@@ -54,8 +54,8 @@
       Quantité : <span class="item-qty">0</span>
     </div>
     <div class="item-card" data-name="bouclierbois" data-price="100" data-effect="Protection de streak 1 semaine"
-      data-img="https://via.placeholder.com/200x120?text=Cape">
-      <img src="https://via.placeholder.com/200x120?text=Cape" alt="bois">
+      data-img="../../../uploads/pub/pub.png">
+      <img src="../../../uploads/pub/pub.png" alt="bois">
       <h4>Bouclier en bois</h4>
       <p>100 points</p>
       <p>Description : Protection 1 semaine</p>
@@ -63,8 +63,8 @@
       Quantité : <span class="item-qty">0</span>
     </div>
     <div class="item-card" data-name="LoupeDuVoyageur" data-price="500"
-      data-effect="Ammélioration de vos recommandation" data-img="https://via.placeholder.com/200x120?text=Cape">
-      <img src="https://via.placeholder.com/200x120?text=Cape" alt="Loupe">
+      data-effect="Ammélioration de vos recommandation" data-img="../../../uploads/pub/pub.png">
+      <img src="../../../uploads/pub/pub.png" alt="Loupe">
       <h4>Loupe Du Voyageur</h4>
       <p>500 points</p>
       <p>Descritpion : Amméliore ta visibilité</p>
@@ -76,21 +76,21 @@
   <h2 class="shop-section-title">Objets payants</h2>
   <div class="shop-container" id="shop">
     <div class="item-card premium" data-name="Pass de combat" data-price="4.99€"
-      data-img="https://via.placeholder.com/200x120?text=Pass">
-      <img src="https://via.placeholder.com/200x120?text=Pass" alt="Pass">
+      data-img="../../../uploads/pub/pub.png">
+      <img src="../../../uploads/pub/pub.png" alt="Pass">
       <h4>Pass de Combat</h4>
       <p>4,99 €</p>
     </div>
     <div class="item-card premium" data-name="Bloqueur de pub" data-price="1.99€"
-      data-img="https://via.placeholder.com/200x120?text=Pass">
-      <img src="https://via.placeholder.com/200x120?text=Pass" alt="BloqueurPub">
+      data-img="../../../uploads/pub/pub.png">
+      <img src="../../../uploads/pub/pub.png" alt="BloqueurPub">
       <h4>Bloqueur de pub</h4>
       <p>1,99 €</p>
     </div>
 
     <div class="item-card premium" data-name="Nitroglycérine" data-price="4.99€"
-      data-img="https://via.placeholder.com/200x120?text=Pass">
-      <img src="https://via.placeholder.com/200x120?text=Pass" alt="Nytro">
+      data-img="../../../uploads/pub/pub.png">
+      <img src="../../../uploads/pub/pub.png" alt="Nytro">
       <h4>Nitroglycérine</h4>
       <p>Descritpion : Plus de personnalisation !</p>
       <p>Durée : 1 mois</p>
