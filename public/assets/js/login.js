@@ -8,7 +8,7 @@ document.getElementById("loginSubmit").addEventListener("click", async function 
     }
 
     try {
-        const response = await fetch("/Soradrive/src/controllers/auth_controller.php?action=login", {
+        const response = await fetch("../../../src/controllers/auth_controller.php?action=login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -22,13 +22,13 @@ document.getElementById("loginSubmit").addEventListener("click", async function 
             // Rediriger en fonction du rôle
             switch (result.role) {
                 case 'etudiant':
-                    window.location.href = "/Soradrive/views/etudiant.php";
+                    window.location.href = "../../../views/etudiant.php";
                     break;
                 case 'administrateur':
-                    window.location.href = "/Soradrive/views/admin.php";
+                    window.location.href = "../../../views/admin.php";
                     break;
                 case 'sponsor':
-                    window.location.href = "/Soradrive/views/sponsor.php";
+                    window.location.href = "../../../views/sponsor.php";
                     break;
                 default:
                     alert("Rôle inconnu !");
