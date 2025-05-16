@@ -48,7 +48,7 @@ if (session_status() === PHP_SESSION_NONE) {
       <div class="card">
         <h2>Gagner !</h2>
         <p>Rouler ensemble, gagner ensemble.</p>
-        <div class="sub-card" onclick="openOverlay('cashshop')">🎁 Récompenses<br /><small>Accès à la boutique</small></div>
+        <div class="sub-card" 🎁 Récompenses<br /><small>Accès à la boutique</small></div>
         <div class="sub-card">🎮 Ludique<br /><small>Gain de points</small></div>
       </div>
     </section>
