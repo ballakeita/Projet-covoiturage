@@ -159,7 +159,7 @@ if (session_status() === PHP_SESSION_NONE) {
           }
           data.trajets.forEach(trip => {
             const li = document.createElement("li");
-            li.dataset.url = "reserve.html";
+            li.dataset.url = `reserverTrajets.php?id=${trip.id_trajet}`;
             li.innerHTML = `
               <strong>${trip.ville_depart} → ${trip.ville_arrivee}</strong><br>
               ${trip.date} — ${trip.heure_depart}
