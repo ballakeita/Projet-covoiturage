@@ -54,7 +54,7 @@ if (session_status() === PHP_SESSION_NONE) {
     </div>
     <div class="stat-box">
       <div class="stat-title">Trajets ce mois</div>
-      <div class="stat-value" id="monthly-rides">çamarchepas</div>
+      <div class="stat-value" id="monthly-rides">Chargement...</div>
     </div>
     <div class="stat-box">
       <div class="stat-title">Trajet annulé</div>
@@ -110,10 +110,11 @@ if (session_status() === PHP_SESSION_NONE) {
         fetch('../../../src/controllers/statistique_controller.php?action=villes_destination_populaires').then(res => res.json()), // verifier l'arbo
         fetch('../../../src/controllers/statistique_controller.php?action=pourcentage_permis').then(res => res.json())
       ]).then(([trajets, annuls, destination, permis]) => {
-        trajetsData = trajets;
+        trajetsData = trajets.trajets_par_mois ?? [];
         annulationsData = annuls;
-        destinationData = destination;
+        destinationData = destination.villes_destination;
 
+        document.getElementById('monthly-annulations').textContent = annulationsData.nombre_annulations  ;
         document.getElementById('Permis').textContent = permis.pourcentage + ' %';
         updateTopDestinationsDisplay();
       });

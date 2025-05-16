@@ -25,7 +25,7 @@ document.getElementById("loginSubmit").addEventListener("click", async function 
                     window.location.href = "../../../views/pages/PHP/home.php";
                     break;
                 case 'administrateur':
-                    window.location.href = "../../../views/pages/PHP/home.php";
+                    window.location.href = "../../../views/pages/PHP/dashboard.php";
                     break;
                 case 'sponsor':
                     window.location.href = "../../../views/pages/PHP/dashboard.php";
