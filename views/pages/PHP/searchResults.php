@@ -8,7 +8,7 @@
     href="https://fonts.googleapis.com/css2?family=Sora:wght@400;700&display=swap"
     rel="stylesheet"
   >
-  <link rel="stylesheet" href="searchResults.css">
+  <link rel="stylesheet" href="../CSS/searchResults.css">
 </head>
 <body>
 
@@ -17,16 +17,16 @@
     <!-- logo rond en background, plus aucun texte à l'intérieur -->
     <div class="logo" aria-label="SoraDrive"></div>
 
-    <form class="search-box" id="searchForm" action="searchResults.html" method="GET">
+    <form class="search-box" id="searchForm" action="searchResults.php" method="GET">
       <input type="text" name="query" id="searchInput" placeholder="Search">
       <button type="submit">🔍</button>
     </form>
 
     <nav class="main-nav">
-      <a href="home.html">Accueil</a>
-      <a href="gestionTrajets.html">Trajets</a>
-      <a href="profil.html">Profil</a>
-      <a href="Contact.html">Contact</a>
+      <a href="home.php">Accueil</a>
+      <a href="gestionTrajets.php">Trajets</a>
+      <a href="profil.php">Profil</a>
+      <a href="Contact.php">Contact</a>
     </nav>
   </header>
 
@@ -84,9 +84,9 @@
     <section class="results">
       <h2>Aucune recherche effectuée.</h2>
       <ul>
-        <li data-url="reserverTrajets.html">Résultat Trajet 1</li>
-        <li data-url="reserverTrajets.html">Résultat Trajet 2</li>
-        <li data-url="reserverTrajets.html">Résultat Trajet 3</li>
+        <li data-url="reserverTrajets.php">Résultat Trajet 1</li>
+        <li data-url="reserverTrajets.php">Résultat Trajet 2</li>
+        <li data-url="reserverTrajets.php">Résultat Trajet 3</li>
       </ul>
     </section>
 
