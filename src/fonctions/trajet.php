@@ -118,6 +118,7 @@ function chercher_trajets_par_ville_destination(int $id_utilisateur, string $vil
 
     $sql = "
         SELECT DISTINCT 
+            t.*,
             vd.nom AS ville_depart,
             va.nom AS ville_arrivee,
             (t.date_depart + MIN(a1.heure_passage))::date AS date,
