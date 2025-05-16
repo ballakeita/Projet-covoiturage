@@ -70,14 +70,7 @@ if (session_status() === PHP_SESSION_NONE) {
     </div>
   </div>
 
-  <script>
-    function openOverlay(id) {
-      document.getElementById(id).classList.remove('hidden');
-    }
-    function closeOverlay(id) {
-      document.getElementById(id).classList.add('hidden');
-    }
-  </script>
+     <script src="../js/home.js"></script>
 </body>
 
   </html>
